@@ -5,20 +5,27 @@
 
 package ru.spbau.annikura.list;
 
-
-import ru.spbau.annikura.list.ListNode;
-import ru.spbau.annikura.list.Entry;
-
+/**
+ * A list storing key-value pairs, can search through itself, add or erase elements by key.
+ *
+ * @param <KeyType>
+ * @param <ValueType>
+ */
 public class KeyValueList<KeyType, ValueType> {
   private ListNode<Entry<KeyType, ValueType>> head =
-      new ListNode<Entry<KeyType, ValueType>>(null);
+      new ListNode<>(null);
 
-  public ValueType find(KeyType key) {
+  /** Returns a value of the element with equal to the given key.
+   *
+   * @param key
+   * @return Returns null if such an element does not exist in the list.
+   */
+  public Entry<KeyType, ValueType> find(KeyType key) {
     ListNode<Entry<KeyType, ValueType>> foundNode = findListNode(key);
     if (foundNode == null) {
       return null;
     }
-    return foundNode.getValue().value;
+    return foundNode.getValue();
   }
 
   private ListNode<Entry<KeyType, ValueType>> findListNode(KeyType key) {
@@ -29,6 +36,7 @@ public class KeyValueList<KeyType, ValueType> {
     return null;
   }
 
+
   public ValueType addOrAssign(KeyType key, ValueType value) {
     ListNode<Entry<KeyType, ValueType>> foundNode = findListNode(key);
     if (foundNode != null) {
@@ -37,7 +45,7 @@ public class KeyValueList<KeyType, ValueType> {
       return oldValue;
     }
     ListNode<Entry<KeyType, ValueType>> newNode =
-        new ListNode<Entry<KeyType, ValueType>>(new Entry<KeyType, ValueType>(key, value));
+        new ListNode<>(new Entry<>(key, value));
     head.insertAfter(newNode);
     return null;
   }

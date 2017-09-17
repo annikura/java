@@ -5,7 +5,11 @@
 
 package ru.spbau.annikura.list;
 
-// Bidirected list node class
+/**
+ * Bidirected list node class
+ *
+ * @param <ValueType>
+ */
 public class ListNode<ValueType> {
   private ListNode<ValueType> next = null;
   private ListNode<ValueType> previous = null;
@@ -15,6 +19,9 @@ public class ListNode<ValueType> {
     this.value = value;
   }
 
+  /**
+   * @return Returns value which is stored in the list node.
+   */
   public ValueType getValue() {
     return value;
   }
@@ -22,10 +29,18 @@ public class ListNode<ValueType> {
     return next;
   }
 
+  /**
+   * @return Returns the next list node or null if the next node doesn't exist.
+   */
   public ListNode<ValueType> previous() {
     return previous;
   }
 
+  /** Inserts a given node next to the current one.
+   *
+   * @param otherNode A node to be placed next after the current
+   * @return Returns new list node value.
+   */
   public ValueType insertAfter(ListNode<ValueType> otherNode) {
     otherNode.next = next;
     next = otherNode;
@@ -36,13 +51,20 @@ public class ListNode<ValueType> {
     return next.value;
   }
 
+  /**
+   * Erases the vertex next to current one. Returns the value of the deleted vertex.
+   *
+   * @return Returns null if the next vertex does not exist.
+   */
   public ValueType eraseAfter() {
     if (next == null) {
       return null;
     }
     ValueType erasedValue = next.value;
     next = next.next;
-    next.previous = this;
+    if (next != null) {
+      next.previous = this;
+    }
     return erasedValue;
   }
 

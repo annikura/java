@@ -5,7 +5,11 @@
 
 package ru.spbau.annikura.list;
 
-// A simple structure to store key and value together
+/** A simple structure to store key and value together
+ *
+ * @param <KeyType>
+ * @param <ValueType>
+ */
 public class Entry<KeyType, ValueType> {
   public KeyType key = null;
   public ValueType value = null;
