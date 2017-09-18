@@ -5,13 +5,40 @@
 
 package ru.spbau.annikura.hashtable;
 
-import java.util.ArrayList;
+import java.beans.VetoableChangeListener;
+import java.util.Vector;
 import ru.spbau.annikura.list.Entry;
 import ru.spbau.annikura.list.KeyValueList;
+import ru.spbau.annikura.list.ListNode;
 
 public class HashTable {
-  private ArrayList<KeyValueList<String, String>> tableContent = new ArrayList<>();
+  private Vector<KeyValueList<String, String>> tableContent = new Vector<>();
   private int tableSize = 0;
+
+  private int countIndex(String str) {
+    if (str != null)
+      return str.hashCode() % tableContent.size();
+    return 0;
+  }
+
+  // If newSize > 0, resizes the table to newSize size. If newSize equals 0, nothing will be done.
+  private void resizeTable(int newSize) {
+    if (newSize == 0) {
+      return;
+    }
+    Vector<KeyValueList<String, String>> oldTable = tableContent;
+    tableContent = new Vector<>(newSize);
+    for (int i = 0; i < newSize; i++)
+      tableContent.add(new KeyValueList<>());
+
+    for (KeyValueList<String, String> list : oldTable) {
+      for (ListNode<Entry<String, String>> it = list.begin(); it != null; it = it.next()) {
+          tableContent.get(countIndex(it.getValue().key)).addOrAssign(
+              it.getValue().key,
+              it.getValue().value);
+      }
+    }
+  }
 
   public HashTable() {
     tableContent.add(new KeyValueList<>());
@@ -29,15 +56,18 @@ public class HashTable {
    * @return Returns true if such a key exists in the hash table.
    */
   public boolean contains(String key) {
-    return get(key) != null;
+    return tableContent.get(countIndex(key)).find(key) != null;
   }
 
   /**
    * @param key
    * @return Value if such a key exists in the hash table, null otherwise.
    */
-  public Entry get(String key) {
-    return tableContent.get(key.hashCode() % tableContent.size()).find(key);
+  public String get(String key) {
+    if (contains(key)) {
+      return tableContent.get(countIndex(key)).find(key).value;
+    }
+    return null;
   }
 
   /**
@@ -48,31 +78,34 @@ public class HashTable {
    * @return If there was such a key in the table, returns a previous value, null if not.
    */
   public String put(String key, String value) {
-    String oldValue = tableContent.get(key.hashCode() % tableContent.size()).addOrAssign(key, value);
-    if (oldValue == null) {
+    if (tableContent.get(countIndex(key)).find(key) == null) {
       tableSize++;
     }
-    return oldValue;
+    if (2 * tableSize >= tableContent.size()) {
+      resizeTable(tableContent.size() * 2);
+    }
+    return tableContent.get(countIndex(key)).addOrAssign(key, value);
   }
 
-  /**Removes key-value pair with the given key from the hash table.
+  /**
+   * Removes key-value pair with the given key from the hash table.
    *
    * @param key
    * @return If such a key existed, returns the deleted value. Otherwise return null.
    */
   public String remove(String key) {
-    String oldValue = tableContent.get(key.hashCode() % tableContent.size()).remove(key);
-    if (oldValue != null) {
+    if (tableContent.get(countIndex(key)).find(key) != null) {
       tableSize--;
     }
-    return oldValue;
+    return tableContent.get(countIndex(key)).remove(key);
   }
 
   /**
    * Clears the hash table.
    */
   public void clear() {
-    tableContent = new ArrayList<KeyValueList<String, String>>();
+    tableContent = new Vector<>();
+    tableContent.add(new KeyValueList<>());
     tableSize = 0;
   }
 }

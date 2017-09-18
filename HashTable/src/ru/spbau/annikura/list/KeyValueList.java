@@ -5,6 +5,8 @@
 
 package ru.spbau.annikura.list;
 
+import java.util.List;
+
 /**
  * A list storing key-value pairs, can search through itself, add or erase elements by key.
  *
@@ -14,6 +16,14 @@ package ru.spbau.annikura.list;
 public class KeyValueList<KeyType, ValueType> {
   private ListNode<Entry<KeyType, ValueType>> head =
       new ListNode<>(null);
+
+  /**
+   *
+   * @return First list node.
+   */
+  public ListNode<Entry<KeyType, ValueType>> begin() {
+    return head.next();
+  }
 
   /**
    * @param key
