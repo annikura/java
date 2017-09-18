@@ -21,6 +21,7 @@ public class ListNodeTest {
 
   @Test
   public static void insertAfterSimple() {
+    // Tests simple insertion.
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
     assertEquals("def", node1.insertAfter(node2));
@@ -32,6 +33,7 @@ public class ListNodeTest {
 
   @Test
   public static void insertAfter() {
+    // Tests double insertion
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
     ListNode<String> node3 = new ListNode<>("ghj");
@@ -48,19 +50,22 @@ public class ListNodeTest {
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
     ListNode<String> node3 = new ListNode<>("ghj");
-    node1.insertAfter(node2);
-    node1.insertAfter(node3);
-    assertEquals("ghj", node1.eraseAfter());
+    node1.insertAfter(node2);  // null-> node1 -> node2 -> null
+    node1.insertAfter(node3);  // null-> node1 -> node3 -> node2 -> null
+    assertEquals("ghj", node1.eraseAfter()); // null-> node1 -> node2 -> null
+
     assertSame(node2, node1.next());
     assertSame(node1, node2.previous());
     assertEquals(null, node1.previous());
     assertEquals(null, node2.next());
-    assertEquals(null, node2.eraseAfter());
+
+    assertEquals(null, node2.eraseAfter());  // Testing erasing after the end of the list
     assertSame(node2, node1.next());
     assertSame(node1, node2.previous());
     assertEquals(null, node1.previous());
     assertEquals(null, node2.next());
-    node1.eraseAfter();
+
+    node1.eraseAfter();  // null -> node1 -> null
     assertEquals(null, node1.previous());
     assertEquals(null, node1.next());
   }

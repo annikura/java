@@ -23,38 +23,39 @@ public class KeyValueListTest {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "b"));
     assertEquals(null, list.addOrAssign("c", "d"));
-    assertEquals(null, list.addOrAssign("xxx", "yyy"));
+    assertEquals(null, list.addOrAssign("xxx", "yyy"));  // <a, b>, <c d>, <xxx, yyy>
     assertEquals(new Entry<>("a", "b").value, list.find("a").value);
-    assertEquals(new Entry<>("a", "b").key, list.find("a").key);
+    assertEquals(new Entry<>("a", "b").key, list.find("a").key);  // Check a -> <a, b>
     assertEquals(new Entry<>("xxx", "yyy").value, list.find("xxx").value);
-    assertEquals(new Entry<>("xxx", "yyy").key, list.find("xxx").key);
+    assertEquals(new Entry<>("xxx", "yyy").key, list.find("xxx").key);  // Check xxx -> <xxx, yyy>
     assertEquals(new Entry<>("c", "d").value, list.find("c").value);
-    assertEquals(new Entry<>("c", "d").key, list.find("c").key);
-    assertEquals(null , list.find("xx"));
+    assertEquals(new Entry<>("c", "d").key, list.find("c").key);  // Check c -> <c, d>
+    assertEquals(null , list.find("xx"));  // Check xx -> not found = null.
   }
 
   @Test
   public static void addOrAssign() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "bb"));
-    assertEquals(null, list.addOrAssign("bb", "bbb"));
-    assertEquals("bb", list.addOrAssign("a", "x"));
+    assertEquals(null, list.addOrAssign("bb", "bbb"));  // <a, bb>, <bb, bbb>
+    assertEquals("bb", list.addOrAssign("a", "x"));  // <a, x>, <bb, bbb> (<a, b> is overwritten with <a, x>)
     assertEquals(new Entry<>("a", "x").value, list.find("a").value);
-    assertEquals(new Entry<>("a", "x").key, list.find("a").key);
+    assertEquals(new Entry<>("a", "x").key, list.find("a").key);  // Check a -> <a, x>
     assertEquals(new Entry<>("bb", "bbb").key, list.find("bb").key);
-    assertEquals(new Entry<>("bb", "bbb").value, list.find("bb").value);
+    assertEquals(new Entry<>("bb", "bbb").value, list.find("bb").value);  // Check bb -> <bb, bbb>
   }
 
   @Test
   public static void remove() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "bb"));
-    assertEquals(null, list.addOrAssign("bb", "bbb"));
-    assertEquals("bb", list.addOrAssign("a", "x"));
-    assertEquals("x", list.remove("a"));
-    assertEquals(null, list.addOrAssign("a", "tt"));
+    assertEquals(null, list.addOrAssign("bb", "bbb"));  // <a, bb>, <bb, bbb>
+    assertEquals("bb", list.addOrAssign("a", "x"));  // <a, x>, <bb, bbb>
+    assertEquals("x", list.remove("a"));  // <bb, bbb>
+    assertEquals(null, list.find("a"));
+    assertEquals(null, list.addOrAssign("a", "tt")); // <a, tt>, <bb, bbb>
     assertEquals(new Entry<>("a", "tt").value, list.find("a").value);
-    assertEquals(new Entry<>("a", "tt").key, list.find("a").key);
+    assertEquals(new Entry<>("a", "tt").key, list.find("a").key);  // Check a -> <a, tt>
   }
 
 }
