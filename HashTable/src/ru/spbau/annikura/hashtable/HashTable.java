@@ -11,6 +11,10 @@ import ru.spbau.annikura.list.Entry;
 import ru.spbau.annikura.list.KeyValueList;
 import ru.spbau.annikura.list.ListNode;
 
+/**
+ * String hash table. Allows containing string values as the counterparts to the string keys.
+ * Elements can be added to, found in or removed from the table.
+ */
 public class HashTable {
   private Vector<KeyValueList<String, String>> tableContent = new Vector<>();
   private int tableSize = 0;
@@ -21,7 +25,10 @@ public class HashTable {
     return 0;
   }
 
-  // If newSize > 0, resizes the table to newSize size. If newSize equals 0, nothing will be done.
+  /** If newSize > 0, resizes the table to newSize size. If newSize equals 0, nothing will be done.
+   *
+   * @param newSize new size of the table
+   */
   private void resizeTable(int newSize) {
     if (newSize == 0) {
       return;
