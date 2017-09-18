@@ -14,12 +14,12 @@ import ru.spbau.annikura.list.Entry;
 public class KeyValueListTest {
 
   @Test
-  public void createInstance() throws Exception {
+  public static void createInstance() {
     KeyValueList<String, String> list;
   }
 
   @Test
-  public void find() throws Exception {
+  public static void find() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "b"));
     assertEquals(null, list.addOrAssign("c", "d"));
@@ -34,7 +34,7 @@ public class KeyValueListTest {
   }
 
   @Test
-  public void addOrAssign() throws Exception {
+  public static void addOrAssign() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "bb"));
     assertEquals(null, list.addOrAssign("bb", "bbb"));
@@ -46,7 +46,7 @@ public class KeyValueListTest {
   }
 
   @Test
-  public void remove() throws Exception {
+  public static void remove() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "bb"));
     assertEquals(null, list.addOrAssign("bb", "bbb"));

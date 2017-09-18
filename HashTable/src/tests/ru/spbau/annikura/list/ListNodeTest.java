@@ -12,7 +12,7 @@ import ru.spbau.annikura.list.ListNode;
  */
 public class ListNodeTest {
   @Test
-  public void createNode() throws Exception {
+  public static void createNode() {
     ListNode<String> node = new ListNode<>("abc");
     assertEquals(null, node.next());
     assertEquals(null, node.previous());
@@ -20,7 +20,7 @@ public class ListNodeTest {
   }
 
   @Test
-  public void insertAfterSimple() throws Exception {
+  public static void insertAfterSimple() {
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
     assertEquals("def", node1.insertAfter(node2));
@@ -31,7 +31,7 @@ public class ListNodeTest {
   }
 
   @Test
-  public void insertAfter() throws Exception {
+  public static void insertAfter() {
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
     ListNode<String> node3 = new ListNode<>("ghj");
@@ -44,7 +44,7 @@ public class ListNodeTest {
   }
 
   @Test
-  public void eraseAfter() throws Exception {
+  public static void eraseAfter() {
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
     ListNode<String> node3 = new ListNode<>("ghj");

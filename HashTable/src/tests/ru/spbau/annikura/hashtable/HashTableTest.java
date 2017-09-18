@@ -2,7 +2,6 @@ package tests.ru.spbau.annikura.hashtable;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import ru.spbau.annikura.hashtable.HashTable;
 
 /**
@@ -12,13 +11,13 @@ import ru.spbau.annikura.hashtable.HashTable;
 
 public class HashTableTest {
   @Test
-  public void createInstance() throws Exception {
+  public static void createInstance() {
     HashTable hashTable = new HashTable();
     assertEquals(0, hashTable.size());
   }
 
   @Test
-  public void size() throws Exception {
+  public static void size() {
     HashTable hashTable = new HashTable();
     assertEquals(0, hashTable.size());
     hashTable.put("x", "y");
@@ -32,14 +31,14 @@ public class HashTableTest {
     hashTable.remove("x");
     assertEquals(1, hashTable.size());
     hashTable.remove("prr");
-    assertEquals(0, hashTable.size());
+    assertEquals(0, hashTable.size());   // Checking that
     hashTable.remove("prr");
     assertEquals(0, hashTable.size());
 
   }
 
   @Test
-  public void contains() throws Exception {
+  public static void contains() {
     HashTable hashTable = new HashTable();
     assertEquals(false, hashTable.contains("xx"));
     hashTable.put("x", "y");
@@ -50,14 +49,14 @@ public class HashTableTest {
   }
 
   @Test
-  public void getFromEmptyTable() throws Exception {
+  public static void getFromEmptyTable() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.get("a"));
     assertEquals(null, hashTable.get(null));
   }
 
   @Test
-  public void getAndPut() throws Exception {
+  public static void getAndPut() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.put("a", "b"));  // Simple insert
     assertEquals("b", hashTable.get("a"));
@@ -76,14 +75,14 @@ public class HashTableTest {
   }
 
   @Test
-  public void removeFromEmptyTable() throws Exception {
+  public static void removeFromEmptyTable() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.remove("key"));
     assertEquals(null, hashTable.remove(null));
   }
 
   @Test
-  public void remove() throws Exception {
+  public static void remove() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.put("key", "value"));
     assertEquals(null, hashTable.put(null, "x"));
@@ -95,7 +94,7 @@ public class HashTableTest {
 
 
   @Test
-  public void clear() throws Exception {
+  public static void clear() {
     HashTable hashTable = new HashTable();
     hashTable.clear();
     hashTable.put("a", "a");
