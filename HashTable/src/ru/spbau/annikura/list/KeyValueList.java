@@ -5,8 +5,6 @@
 
 package ru.spbau.annikura.list;
 
-import java.util.List;
-
 /**
  * A list storing key-value pairs, can search through itself, add or erase elements by key.
  *
@@ -14,24 +12,24 @@ import java.util.List;
  * @param <ValueType>
  */
 public class KeyValueList<KeyType, ValueType> {
-  private ListNode<Entry<KeyType, ValueType>> head =
+  private ListNode<Pair<KeyType, ValueType>> head =
       new ListNode<>(null);
 
   /**
    *
    * @return First list node.
    */
-  public ListNode<Entry<KeyType, ValueType>> begin() {
+  public ListNode<Pair<KeyType, ValueType>> begin() {
     return head.next();
   }
 
   /**
    * @param key
-   * @return Returns an Entry instance with a corresponding key-value pair.
+   * @return Returns an Pair instance with a corresponding key-value pair.
    * Returns null if such an element does not exist in the list.
    */
-  public Entry<KeyType, ValueType> find(KeyType key) {
-    ListNode<Entry<KeyType, ValueType>> foundNode = findListNode(key);
+  public Pair<KeyType, ValueType> find(KeyType key) {
+    ListNode<Pair<KeyType, ValueType>> foundNode = findListNode(key);
     if (foundNode == null) {
       return null;
     }
@@ -44,15 +42,15 @@ public class KeyValueList<KeyType, ValueType> {
    * @return Returns a list node containing the given key.
    * Returns null if there is no such a key in the list.
    */
-  private ListNode<Entry<KeyType, ValueType>> findListNode(KeyType key) {
-    for (ListNode<Entry<KeyType, ValueType>> it = head.next(); it != null; it = it.next()) {
+  private ListNode<Pair<KeyType, ValueType>> findListNode(KeyType key) {
+    for (ListNode<Pair<KeyType, ValueType>> it = head.next(); it != null; it = it.next()) {
       if (it.getValue().key == key)
         return it;
     }
     return null;
   }
 
-  /** Inserts Entry with given data into the list. If such a key already existed in the list,
+  /** Inserts Pair with given data into the list. If such a key already existed in the list,
    * replaces the value.
    *
    * @param key
@@ -60,25 +58,25 @@ public class KeyValueList<KeyType, ValueType> {
    * @return Null if key didn't exist in the list or the previous value if it did.
    */
   public ValueType addOrAssign(KeyType key, ValueType value) {
-    ListNode<Entry<KeyType, ValueType>> foundNode = findListNode(key);
+    ListNode<Pair<KeyType, ValueType>> foundNode = findListNode(key);
     if (foundNode != null) {
       ValueType oldValue = foundNode.getValue().value;
       foundNode.getValue().value = value;
       return oldValue;
     }
-    ListNode<Entry<KeyType, ValueType>> newNode =
-        new ListNode<>(new Entry<>(key, value));
+    ListNode<Pair<KeyType, ValueType>> newNode =
+        new ListNode<>(new Pair<>(key, value));
     head.insertAfter(newNode);
     return null;
   }
 
   /**
-   * Removes an Entry with a given key from the list.
+   * Removes an Pair with a given key from the list.
    * @param key
    * @return Returns value of the erased pair. Returns null is such a key didn't exist.
    */
   public ValueType remove(KeyType key) {
-    ListNode<Entry<KeyType, ValueType>> foundNode = findListNode(key);
+    ListNode<Pair<KeyType, ValueType>> foundNode = findListNode(key);
     if (foundNode != null) {
       return foundNode.previous().eraseAfter().value;
     }

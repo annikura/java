@@ -10,11 +10,11 @@ package ru.spbau.annikura.list;
  * @param <KeyType>
  * @param <ValueType>
  */
-public class Entry<KeyType, ValueType> {
+public class Pair<KeyType, ValueType> {
   public KeyType key = null;
   public ValueType value = null;
 
-  public Entry(KeyType key, ValueType value) {
+  public Pair(KeyType key, ValueType value) {
     this.key = key;
     this.value = value;
   }

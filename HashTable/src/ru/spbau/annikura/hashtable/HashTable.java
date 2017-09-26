@@ -5,9 +5,8 @@
 
 package ru.spbau.annikura.hashtable;
 
-import java.beans.VetoableChangeListener;
 import java.util.Vector;
-import ru.spbau.annikura.list.Entry;
+import ru.spbau.annikura.list.Pair;
 import ru.spbau.annikura.list.KeyValueList;
 import ru.spbau.annikura.list.ListNode;
 
@@ -39,7 +38,7 @@ public class HashTable {
       tableContent.add(new KeyValueList<>());
 
     for (KeyValueList<String, String> list : oldTable) {
-      for (ListNode<Entry<String, String>> it = list.begin(); it != null; it = it.next()) {
+      for (ListNode<Pair<String, String>> it = list.begin(); it != null; it = it.next()) {
           tableContent.get(countIndex(it.getValue().key)).addOrAssign(
               it.getValue().key,
               it.getValue().value);
