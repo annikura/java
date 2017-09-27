@@ -1,4 +1,4 @@
-package tests.ru.spbau.annikura.spiral;
+package test.java.ru.spbau.annikura.spiral;
 
 import org.junit.jupiter.api.Test;
 import ru.spbau.annikura.spiral.Spiral;
@@ -6,7 +6,7 @@ import ru.spbau.annikura.spiral.Spiral;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SpiralTest {
-    @org.junit.Test
+    @Test
     public static void printUnspiralized() {
         int[][] matrix = {{5, 4, 3}, {6, 1, 2}, {7, 8, 9}};
         Spiral.PrintUnspiralized(matrix);

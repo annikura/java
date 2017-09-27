@@ -14,7 +14,7 @@ public class Spiral {
      * @throws IllegalArgumentException if matrix has invalid size: it is not a square
      * or the side of the matrix is even.
      */
-    public static void PrintUnspiralized(int[][] matrix) throws IllegalArgumentException {
+    public static void PrintUnspiralized(final int[][] matrix) throws IllegalArgumentException {
         int[] toPrint = UnspiralizeIntoList(matrix);
         for (int i = 0; i < toPrint.length; i++)
             System.out.println(toPrint[i]);
@@ -28,7 +28,7 @@ public class Spiral {
      * @throws IllegalArgumentException if matrix has invalid size: it is not a square
      * or the side of the matrix is even.
      */
-    public static int[] UnspiralizeIntoList(int[][] matrix) throws IllegalArgumentException {
+    public static int[] UnspiralizeIntoList(final int[][] matrix) throws IllegalArgumentException {
         int n = matrix.length;
         if (n % 2 == 0) {
             throw new IllegalArgumentException("Matrix should have an odd size.");
@@ -63,11 +63,10 @@ public class Spiral {
         return returnList;
     }
 
-    public static int[][] sortColumns(int[][] matrix) {
+    public static int[][] sortColumns(final int[][] matrix) {
         if (matrix.length == 0 || matrix[0].length == 0) {
             return matrix;
         }
-        int n = matrix.length, m = matrix[0].length;
         // Now we have at least one element in at least one column.
         int[][] transposedMatrix = transposeMatrix(matrix);
         Arrays.sort(transposedMatrix, new Comparator<int[]>() {
@@ -78,7 +77,7 @@ public class Spiral {
         return transposeMatrix(transposedMatrix);
     }
 
-    private static int[][] transposeMatrix(int[][] matrix) {
+    private static int[][] transposeMatrix(final int[][] matrix) {
         int n = matrix.length, m = matrix[0].length;
         int [][] transposedMatrix = new int[m][n];
         for (int i = 0; i < n; i++) {

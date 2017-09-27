@@ -49,7 +49,7 @@ public class Coordinate {
      * Adds the given coordinate pair to the object coordinates.
      * @param other a coordinate pair which will be added.
      */
-    public void add(Coordinate other) {
+    public void add(final Coordinate other) {
         x += other.x;
         y += other.y;
     }

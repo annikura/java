@@ -1,5 +1,5 @@
-import tests.ru.spbau.annikura.spiral.SpiralTest;
-import tests.ru.spbau.annikura.spiral.CoordinateTest;
+import ru.spbau.annikura.spiral.SpiralTest;
+import ru.spbau.annikura.spiral.CoordinateTest;
 
 public class RunTests {
     public static void main (String[] args){

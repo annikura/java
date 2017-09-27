@@ -1,4 +1,4 @@
-package tests.ru.spbau.annikura.spiral;
+package test.java.ru.spbau.annikura.spiral;
 
 import org.junit.jupiter.api.Test;
 import ru.spbau.annikura.spiral.Coordinate;
