@@ -6,7 +6,7 @@ import ru.spbau.annikura.spiral.Spiral;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SpiralTest {
-    @Test
+    @org.junit.Test
     public static void printUnspiralized() {
         int[][] matrix = {{5, 4, 3}, {6, 1, 2}, {7, 8, 9}};
         Spiral.PrintUnspiralized(matrix);

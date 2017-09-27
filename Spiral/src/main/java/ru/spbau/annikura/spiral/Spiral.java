@@ -71,7 +71,6 @@ public class Spiral {
         // Now we have at least one element in at least one column.
         int[][] transposedMatrix = transposeMatrix(matrix);
         Arrays.sort(transposedMatrix, new Comparator<int[]>() {
-            @Override
             public int compare(int[] arr1, int[] arr2) {
                 return arr1[0] - arr2[0];
             }
