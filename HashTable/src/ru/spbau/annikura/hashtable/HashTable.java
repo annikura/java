@@ -5,6 +5,7 @@
 
 package ru.spbau.annikura.hashtable;
 
+import java.security.Key;
 import java.util.Vector;
 import ru.spbau.annikura.list.Pair;
 import ru.spbau.annikura.list.KeyValueList;
@@ -15,12 +16,24 @@ import ru.spbau.annikura.list.ListNode;
  * Elements can be added to, found in or removed from the table.
  */
 public class HashTable {
-  private Vector<KeyValueList<String, String>> tableContent = new Vector<>();
+  private KeyValueList<String, String>[] tableContent = new KeyValueList[1];
   private int tableSize = 0;
+
+  public HashTable() {
+    initList();
+  }
+
+  private void initList() {
+    for (int i = 0; i < tableContent.length; i++) {
+      if (tableContent[i] == null) {
+        tableContent[i] = new KeyValueList<>();
+      }
+    }
+  }
 
   private int countIndex(String str) {
     if (str != null)
-      return str.hashCode() % tableContent.size();
+      return str.hashCode() % tableContent.length;
     return 0;
   }
 
@@ -32,22 +45,16 @@ public class HashTable {
     if (newSize == 0) {
       return;
     }
-    Vector<KeyValueList<String, String>> oldTable = tableContent;
-    tableContent = new Vector<>(newSize);
-    for (int i = 0; i < newSize; i++)
-      tableContent.add(new KeyValueList<>());
-
+    KeyValueList<String, String>[] oldTable = tableContent;
+    tableContent = new KeyValueList[newSize];
+    initList();
     for (KeyValueList<String, String> list : oldTable) {
       for (ListNode<Pair<String, String>> it = list.begin(); it != null; it = it.next()) {
-          tableContent.get(countIndex(it.getValue().GetKey())).addOrAssign(
+          tableContent[countIndex(it.getValue().GetKey())].addOrAssign(
               it.getValue().GetKey(),
               it.getValue().GetValue());
       }
     }
-  }
-
-  public HashTable() {
-    tableContent.add(new KeyValueList<>());
   }
 
   /**
@@ -62,7 +69,7 @@ public class HashTable {
    * @return Returns true if such a key exists in the hash table.
    */
   public boolean contains(String key) {
-    return tableContent.get(countIndex(key)).find(key) != null;
+    return tableContent[countIndex(key)].find(key) != null;
   }
 
   /**
@@ -71,7 +78,7 @@ public class HashTable {
    */
   public String get(String key) {
     if (contains(key)) {
-      return tableContent.get(countIndex(key)).find(key).GetValue();
+      return tableContent[countIndex(key)].find(key).GetValue();
     }
     return null;
   }
@@ -84,13 +91,13 @@ public class HashTable {
    * @return If there was such a key in the table, returns a previous value, null if not.
    */
   public String put(String key, String value) {
-    if (tableContent.get(countIndex(key)).find(key) == null) {
+    if (tableContent[countIndex(key)].find(key) == null) {
       tableSize++;
     }
-    if (2 * tableSize >= tableContent.size()) {
-      resizeTable(tableContent.size() * 2);
+    if (2 * tableSize >= tableContent.length) {
+      resizeTable(tableContent.length * 2);
     }
-    return tableContent.get(countIndex(key)).addOrAssign(key, value);
+    return tableContent[countIndex(key)].addOrAssign(key, value);
   }
 
   /**
@@ -100,18 +107,18 @@ public class HashTable {
    * @return If such a key existed, returns the deleted value. Otherwise return null.
    */
   public String remove(String key) {
-    if (tableContent.get(countIndex(key)).find(key) != null) {
+    if (tableContent[countIndex(key)].find(key) != null) {
       tableSize--;
     }
-    return tableContent.get(countIndex(key)).remove(key);
+    return tableContent[countIndex(key)].remove(key);
   }
 
   /**
    * Clears the hash table.
    */
   public void clear() {
-    tableContent = new Vector<>();
-    tableContent.add(new KeyValueList<>());
+    tableContent = new KeyValueList[1];
+    initList();
     tableSize = 0;
   }
 }
