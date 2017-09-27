@@ -39,9 +39,9 @@ public class HashTable {
 
     for (KeyValueList<String, String> list : oldTable) {
       for (ListNode<Pair<String, String>> it = list.begin(); it != null; it = it.next()) {
-          tableContent.get(countIndex(it.getValue().key)).addOrAssign(
-              it.getValue().key,
-              it.getValue().value);
+          tableContent.get(countIndex(it.getValue().GetKey())).addOrAssign(
+              it.getValue().GetKey(),
+              it.getValue().GetValue());
       }
     }
   }
@@ -71,7 +71,7 @@ public class HashTable {
    */
   public String get(String key) {
     if (contains(key)) {
-      return tableContent.get(countIndex(key)).find(key).value;
+      return tableContent.get(countIndex(key)).find(key).GetValue();
     }
     return null;
   }

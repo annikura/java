@@ -44,7 +44,7 @@ public class KeyValueList<KeyType, ValueType> {
    */
   private ListNode<Pair<KeyType, ValueType>> findListNode(KeyType key) {
     for (ListNode<Pair<KeyType, ValueType>> it = head.next(); it != null; it = it.next()) {
-      if (it.getValue().key == key)
+      if (it.getValue().GetKey() == key)
         return it;
     }
     return null;
@@ -60,8 +60,8 @@ public class KeyValueList<KeyType, ValueType> {
   public ValueType addOrAssign(KeyType key, ValueType value) {
     ListNode<Pair<KeyType, ValueType>> foundNode = findListNode(key);
     if (foundNode != null) {
-      ValueType oldValue = foundNode.getValue().value;
-      foundNode.getValue().value = value;
+      ValueType oldValue = foundNode.getValue().GetValue();
+      foundNode.getValue().SetValue(value);
       return oldValue;
     }
     ListNode<Pair<KeyType, ValueType>> newNode =
@@ -78,7 +78,7 @@ public class KeyValueList<KeyType, ValueType> {
   public ValueType remove(KeyType key) {
     ListNode<Pair<KeyType, ValueType>> foundNode = findListNode(key);
     if (foundNode != null) {
-      return foundNode.previous().eraseAfter().value;
+      return foundNode.previous().eraseAfter().GetValue();
     }
     return null;
   }
