@@ -20,6 +20,7 @@ public class RunTests {
         SpiralTest.unspiralizeIntoList3x3();
         SpiralTest.sortMatrix1x3();
         SpiralTest.sortMatrix3x3();
+        SpiralTest.sortMatrix1x0();
 
         System.out.println("OK. All tests passed.");
     }

@@ -49,4 +49,13 @@ public class SpiralTest {
         int[][] expected = {{1, 3, 4}, {3, 2, 1}, {6, 5, 4}};
         assertArrayEquals(expected, sorted);
     }
+
+
+    @Test
+    public static void sortMatrix1x0() {
+        int[][] matrix = {{}};
+        int[][] sorted = Spiral.sortColumns(matrix);
+        int[][] expected = {{}};
+        assertArrayEquals(expected, sorted);
+    }
 }
