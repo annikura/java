@@ -12,7 +12,7 @@ public class KeyValueList<KeyType, ValueType> {
 
   /**
    *
-   * @return First list node.
+   * @return first list node.
    */
   public ListNode<Pair<KeyType, ValueType>> begin() {
     return head.next();
@@ -20,7 +20,7 @@ public class KeyValueList<KeyType, ValueType> {
 
   /**
    * @param key
-   * @return Returns an Pair instance with a corresponding key-value pair.
+   * @return a Pair instance with a corresponding key-value pair.
    * Returns null if such an element does not exist in the list.
    */
   public Pair<KeyType, ValueType> find(KeyType key) {
@@ -34,7 +34,7 @@ public class KeyValueList<KeyType, ValueType> {
   /** Finds a list containing the required key.
    *
    * @param key
-   * @return Returns a list node containing the given key.
+   * @return a list node containing the given key.
    * Returns null if there is no such a key in the list.
    */
   private ListNode<Pair<KeyType, ValueType>> findListNode(KeyType key) {
@@ -50,7 +50,7 @@ public class KeyValueList<KeyType, ValueType> {
    *
    * @param key
    * @param value
-   * @return Null if key didn't exist in the list or the previous value if it did.
+   * @return null if key didn't exist in the list or the previous value if it did.
    */
   public ValueType addOrAssign(KeyType key, ValueType value) {
     ListNode<Pair<KeyType, ValueType>> foundNode = findListNode(key);
@@ -68,7 +68,7 @@ public class KeyValueList<KeyType, ValueType> {
   /**
    * Removes an Pair with a given key from the list.
    * @param key
-   * @return Returns value of the erased pair. Returns null is such a key didn't exist.
+   * @return value of the erased pair. Returns null is such a key didn't exist.
    */
   public ValueType remove(KeyType key) {
     ListNode<Pair<KeyType, ValueType>> foundNode = findListNode(key);

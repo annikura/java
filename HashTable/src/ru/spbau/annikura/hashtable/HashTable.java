@@ -53,7 +53,7 @@ public class HashTable {
   }
 
   /**
-   * @return Number of keys in a current table
+   * @return number of keys in a current table
    */
   public int size() {
     return tableSize;
@@ -61,7 +61,7 @@ public class HashTable {
 
   /**
    * @param key
-   * @return Returns true if such a key exists in the hash table.
+   * @return true if such a key exists in the hash table.
    */
   public boolean contains(String key) {
     return tableContent[countIndex(key)].find(key) != null;
@@ -69,7 +69,7 @@ public class HashTable {
 
   /**
    * @param key
-   * @return Value if such a key exists in the hash table, null otherwise.
+   * @return value if such a key exists in the hash table, null otherwise.
    */
   public String get(String key) {
     if (contains(key)) {
@@ -83,7 +83,7 @@ public class HashTable {
    *
    * @param key
    * @param value
-   * @return If there was such a key in the table, returns a previous value, null if not.
+   * @return a previous value, if there was such a key in the table, null if not.
    */
   public String put(String key, String value) {
     if (tableContent[countIndex(key)].find(key) == null) {
@@ -99,7 +99,7 @@ public class HashTable {
    * Removes key-value pair with the given key from the hash table.
    *
    * @param key
-   * @return If such a key existed, returns the deleted value. Otherwise return null.
+   * @return the deleted value, if such a key existed. Otherwise returns null.
    */
   public String remove(String key) {
     if (tableContent[countIndex(key)].find(key) != null) {

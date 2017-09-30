@@ -15,7 +15,7 @@ public class ListNode<ValueType> {
   }
 
   /**
-   * @return Returns value which is stored in the list node.
+   * @return value which is stored in the list node.
    */
   public ValueType getValue() {
     return value;
@@ -25,7 +25,7 @@ public class ListNode<ValueType> {
   }
 
   /**
-   * @return Returns the next list node or null if the next node doesn't exist.
+   * @return the next list node or null if the next node doesn't exist.
    */
   public ListNode<ValueType> previous() {
     return previous;
@@ -33,8 +33,8 @@ public class ListNode<ValueType> {
 
   /** Inserts a given node next to the current one.
    *
-   * @param otherNode A node to be placed next after the current
-   * @return Returns new list node value.
+   * @param otherNode a node to be placed next after the current
+   * @return new list node value.
    */
   public ValueType insertAfter(ListNode<ValueType> otherNode) {
     otherNode.next = next;
@@ -47,9 +47,9 @@ public class ListNode<ValueType> {
   }
 
   /**
-   * Erases the vertex next to current one. Returns the value of the deleted vertex.
+   * Erases the vertex next to current one.
    *
-   * @return Returns null if the next vertex does not exist.
+   * @return the value of the deleted vertex. Null if the next vertex does not exist.
    */
   public ValueType eraseAfter() {
     if (next == null) {
