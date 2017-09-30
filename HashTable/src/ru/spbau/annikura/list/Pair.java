@@ -1,8 +1,3 @@
-/**
- * Created by annikura on 9/17/17.
- * @author Anna Shvetsova
- */
-
 package ru.spbau.annikura.list;
 
 /** A simple structure to store key and value together

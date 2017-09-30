@@ -1,8 +1,3 @@
-/**
- * Created by annikura on 9/16/17.
- * @author Anna Shvetsova
- */
-
 package ru.spbau.annikura.hashtable;
 
 import java.security.Key;

@@ -4,11 +4,6 @@ import tests.ru.spbau.annikura.hashtable.HashTableTest;
 import tests.ru.spbau.annikura.list.KeyValueListTest;
 import tests.ru.spbau.annikura.list.ListNodeTest;
 
-/**
- * Created by ashvet on 9/18/17.
- *
- * @author Anna Shvetsova
- */
 public class TestRunner {
   public static void main(String[] args) {
     HashTableTest.clear();

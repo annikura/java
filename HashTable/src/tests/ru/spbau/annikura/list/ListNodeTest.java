@@ -6,10 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import ru.spbau.annikura.list.ListNode;
 
-/**
- * Created by ashvet on 9/17/17.
- * @author Anna Shvetsova
- */
 public class ListNodeTest {
   @Test
   public static void createNode() {

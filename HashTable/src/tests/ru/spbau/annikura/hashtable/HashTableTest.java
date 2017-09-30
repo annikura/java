@@ -4,11 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import ru.spbau.annikura.hashtable.HashTable;
 
-/**
- * Created by ashvet on 9/17/17.
- * @author Anna Shvetsova
- */
-
 public class HashTableTest {
   @Test
   public static void createInstance() {

@@ -6,11 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import ru.spbau.annikura.list.KeyValueList;
 import ru.spbau.annikura.list.Pair;
 
-/**
- * Created by ashvet on 9/17/17.
- * @author Anna Shvetsova
- */
-
 public class KeyValueListTest {
 
   @Test
