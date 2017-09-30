@@ -100,4 +100,21 @@ public class HashTableTest {
     assertEquals("b", hashTable.get("a"));
   }
 
+  @Test
+  public static void collision() {
+    HashTable hashTable = new HashTable();
+    String str1 = "Aa";
+    String str2 = "BB";
+    if (str1.hashCode() != str2.hashCode()) {
+      System.out.println("WARNING: Collision test is broken." +
+              "Hash table is not being tested for collisions now." +
+              "Change strings to ones that match by hash.");
+      return;
+    }
+    assertEquals(null, hashTable.put(str1, "x"));
+    assertEquals("x", hashTable.get(str1));
+    assertEquals(null, hashTable.put(str2, "y"));
+    assertEquals("y", hashTable.get(str2));
+    assertEquals("x", hashTable.get(str1));
+  }
 }
