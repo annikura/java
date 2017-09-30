@@ -1,6 +1,5 @@
 package tests.ru.spbau.annikura;
 
-import ru.spbau.annikura.hashtable.HashTable;
 import tests.ru.spbau.annikura.hashtable.HashTableTest;
 import tests.ru.spbau.annikura.list.KeyValueListTest;
 import tests.ru.spbau.annikura.list.ListNodeTest;
