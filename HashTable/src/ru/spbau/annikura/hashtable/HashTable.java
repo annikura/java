@@ -1,7 +1,5 @@
 package ru.spbau.annikura.hashtable;
 
-import java.security.Key;
-import java.util.Vector;
 import ru.spbau.annikura.list.Pair;
 import ru.spbau.annikura.list.KeyValueList;
 import ru.spbau.annikura.list.ListNode;
