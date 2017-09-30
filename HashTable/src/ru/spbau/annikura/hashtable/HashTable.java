@@ -28,7 +28,7 @@ public class HashTable {
 
   private int countIndex(String str) {
     if (str != null)
-      return str.hashCode() % tableContent.length;
+      return (str.hashCode() % tableContent.length + tableContent.length) % tableContent.length;
     return 0;
   }
 

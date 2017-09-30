@@ -117,4 +117,20 @@ public class HashTableTest {
     assertEquals("y", hashTable.get(str2));
     assertEquals("x", hashTable.get(str1));
   }
+
+  @Test
+  public static void bigTest() {
+    HashTable hashTable = new HashTable();
+    String str = "1";
+
+    // Will also generate strings with a negative hash.
+    for (int i = 0; i < 100; i++) {
+      assertEquals(null, hashTable.put(str, str + "a"));
+      str += "1";
+    }
+    str = "1";
+    for (int i = 0; i < 100; i++) {
+      assertEquals(str + "a", hashTable.get(str));
+    }
+  }
 }

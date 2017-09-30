@@ -7,6 +7,16 @@ import tests.ru.spbau.annikura.list.ListNodeTest;
 
 public class TestRunner {
   public static void main(String[] args) {
+    ListNodeTest.createNode();
+    ListNodeTest.insertAfterSimple();
+    ListNodeTest.insertAfter();
+    ListNodeTest.eraseAfter();
+
+    KeyValueListTest.createInstance();
+    KeyValueListTest.find();
+    KeyValueListTest.addOrAssign();
+    KeyValueListTest.remove();
+
     HashTableTest.clear();
     HashTableTest.contains();
     HashTableTest.createInstance();
@@ -16,16 +26,7 @@ public class TestRunner {
     HashTableTest.removeFromEmptyTable();
     HashTableTest.size();
     HashTableTest.collision();
-
-    KeyValueListTest.createInstance();
-    KeyValueListTest.find();
-    KeyValueListTest.addOrAssign();
-    KeyValueListTest.remove();
-
-    ListNodeTest.createNode();
-    ListNodeTest.insertAfterSimple();
-    ListNodeTest.insertAfter();
-    ListNodeTest.eraseAfter();
+    HashTableTest.bigTest();
 
     System.out.println("OK. All tests passed");
   }
