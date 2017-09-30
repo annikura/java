@@ -2,7 +2,6 @@ package ru.spbau.annikura.hashtable;
 
 import ru.spbau.annikura.list.Pair;
 import ru.spbau.annikura.list.KeyValueList;
-import ru.spbau.annikura.list.ListNode;
 
 /**
  * String hash table. Allows containing string values as the counterparts to the string keys.
@@ -42,10 +41,10 @@ public class HashTable {
     tableContent = new KeyValueList[newSize];
     initList();
     for (KeyValueList<String, String> list : oldTable) {
-      for (ListNode<Pair<String, String>> it = list.begin(); it != null; it = it.next()) {
-          tableContent[countIndex(it.getValue().GetKey())].addOrAssign(
-              it.getValue().GetKey(),
-              it.getValue().GetValue());
+      for (Pair<String, String> pair : list) {
+          tableContent[countIndex(pair.GetKey())].addOrAssign(
+              pair.GetKey(),
+              pair.GetValue());
       }
     }
   }

@@ -6,16 +6,13 @@ package ru.spbau.annikura.list;
  * @param <KeyType>
  * @param <ValueType>
  */
-public class KeyValueList<KeyType, ValueType> {
+public class KeyValueList<KeyType, ValueType> implements Iterable<Pair<KeyType, ValueType>> {
   private ListNode<Pair<KeyType, ValueType>> head =
       new ListNode<>(null);
 
-  /**
-   *
-   * @return first list node.
-   */
-  public ListNode<Pair<KeyType, ValueType>> begin() {
-    return head.next();
+  @Override
+  public ListIterator<Pair<KeyType, ValueType>> iterator() {
+    return new ListIterator<>(head);
   }
 
   /**
