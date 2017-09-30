@@ -106,8 +106,8 @@ public class HashTableTest {
     String str1 = "Aa";
     String str2 = "BB";
     if (str1.hashCode() != str2.hashCode()) {
-      System.out.println("WARNING: Collision test is broken." +
-              "Hash table is not being tested for collisions now." +
+      System.out.println("WARNING: Collision test is broken. " +
+              "Hash table is not being tested for collisions now. " +
               "Change strings to ones that match by hash.");
       return;
     }
