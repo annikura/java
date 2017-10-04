@@ -1,7 +1,8 @@
 package ru.spbau.annikura.trie;
 
 import ru.spbau.annikura.string.StringPointer;
-import java.io.Serializable;
+
+import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -137,5 +138,18 @@ public class Trie implements Serializable {
      */
     public int howManyStartsWithPrefix(String prefix) {
         return root.howManyStartsWithPrefix(new StringPointer(prefix));
+    }
+
+
+    void serialize(OutputStream out) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(out);
+        oos.writeObject(this);
+        oos.flush();
+        oos.close();
+    }
+    void deserialize(InputStream in) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(in);
+        this.root = ((Trie)ois.readObject()).root;
+        ois.close();
     }
 }
