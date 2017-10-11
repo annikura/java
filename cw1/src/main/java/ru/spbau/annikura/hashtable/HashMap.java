@@ -9,7 +9,7 @@ import java.util.*;
  * String hash map. Allows containing string values as the counterparts to the string keys.
  * Elements can be added to, found in or removed from the table.
  */
-public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K, V>> {
+public class HashMap<K, V> implements Iterable<Pair<K, V>> {
 
     List<Pair<K, V>> innerList = new List<>();
 
@@ -87,7 +87,6 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K,
      * @param key
      * @return value if such a key exists in the hash table, null otherwise.
      */
-    @Override
     public V get(Object key) {
         if (contains((K)key)) {
             return tableContent[countIndex((K) key)].find((K) key).getValue();
@@ -122,7 +121,6 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K,
      * @param key
      * @return the deleted value, if such a key existed. Otherwise returns null.
      */
-    @Override
     public V remove(Object key) {
         if (tableContent[countIndex((K)key)].find((K) key) != null) {
             tableSize--;
@@ -139,9 +137,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K,
         tableSize = 0;
     }
 
-    @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        return new Set<Entry<K, V>>() {
+    public Set<Pair<K, V>> entrySet() {
+        return new Set<Pair<K, V>>() {
             @Override
             public int size() {
                 return tableSize;
@@ -158,7 +155,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K,
             }
 
             @Override
-            public Iterator<Entry<K, V>> iterator() {
+            public Iterator<Pair<K, V>> iterator() {
                 return innerList.iterator();
             }
 
@@ -173,7 +170,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K,
             }
 
             @Override
-            public boolean add(Entry<K, V> kvEntry) {
+            public boolean add(Pair<K, V> kvPair) {
                 return false;
             }
 
@@ -188,7 +185,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K,
             }
 
             @Override
-            public boolean addAll(Collection<? extends Entry<K, V>> collection) {
+            public boolean addAll(Collection<? extends Pair<K, V>> collection) {
                 return false;
             }
 
@@ -206,6 +203,6 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Iterable<Pair<K,
             public void clear() {
 
             }
-        }
+        };
     }
 }
