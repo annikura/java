@@ -14,8 +14,8 @@ public class Spiral {
      * @throws IllegalArgumentException if matrix has invalid size: it is not a square
      * or the side of the matrix is even.
      */
-    public static void PrintUnspiralized(final int[][] matrix) throws IllegalArgumentException {
-        int[] toPrint = UnspiralizeIntoList(matrix);
+    public static void printUnspiralized(final int[][] matrix) throws IllegalArgumentException {
+        int[] toPrint = unspiralizeIntoList(matrix);
         for (int i = 0; i < toPrint.length; i++)
             System.out.println(toPrint[i]);
     }
@@ -28,7 +28,7 @@ public class Spiral {
      * @throws IllegalArgumentException if matrix has invalid size: it is not a square
      * or the side of the matrix is even.
      */
-    public static int[] UnspiralizeIntoList(final int[][] matrix) throws IllegalArgumentException {
+    public static int[] unspiralizeIntoList(final int[][] matrix) throws IllegalArgumentException {
         int n = matrix.length;
         if (n % 2 == 0) {
             throw new IllegalArgumentException("Matrix should have an odd size.");

@@ -1,9 +1,8 @@
-package test.java.ru.spbau.annikura.spiral;
+package ru.spbau.annikura.spiral;
 
-import org.junit.jupiter.api.Test;
-import ru.spbau.annikura.spiral.Coordinate;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class CoordinateTest {
     @Test

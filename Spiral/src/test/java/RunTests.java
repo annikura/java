@@ -1,5 +1,5 @@
-import test.java.ru.spbau.annikura.spiral.SpiralTest;
-import test.java.ru.spbau.annikura.spiral.CoordinateTest;
+import ru.spbau.annikura.spiral.SpiralTest;
+import ru.spbau.annikura.spiral.CoordinateTest;
 
 public class RunTests {
     public static void main (String[] args){
@@ -11,9 +11,9 @@ public class RunTests {
         CoordinateTest.turn90DegLeftSimple();
         CoordinateTest.turn90DegLeft();
 
-        System.out.println("Start testing PrintUnspirialized:");
+        System.out.println("Start testing printUnspirialized:");
         SpiralTest.printUnspiralized();
-        System.out.println("End testing PrintUnspirialized.");
+        System.out.println("End testing printUnspirialized.");
 
         SpiralTest.unspiralizeIntoListSimple1x1();
         SpiralTest.unspiralizeIntoListSimple3x3();
