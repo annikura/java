@@ -2,10 +2,10 @@ package ru.spbau.annikura.list;
 
 import java.util.Iterator;
 
-public class ListIterator<T> implements Iterator<T>{
+class ListIterator<T> implements Iterator<T>{
     private ListNode<T> node;
 
-    public ListIterator(ListNode<T> node) {
+    ListIterator(ListNode<T> node) {
         this.node = node;
     }
 
@@ -19,5 +19,4 @@ public class ListIterator<T> implements Iterator<T>{
     public boolean hasNext() {
         return node.next() != null;
     }
-
 }
