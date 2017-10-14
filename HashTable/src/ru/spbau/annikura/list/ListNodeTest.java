@@ -1,4 +1,5 @@
-package tests.ru.spbau.annikura.list;
+package ru.spbau.annikura.list;
+
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

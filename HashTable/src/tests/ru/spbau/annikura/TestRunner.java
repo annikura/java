@@ -1,8 +1,8 @@
 package tests.ru.spbau.annikura;
 
-import tests.ru.spbau.annikura.hashtable.HashTableTest;
-import tests.ru.spbau.annikura.list.KeyValueListTest;
-import tests.ru.spbau.annikura.list.ListNodeTest;
+import ru.spbau.annikura.hashtable.HashTableTest;
+import ru.spbau.annikura.list.KeyValueListTest;
+import ru.spbau.annikura.list.ListNodeTest;
 
 public class TestRunner {
   public static void main(String[] args) {

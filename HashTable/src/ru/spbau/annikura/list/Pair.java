@@ -14,19 +14,19 @@ public class Pair<KeyType, ValueType> {
     this.value = value;
   }
 
-  public KeyType GetKey() {
+  public KeyType getKey() {
     return key;
   }
 
-  public void SetKey(KeyType key) {
+  public void setKey(KeyType key) {
     this.key = key;
   }
 
-  public ValueType GetValue() {
+  public ValueType getValue() {
     return value;
   }
 
-  public void SetValue(ValueType value) {
+  public void setValue(ValueType value) {
     this.value = value;
   }
 }

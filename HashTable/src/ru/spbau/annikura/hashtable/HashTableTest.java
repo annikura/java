@@ -1,4 +1,4 @@
-package tests.ru.spbau.annikura.hashtable;
+package ru.spbau.annikura.hashtable;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

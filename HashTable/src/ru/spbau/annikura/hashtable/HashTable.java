@@ -42,9 +42,9 @@ public class HashTable {
     initList();
     for (KeyValueList<String, String> list : oldTable) {
       for (Pair<String, String> pair : list) {
-          tableContent[countIndex(pair.GetKey())].addOrAssign(
-              pair.GetKey(),
-              pair.GetValue());
+          tableContent[countIndex(pair.getKey())].addOrAssign(
+              pair.getKey(),
+              pair.getValue());
       }
     }
   }
@@ -70,7 +70,7 @@ public class HashTable {
    */
   public String get(String key) {
     if (contains(key)) {
-      return tableContent[countIndex(key)].find(key).GetValue();
+      return tableContent[countIndex(key)].find(key).getValue();
     }
     return null;
   }
