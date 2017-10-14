@@ -2,6 +2,7 @@ package ru.spbau.annikura.spiral;
 
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertArrayEquals;
 
 
