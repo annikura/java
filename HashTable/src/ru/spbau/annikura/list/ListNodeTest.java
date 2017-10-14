@@ -1,11 +1,8 @@
 package ru.spbau.annikura.list;
 
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-
-import ru.spbau.annikura.list.ListNode;
 
 public class ListNodeTest {
   @Test

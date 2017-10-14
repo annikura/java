@@ -2,7 +2,6 @@ package ru.spbau.annikura.hashtable;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import ru.spbau.annikura.hashtable.HashTable;
 
 public class HashTableTest {
   @Test
@@ -26,7 +25,7 @@ public class HashTableTest {
     hashTable.remove("x");
     assertEquals(1, hashTable.size());
     hashTable.remove("prr");
-    assertEquals(0, hashTable.size());   // Checking that
+    assertEquals(0, hashTable.size());
     hashTable.remove("prr");
     assertEquals(0, hashTable.size());
 
