@@ -67,7 +67,7 @@ public class Maybe<T> {
      * @return a Maybe containing a result of the function applied to the current Maybe content if it existed.
      * If not, returns new empty Maybe.
      */
-    public <U> Maybe<U> map(Function<T, U> mapper) throws MaybeException {
+    public <U> Maybe<U> map(Function<? super T, U> mapper) throws MaybeException {
         if (!isPresent()) {
             return Maybe.nothing();
         }
