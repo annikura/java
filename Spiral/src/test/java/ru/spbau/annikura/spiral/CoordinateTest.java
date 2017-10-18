@@ -6,12 +6,12 @@ import static org.junit.Assert.assertEquals;
 
 public class CoordinateTest {
     @Test
-    public static void createInstance() {
+    public void createInstance() {
         Coordinate point = new Coordinate(5, 7);
     }
 
     @Test
-    public static void getX() {
+    public void getX() {
         Coordinate point = new Coordinate(5, 7);
         assertEquals(5, point.getX());
         point.add(new Coordinate(3, 0));
@@ -19,7 +19,7 @@ public class CoordinateTest {
     }
 
     @Test
-    public static void getY() {
+    public void getY() {
         Coordinate point = new Coordinate(5, 7);
         assertEquals(7, point.getY());
         point.add(new Coordinate(4, 5));
@@ -27,7 +27,7 @@ public class CoordinateTest {
     }
 
     @Test
-    public static void inSquare() {
+    public void inSquare() {
         Coordinate point = new Coordinate(0, 0);
         assertEquals(true, point.inSquare(-3, -4, 3, 1));
         assertEquals(true, point.inSquare(0, -1, 3, 3));
@@ -38,7 +38,7 @@ public class CoordinateTest {
     }
 
     @Test
-    public static void add() {
+    public void add() {
         Coordinate point = new Coordinate(2, 1);
         point.add(new Coordinate(7, 4));
         assertEquals(9, point.getX());
@@ -50,7 +50,7 @@ public class CoordinateTest {
     }
 
     @Test
-    public static void turn90DegLeftSimple() {
+    public void turn90DegLeftSimple() {
         Coordinate point = new Coordinate(0, 1);
         point.turn90DegLeft();
         assertEquals(-1, point.getX());
@@ -67,7 +67,7 @@ public class CoordinateTest {
     }
 
     @Test
-    public static void turn90DegLeft() {
+    public void turn90DegLeft() {
         Coordinate point = new Coordinate(2, 3);
         point.turn90DegLeft();
         assertEquals(-3, point.getX());
