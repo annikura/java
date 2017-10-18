@@ -1,10 +1,17 @@
 package ru.spbau.annikura.set;
 
+/**
+ * Tree container class. Stores data in a search tree structure.
+ * @param <T>
+ */
 public class Set<T extends Comparable<T>> {
+    /**
+     * Search tree node class.
+     */
     private class SetNode {
         private SetNode left = null;
         private SetNode right = null;
-        T value;
+        private final T value;
 
         SetNode(final T t) {
             value = t;
@@ -72,18 +79,35 @@ public class Set<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Size getter method
+     * @return number of elements in the set.
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Adds a value to the set. Does nothing if this value already existed.
+     * @param t
+     */
     public void add(final T t) {
         root = add(t, root);
     }
 
+    /**
+     * Deletes value from the list. Does nothing if the value didn't exist.
+     * @param t
+     */
     public void delete(final T t) {
         root = delete(t, root);
     }
 
+    /**
+     * Checks whether the value is stored by the set.
+     * @param t
+     * @return true if t is in the set, false otherwise.
+     */
     public boolean contains(final T t) {
         return contains(t, root);
     }
