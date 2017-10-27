@@ -52,13 +52,13 @@ public class ZipFile {
     }
 
     /**
-     * Creates a file called fileName extracted from the top of zipInput stream in a resultFolder.
+     * Creates a file called fileName extracted from the top of zipInputStream in a resultFolder.
      * Not to waste RAM, it writes and reads data from the disk simultaneously, processing it through the buffer.
      * If the buffer is null, new one will be allocated.
-     * @param zipInputStream
-     * @param fileName
-     * @param resultFolder
-     * @param buffer
+     * @param zipInputStream is a stream to read input stream from.
+     * @param fileName is a name of a new file.
+     * @param resultFolder is a folder where new file will be saved to.
+     * @param buffer is a buffer where new data from the stream will be read to.
      * @throws IOException will be thrown if the file already exists.
      */
     private static void unzipFile(@NotNull ZipInputStream zipInputStream,
