@@ -1,3 +1,4 @@
+import com.sun.istack.internal.NotNull;
 import ru.spbau.annikura.zipfile.ZipFile;
 
 import java.io.File;
@@ -10,7 +11,7 @@ public class UnzipMatchingFiles {
      * Only the files which ame will match a regular expression will be extracted.
      * @param args must contain a valid path and a regular expression.
      */
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
         if  (args.length != 2) {
             System.out.println("Expected two arguments: directory path and regular expression. Found " + args.length);
             return;

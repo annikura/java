@@ -1,5 +1,8 @@
 package ru.spbau.annikura.zipfile;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +36,7 @@ public class ZipFile {
      * @param folderName name of the directory
      * @throws FileSystemException will be thrown if an attempt to create a folder will fail due to any reason.
      */
-    private static void checkThatFolderExistsOrCreate(final String folderName) throws FileSystemException {
+    private static void checkThatFolderExistsOrCreate(@NotNull final String folderName) throws FileSystemException {
         LOGGER.info("Checking folder for existence: " + folderName);
         File folder = new File(folderName);
         if (!folder.exists()) {
@@ -58,9 +61,9 @@ public class ZipFile {
      * @param buffer
      * @throws IOException will be thrown if the file already exists.
      */
-    private static void unzipFile(ZipInputStream zipInputStream,
-                                  final String fileName, final String resultFolder,
-                                  byte[] buffer) throws IOException {
+    private static void unzipFile(@NotNull ZipInputStream zipInputStream,
+                                  @NotNull final String fileName, @NotNull final String resultFolder,
+                                  @Nullable byte[] buffer) throws IOException {
         if (buffer == null) {
             buffer = new byte[BUFFER_SIZE];
         }
@@ -83,15 +86,15 @@ public class ZipFile {
     }
 
     /**
-     * Unzips an archive leaving only files which names were matched be the Predicate.
+     * Unzips an archive leaving only files which names were matched by the Predicate.
      * Directories structure is unzipped as it was in the archive.
      * @param file is an archive file.
      * @param resultFolder is a folder where all the files from the archive will be placed to.
      * @param fileNamePredicate allows to filter files. If the result of Predicate.test is true, file will be unzipped.
-     * @throws IOException
+     * @throws IOException if IO fails
      */
-    public static void unzipFilesIf(final File file, final String resultFolder,
-                                    Predicate<String> fileNamePredicate) throws IOException {
+    public static void unzipFilesIf(@NotNull final File file, @NotNull final String resultFolder,
+                                    @NotNull Predicate<String> fileNamePredicate) throws IOException {
         byte[] buffer = new byte[BUFFER_SIZE];
         LOGGER.info("Started unzipping archive " + file + " to folder " + resultFolder);
         checkThatFolderExistsOrCreate(resultFolder);
