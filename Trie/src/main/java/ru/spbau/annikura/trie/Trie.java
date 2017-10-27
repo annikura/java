@@ -29,7 +29,9 @@ public class Trie implements Serializable {
 
         /**
          * Checks if the subtree of the node contains the suffix string starting from the given string pointer.
-         * @param str string pointer to a prefix.
+         *
+         * Works in O(|number of iterations for str to reach the end of the string|).
+         * @param str string pointer to string that should be checked.
          * @return true if subtree contains string pointer suffix string, false if not.
          */
         boolean contains (StringPointer str) {
@@ -43,6 +45,8 @@ public class Trie implements Serializable {
         /**
          * Adds a suffix string provided by string pointer to the subtree of the node.
          * The subtree must not to contain this string before adding.
+         *
+         * Works in O(|number of iterations for str to reach the end of the string|).
          * @param str string pointer to the string which will be added.
          */
         void addWord(StringPointer str) {
@@ -62,6 +66,8 @@ public class Trie implements Serializable {
 
         /**
          * Removes a suffix string provided by string pointer from the subtree of the node.
+         *
+         * Works in O(|number of iterations for str to reach the end of the string|).
          * The subtree must contain this string before removing.
          * @param str string pointer to the string which will be removed.
          */
@@ -77,6 +83,8 @@ public class Trie implements Serializable {
         /**
          * Finds the number of the substrings starting from the node prefix which
          * start with the suffix string provided by the string pointer.
+         *
+         * Works in O(|number of iterations for str to reach the end of the string|).
          * @param str string pointer to the string which presence in this trie is to be tested
          * @return number of strings in the subtree starting with given prefix.
          */
@@ -95,7 +103,7 @@ public class Trie implements Serializable {
     /**
      * Adds string to trie.
      *
-     * Works in O-big from string length.
+     * Works in O(|element|).
      * @param element string which will be added to trie.
      * @return true if 'element' did not exist in the trie right before insertion, false if not.
      */
@@ -110,7 +118,7 @@ public class Trie implements Serializable {
     /**
      * Checks whether trie contains given string.
      *
-     * Works in O-big from string length.
+     * Works in O(|element|).
      * @param element element whose presence in this Trie is to be tested
      * @return true if trie contains given string, false if not.
      */
@@ -121,7 +129,7 @@ public class Trie implements Serializable {
     /**
      * Removes string from the trie if it previously was there.
      *
-     * Works in O-big from string length.
+     * Works in O(|element|).
      * @param element a string to be removed from the Trie.
      * @return true if 'element' existed in the trie right before removing, false if not.
      */
@@ -144,7 +152,7 @@ public class Trie implements Serializable {
     /**
      * Counts the number of strings that start with a given prefix.
      *
-     * Works in O-big from the prefix string length.
+     * Works in O(|element|).
      * @param prefix specifies a string prefix
      * @return number of strings that start with a given prefix.
      */
@@ -165,7 +173,7 @@ public class Trie implements Serializable {
     }
 
     /**
-     * Deserializes the Trie
+     * Deserializes the Trie.
      * @param in a stream which the Trie will be deserialized from.
      * @throws IOException if IO fails.
      * @throws ClassNotFoundException if the data in the stream is not a valid Trie.
