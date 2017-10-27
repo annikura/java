@@ -12,15 +12,16 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class ZipFileTest {
-
     @Test
     public void simpleTextFile() throws Exception {
-        String startPath = "src/test/resources/singleTextFileTest/file.zip";
-        String resultPath = "src/test/resources/singleTextFileTest/result/file";
+        String startPath = Paths.get("src","test", "resources",
+                "singleTextFileTest", "file.zip").toString();
+        String resultPath = Paths.get("src","test", "resources",
+                "singleTextFileTest", "result", "file").toString();
         File newFile = new File(resultPath);
         File zipFile = new File(startPath);
         try {
-            ZipFile.unzipFilesIf(zipFile, zipFile.getParent() + File.separator + "result", s -> true);
+            ZipFile.unzipFilesIf(zipFile, Paths.get(zipFile.getParent(),"result").toString(), s -> true);
             assertEquals(true, newFile.exists());
             List<String> contents = Files.readAllLines(Paths.get(resultPath), StandardCharsets.UTF_8);
             assertEquals(1, contents.size());
@@ -32,13 +33,17 @@ public class ZipFileTest {
 
     @Test
     public void filtration() throws Exception {
-        String startPath = "src/test/resources/filtrationTest/file.zip";
-        String resultPath = "src/test/resources/filtrationTest/result/";
+
+        String startPath = Paths.get("src","test", "resources",
+                "filtrationTest", "file.zip").toString();
+        String resultPath = Paths.get("src","test", "resources",
+                "filtrationTest", "result").toString();
         File resultDir = new File(resultPath);
         File zipFile = new File(startPath);
         File[] files = {};
         try {
-            ZipFile.unzipFilesIf(zipFile, zipFile.getParent() + File.separator + "result", s -> s.contains("f"));
+            ZipFile.unzipFilesIf(zipFile, Paths.get(zipFile.getParent(),"result").toString(),
+                    s -> s.contains("f"));
             assertEquals(true, resultDir.exists());
             files = resultDir.listFiles();
             assertEquals(3, files.length);
@@ -53,12 +58,14 @@ public class ZipFileTest {
 
     @Test
     public void folders() throws Exception {
-        String startPath = "src/test/resources/foldersTest/file";
-        String resultPath = "src/test/resources/foldersTest/result/";
+        String startPath = Paths.get("src","test", "resources",
+                "foldersTest", "file").toString();
+        String resultPath = Paths.get("src","test", "resources",
+                "foldersTest", "result").toString();
         File resultDir = new File(resultPath);
         File zipFile = new File(startPath);
         try {
-            ZipFile.unzipFilesIf(zipFile, zipFile.getParent() + File.separator + "result", s -> false);
+            ZipFile.unzipFilesIf(zipFile, Paths.get(zipFile.getParent(),"result").toString(), s -> false);
             assertEquals(true, resultDir.exists());
             assertEquals(3, resultDir.list().length);
         } finally {
@@ -70,8 +77,9 @@ public class ZipFileTest {
 
     @Test(expected = FileSystemException.class)
     public void fileAlreadyExists() throws Exception {
-        String startPath = "src/test/resources/fileAlreadyExistsTest/file";
+        String startPath = Paths.get("src","test", "resources",
+                "fileAlreadyExistsTest", "file").toString();
         File zipFile = new File(startPath);
-        ZipFile.unzipFilesIf(zipFile, zipFile.getParent() + File.separator + "result", s -> true);
+        ZipFile.unzipFilesIf(zipFile, Paths.get(zipFile.getParent(), "result").toString(), s -> true);
     }
 }
