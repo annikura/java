@@ -107,7 +107,7 @@ public class Trie implements Serializable {
 
     /**
      * Checks whether trie contains given string.
-     * @param element
+     * @param element element whose presence in this Trie is to be tested
      * @return true if trie contains given string, false if not.
      */
     public boolean contains(String element) {
@@ -116,7 +116,7 @@ public class Trie implements Serializable {
 
     /**
      * Removes string from the trie if it previously was there.
-     * @param element
+     * @param element a string to be removed from the Trie.
      * @return true if 'element' existed in the trie right before removing, false if not.
      */
     public boolean remove(String element) {
@@ -133,7 +133,7 @@ public class Trie implements Serializable {
 
     /**
      * Counts the number of strings that start with a given prefix.
-     * @param prefix
+     * @param prefix specifies a string prefix
      * @return number of strings that start with a given prefix.
      */
     public int howManyStartsWithPrefix(String prefix) {
@@ -141,13 +141,13 @@ public class Trie implements Serializable {
     }
 
 
-    void serialize(OutputStream out) throws IOException {
+    public void serialize(OutputStream out) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(out);
         oos.writeObject(this);
         oos.flush();
         oos.close();
     }
-    void deserialize(InputStream in) throws IOException, ClassNotFoundException {
+    public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(in);
         this.root = ((Trie)ois.readObject()).root;
         ois.close();

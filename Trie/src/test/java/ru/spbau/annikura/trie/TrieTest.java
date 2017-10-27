@@ -1,4 +1,4 @@
-package test.ru.spbau.annikura.trie;
+package ru.spbau.annikura.trie;
 
 import org.junit.Test;
 
@@ -262,5 +262,16 @@ public class TrieTest {
         trie.howManyStartsWithPrefix("xor");
         trie.howManyStartsWithPrefix("storpedia");
         trie.howManyStartsWithPrefix("");
+    }
+
+    @Test
+    public void serializationTest() {
+        TrieTestingWrapper trie = new TrieTestingWrapper();
+        trie.add("string");
+        trie.add("one more string");
+        trie.add("yet one more string");
+        trie.add("string starting with 'string'");
+
+
     }
 }

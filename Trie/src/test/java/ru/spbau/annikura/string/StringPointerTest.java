@@ -1,7 +1,6 @@
-package test.ru.spbau.annikura.string;
+package ru.spbau.annikura.string;
 
 import org.junit.Test;
-import ru.spbau.annikura.string.StringPointer;
 
 import static org.junit.Assert.*;
 

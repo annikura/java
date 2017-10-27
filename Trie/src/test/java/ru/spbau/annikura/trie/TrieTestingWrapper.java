@@ -1,7 +1,7 @@
-package test.ru.spbau.annikura.trie;
+package ru.spbau.annikura.trie;
 
-import ru.spbau.annikura.trie.Trie;
-
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashSet;
 import static org.junit.Assert.assertEquals;
 
@@ -92,5 +92,9 @@ class TrieTestingWrapper {
      */
     void size() {
         assertEquals(words.size(), trie.size());
+    }
+
+    void serialize(OutputStream out) throws IOException {
+        trie.serialize(out);
     }
 }
