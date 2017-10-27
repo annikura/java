@@ -1,10 +1,12 @@
 package ru.spbau.annikura.maybe;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 import java.util.function.Function;
 
 /**
  * Container storing either one value of type T, or nothing.
- * @param <T>
  */
 public class Maybe<T> {
     private final T value;
@@ -15,7 +17,7 @@ public class Maybe<T> {
         hasValue = false;
     }
 
-    private Maybe(T value) {
+    private Maybe(@Nullable final T value) {
         this.value = value;
         hasValue = true;
     }
@@ -23,18 +25,16 @@ public class Maybe<T> {
     /**
      * Maybe factory function.
      * Creates Maybe containing value of the type T.
-     * @param t
-     * @param <T>
+     * @param t a value to be contained by new Maybe.
      * @return Maybe containing given value.
      */
-    public static <T> Maybe<T> just(T t) {
+    public static <T> Maybe<T> just(@Nullable final T t) {
         return new Maybe<>(t);
     }
 
     /**
      * Maybe factory finction.
      * Creates an empty Maybe.
-     * @param <T>
      * @return empty Maybe.
      */
     public static <T> Maybe<T> nothing() {
@@ -62,12 +62,12 @@ public class Maybe<T> {
 
     /**
      * Applies a given function to the Maybe content, if it exists and creates a new Maybe with its result.
-     * @param mapper
-     * @param <U>
+     * @param mapper a function to be applied to the old Maybe content.
+     * @param <U> a type of the new Maybe content
      * @return a Maybe containing a result of the function applied to the current Maybe content if it existed.
      * If not, returns new empty Maybe.
      */
-    public <U> Maybe<U> map(Function<? super T, U> mapper) {
+    public <U> Maybe<U> map(@NotNull Function<? super T, U> mapper) {
         if (!isPresent()) {
             return Maybe.nothing();
         }

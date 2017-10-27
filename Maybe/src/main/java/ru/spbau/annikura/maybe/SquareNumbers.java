@@ -1,12 +1,14 @@
 package ru.spbau.annikura.maybe;
 
+import com.sun.istack.internal.NotNull;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SquareNumbers {
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
         if (args.length != 2) {
             System.out.println("Arguments are invalid. Input filename and output filename are expected.");
             return;
