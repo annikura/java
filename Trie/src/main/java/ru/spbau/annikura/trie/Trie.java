@@ -24,7 +24,7 @@ public class Trie implements Serializable {
      */
     private class TrieNode implements Serializable {
         private int wordsCount = 0;
-        private HashMap<Character, TrieNode> toNode = new HashMap<Character, TrieNode>();
+        private HashMap<Character, TrieNode> toNode = new HashMap<>();
         private boolean wordEnd = false;
 
         /**
@@ -94,6 +94,8 @@ public class Trie implements Serializable {
     private TrieNode root = new TrieNode();
     /**
      * Adds string to trie.
+     *
+     * Works in O-big from string length.
      * @param element string which will be added to trie.
      * @return true if 'element' did not exist in the trie right before insertion, false if not.
      */
@@ -107,6 +109,8 @@ public class Trie implements Serializable {
 
     /**
      * Checks whether trie contains given string.
+     *
+     * Works in O-big from string length.
      * @param element element whose presence in this Trie is to be tested
      * @return true if trie contains given string, false if not.
      */
@@ -116,6 +120,8 @@ public class Trie implements Serializable {
 
     /**
      * Removes string from the trie if it previously was there.
+     *
+     * Works in O-big from string length.
      * @param element a string to be removed from the Trie.
      * @return true if 'element' existed in the trie right before removing, false if not.
      */
@@ -127,12 +133,18 @@ public class Trie implements Serializable {
         return true;
     }
 
+    /**
+     * Size getter.
+     * @return the number of words in the Trie.
+     */
     public int size() {
         return root.howManyStartsWithPrefix(new StringPointer(""));
     }
 
     /**
      * Counts the number of strings that start with a given prefix.
+     *
+     * Works in O-big from the prefix string length.
      * @param prefix specifies a string prefix
      * @return number of strings that start with a given prefix.
      */
