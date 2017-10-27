@@ -24,7 +24,7 @@ class TrieTestingWrapper {
      * For each word storing in dictionary checks whether it is stored by trie.
      * If there is a word which should not be in trie, but it is, falls with assertion.
      */
-    public void checkConsistency() {
+    void checkConsistency() {
         for (String word : dictionary) {
             assertEquals(words.contains(word), trie.contains(word));
         }
@@ -44,7 +44,7 @@ class TrieTestingWrapper {
 
     /**
      * Asks trie whether string is there. Compares result to the one that should be.
-     * @param str
+     * @param str a string which will be added to the inner trie.
      */
     void contains(String str) {
         dictionary.add(str);
@@ -54,7 +54,7 @@ class TrieTestingWrapper {
 
     /**
      * Removes string from the trie. Checks consistency.
-     * @param str
+     * @param str a string which will be removed from the trie.
      */
     void remove(String str) {
         assertEquals(words.contains(str), trie.remove(str));
@@ -66,7 +66,7 @@ class TrieTestingWrapper {
 
     /**
      * Counts the number of such strings, compares the answer with trie's result.
-     * @param str
+     * @param str a prefix from which all the counted strings should start.
      */
     void howManyStartsWithPrefix(String str) {
         dictionary.add(str);
