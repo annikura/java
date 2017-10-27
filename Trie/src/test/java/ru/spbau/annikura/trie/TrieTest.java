@@ -2,6 +2,11 @@ package ru.spbau.annikura.trie;
 
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StreamCorruptedException;
+
 public class TrieTest {
 
     @Test
@@ -265,13 +270,33 @@ public class TrieTest {
     }
 
     @Test
-    public void serializationTest() {
+    public void serializationAndDeserialization() throws IOException, ClassNotFoundException {
         TrieTestingWrapper trie = new TrieTestingWrapper();
         trie.add("string");
         trie.add("one more string");
         trie.add("yet one more string");
         trie.add("string starting with 'string'");
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        trie.serialize(out);
+        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+        trie.deserialize(in);
+        trie.checkConsistency();
+    }
 
 
+    @Test(expected = StreamCorruptedException.class)
+    public void deserializeEmpty() throws ClassNotFoundException, IOException {
+        TrieTestingWrapper trie = new TrieTestingWrapper();
+        ByteArrayInputStream in = new ByteArrayInputStream(new byte[10]);
+        trie.deserialize(in);
+        trie.checkConsistency();
+    }
+
+    @Test(expected = StreamCorruptedException.class)
+    public void deserializeInvalidTrie() throws ClassNotFoundException, IOException {
+        TrieTestingWrapper trie = new TrieTestingWrapper();
+        byte [] byteArray = {5, 5, 5, 10, 14};
+        ByteArrayInputStream in = new ByteArrayInputStream(byteArray);
+        trie.deserialize(in);
     }
 }

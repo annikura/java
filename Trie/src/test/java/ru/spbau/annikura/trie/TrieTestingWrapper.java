@@ -1,8 +1,10 @@
 package ru.spbau.annikura.trie;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashSet;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -14,15 +16,15 @@ import static org.junit.Assert.assertEquals;
  * by storing all the data in its own private storage and comparing th results of the calls.
  */
 class TrieTestingWrapper {
-    private HashSet<String> words = new HashSet<String>();
-    static private HashSet<String> dictionary = new HashSet<String>();
+    private HashSet<String> words = new HashSet<>();
+    static private HashSet<String> dictionary = new HashSet<>();
     private Trie trie = new Trie();
 
     /**
      * For each word storing in dictionary checks whether it is stored by trie.
      * If there is a word which should not be in trie, but it is, falls with assertion.
      */
-    private void checkConsistency() {
+    public void checkConsistency() {
         for (String word : dictionary) {
             assertEquals(words.contains(word), trie.contains(word));
         }
@@ -94,7 +96,22 @@ class TrieTestingWrapper {
         assertEquals(words.size(), trie.size());
     }
 
+    /**
+     * Serializes a stored trie.
+     * @param out a stream where the stream will be serialized to
+     * @throws IOException if IO fails.
+     */
     void serialize(OutputStream out) throws IOException {
         trie.serialize(out);
+    }
+
+    /**
+     * Deserializes a stored trie.
+     * @param in a stream which the stream will be deserialized from.
+     * @throws IOException if IO fails.
+     * @throws ClassNotFoundException if input is not a valid Trie.
+     */
+    void deserialize(InputStream in) throws IOException, ClassNotFoundException {
+        trie.deserialize(in);
     }
 }
