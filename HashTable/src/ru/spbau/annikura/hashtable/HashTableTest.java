@@ -1,17 +1,19 @@
 package ru.spbau.annikura.hashtable;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class HashTableTest {
   @Test
-  public static void createInstance() {
+
+  public void createInstance() {
     HashTable hashTable = new HashTable();
     assertEquals(0, hashTable.size());
   }
 
   @Test
-  public static void size() {
+  public void size() {
     HashTable hashTable = new HashTable();
     assertEquals(0, hashTable.size());
     hashTable.put("x", "y");
@@ -32,7 +34,7 @@ public class HashTableTest {
   }
 
   @Test
-  public static void contains() {
+  public void contains() {
     HashTable hashTable = new HashTable();
     assertEquals(false, hashTable.contains("xx"));
     hashTable.put("x", "y");
@@ -43,14 +45,14 @@ public class HashTableTest {
   }
 
   @Test
-  public static void getFromEmptyTable() {
+  public void getFromEmptyTable() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.get("a"));
     assertEquals(null, hashTable.get(null));
   }
 
   @Test
-  public static void getAndPut() {
+  public void getAndPut() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.put("a", "b"));  // Simple insert
     assertEquals("b", hashTable.get("a"));
@@ -69,14 +71,14 @@ public class HashTableTest {
   }
 
   @Test
-  public static void removeFromEmptyTable() {
+  public void removeFromEmptyTable() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.remove("key"));
     assertEquals(null, hashTable.remove(null));
   }
 
   @Test
-  public static void remove() {
+  public void remove() {
     HashTable hashTable = new HashTable();
     assertEquals(null, hashTable.put("key", "value"));
     assertEquals(null, hashTable.put(null, "x"));
@@ -88,7 +90,7 @@ public class HashTableTest {
 
 
   @Test
-  public static void clear() {
+  public void clear() {
     HashTable hashTable = new HashTable();
     hashTable.clear();
     hashTable.put("a", "a");
@@ -100,7 +102,7 @@ public class HashTableTest {
   }
 
   @Test
-  public static void collision() {
+  public void collision() {
     HashTable hashTable = new HashTable();
     String str1 = "Aa";
     String str2 = "BB";
@@ -118,7 +120,7 @@ public class HashTableTest {
   }
 
   @Test
-  public static void bigTest() {
+  public void bigTest() {
     HashTable hashTable = new HashTable();
     String str = "1";
 

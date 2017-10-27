@@ -1,17 +1,18 @@
 package ru.spbau.annikura.list;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class KeyValueListTest {
 
   @Test
-  public static void createInstance() {
+  public void createInstance() {
     KeyValueList<String, String> list;
   }
 
   @Test
-  public static void find() {
+  public void find() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "b"));
     assertEquals(null, list.addOrAssign("c", "d"));
@@ -26,7 +27,7 @@ public class KeyValueListTest {
   }
 
   @Test
-  public static void addOrAssign() {
+  public void addOrAssign() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "bb"));
     assertEquals(null, list.addOrAssign("bb", "bbb"));  // <a, bb>, <bb, bbb>
@@ -38,7 +39,7 @@ public class KeyValueListTest {
   }
 
   @Test
-  public static void remove() {
+  public void remove() {
     KeyValueList<String, String> list = new KeyValueList<>();
     assertEquals(null, list.addOrAssign("a", "bb"));
     assertEquals(null, list.addOrAssign("bb", "bbb"));  // <a, bb>, <bb, bbb>
