@@ -1,7 +1,8 @@
 package ru.spbau.annikura.spiral;
 
 /**
- * A simple class to store  x-y coordinates, turn vectors stored in them or add coordinates to each other.
+ * A simple class to store  x-y coordinates, turn vectors
+ * stored in them or add coordinates to each other.
  */
 public class Coordinate {
     private int x, y;
