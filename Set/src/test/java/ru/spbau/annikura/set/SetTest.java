@@ -9,13 +9,13 @@ import static org.junit.Assert.assertEquals;
 public class SetTest {
     @Test
     public void createInstance() {
-        Set<Integer> intSet = new Set<Integer>();
+        Set<Integer> intSet = new Set<>();
         assertEquals(0, intSet.size());
     }
 
     @Test
     public void simpleAdd() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("a");
         setWrapper.check();
     }
@@ -23,7 +23,7 @@ public class SetTest {
 
     @Test
     public void doubleAdd() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("a");
         setWrapper.add("a");
         setWrapper.check();
@@ -32,7 +32,7 @@ public class SetTest {
 
     @Test
     public void addThree() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("a");
         setWrapper.add("bb");
         setWrapper.add("ccc");
@@ -41,7 +41,7 @@ public class SetTest {
 
     @Test
     public void addFive() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("bb");
         setWrapper.add("abacaba dabacaba");
         setWrapper.add("ccc");
@@ -53,7 +53,7 @@ public class SetTest {
 
     @Test
     public void addManyInOrder() {
-        SetWrapper<Integer> setWrapper = new SetWrapper<Integer>();
+        SetWrapper<Integer> setWrapper = new SetWrapper<>();
         for (int i = 0; i < 1000; i++)
             setWrapper.add(i);
         setWrapper.check();
@@ -62,7 +62,7 @@ public class SetTest {
 
     @Test
     public void addManyRandom() {
-        SetWrapper<Integer> setWrapper = new SetWrapper<Integer>();
+        SetWrapper<Integer> setWrapper = new SetWrapper<>();
         Random random = new Random();
         for (int i = 0; i < 1000; i++)
             setWrapper.add(random.nextInt());
@@ -71,7 +71,7 @@ public class SetTest {
 
     @Test
     public void deleteOne() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("abba");
         setWrapper.check();
         setWrapper.delete("abba");
@@ -80,7 +80,7 @@ public class SetTest {
 
     @Test
     public void deleteTwo() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("abba");
         setWrapper.add("ab");
         setWrapper.delete("abba");
@@ -91,7 +91,7 @@ public class SetTest {
 
     @Test
     public void deleteEqual() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("abba");
         setWrapper.add("ab");
         setWrapper.add("ab");
@@ -101,7 +101,7 @@ public class SetTest {
 
     @Test
     public void deleteFromEmpty() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.delete("ab");
         setWrapper.check();
     }
@@ -109,7 +109,7 @@ public class SetTest {
 
     @Test
     public void deleteNotExisting() {
-        SetWrapper<String> setWrapper = new SetWrapper<String>();
+        SetWrapper<String> setWrapper = new SetWrapper<>();
         setWrapper.add("ab");
         setWrapper.delete("ab");
         setWrapper.delete("ab");
@@ -118,7 +118,7 @@ public class SetTest {
 
     @Test
     public void deleteManySimple() {
-        SetWrapper<Integer> setWrapper = new SetWrapper<Integer>();
+        SetWrapper<Integer> setWrapper = new SetWrapper<>();
         for (int i = 0; i < 1007; i++)
             setWrapper.add(i);
         for (int i = 1; i < 1007; i += 2)
@@ -128,7 +128,7 @@ public class SetTest {
 
     @Test
     public void deleteManyRandom() {
-        SetWrapper<Integer> setWrapper = new SetWrapper<Integer>();
+        SetWrapper<Integer> setWrapper = new SetWrapper<>();
         Random random = new Random();
         for (int i = 0; i < 10007; i++)
             setWrapper.add(random.nextInt() % 1000);

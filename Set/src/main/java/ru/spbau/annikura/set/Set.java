@@ -89,7 +89,7 @@ public class Set<T extends Comparable<T>> {
 
     /**
      * Adds a value to the set. Does nothing if this value already existed.
-     * @param t
+     * @param t a value to be added.
      */
     public void add(final T t) {
         root = add(t, root);
@@ -97,7 +97,7 @@ public class Set<T extends Comparable<T>> {
 
     /**
      * Deletes value from the list. Does nothing if the value didn't exist.
-     * @param t
+     * @param t a value to be deleted.
      */
     public void delete(final T t) {
         root = delete(t, root);
@@ -105,7 +105,7 @@ public class Set<T extends Comparable<T>> {
 
     /**
      * Checks whether the value is stored by the set.
-     * @param t
+     * @param t element whose presence in this set is to be tested.
      * @return true if t is in the set, false otherwise.
      */
     public boolean contains(final T t) {
