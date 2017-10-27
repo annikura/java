@@ -152,7 +152,7 @@ public class Trie implements Serializable {
     /**
      * Counts the number of strings that start with a given prefix.
      *
-     * Works in O(|element|).
+     * Works in O(|prefix|).
      * @param prefix specifies a string prefix
      * @return number of strings that start with a given prefix.
      */
