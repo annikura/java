@@ -57,7 +57,7 @@ public class HashTable {
   }
 
   /**
-   * @param key
+   * @param key element whose presence in this set is to be tested.
    * @return true if such a key exists in the hash table.
    */
   public boolean contains(String key) {
@@ -65,7 +65,7 @@ public class HashTable {
   }
 
   /**
-   * @param key
+   * @param key an elemet a value pair to which should be returned if such a key exists in the table.
    * @return value if such a key exists in the hash table, null otherwise.
    */
   public String get(String key) {
@@ -78,8 +78,8 @@ public class HashTable {
   /**
    * Puts value under the given key into the hash table.
    *
-   * @param key
-   * @param value
+   * @param key first value of the Pair that will be inserted.
+   * @param value second value of the Pair that will be inserted.
    * @return a previous value, if there was such a key in the table, null if not.
    */
   public String put(String key, String value) {
@@ -95,7 +95,7 @@ public class HashTable {
   /**
    * Removes key-value pair with the given key from the hash table.
    *
-   * @param key
+   * @param key an element a Pair of which will be removed from the table if existed there before
    * @return the deleted value, if such a key existed. Otherwise returns null.
    */
   public String remove(String key) {
