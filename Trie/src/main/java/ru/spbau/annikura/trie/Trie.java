@@ -29,7 +29,7 @@ public class Trie implements Serializable {
 
         /**
          * Checks if the subtree of the node contains the suffix string starting from the given string pointer.
-         * @param str
+         * @param str string pointer to a prefix.
          * @return true if subtree contains string pointer suffix string, false if not.
          */
         boolean contains (StringPointer str) {
@@ -43,7 +43,7 @@ public class Trie implements Serializable {
         /**
          * Adds a suffix string provided by string pointer to the subtree of the node.
          * The subtree must not to contain this string before adding.
-         * @param str
+         * @param str string pointer to the string which will be added.
          */
         void addWord(StringPointer str) {
             wordsCount++;
@@ -63,7 +63,7 @@ public class Trie implements Serializable {
         /**
          * Removes a suffix string provided by string pointer from the subtree of the node.
          * The subtree must contain this string before removing.
-         * @param str
+         * @param str string pointer to the string which will be removed.
          */
         void removeWord(StringPointer str) {
             wordsCount--;
@@ -77,7 +77,7 @@ public class Trie implements Serializable {
         /**
          * Finds the number of the substrings starting from the node prefix which
          * start with the suffix string provided by the string pointer.
-         * @param str
+         * @param str string pointer to the string which presence in this trie is to be tested
          * @return number of strings in the subtree starting with given prefix.
          */
         int howManyStartsWithPrefix(StringPointer str) {
@@ -140,13 +140,24 @@ public class Trie implements Serializable {
         return root.howManyStartsWithPrefix(new StringPointer(prefix));
     }
 
-
+    /**
+     * Serializes the Trie into the given output stream.
+     * @param out a stream where the Trie will be serialized to.
+     * @throws IOException if IO fails.
+     */
     public void serialize(OutputStream out) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(out);
         oos.writeObject(this);
         oos.flush();
         oos.close();
     }
+
+    /**
+     * Deserializes the Trie
+     * @param in a stream which the Trie will be deserialized from.
+     * @throws IOException if IO fails.
+     * @throws ClassNotFoundException if the data in the stream is not a valid Trie.
+     */
     public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(in);
         this.root = ((Trie)ois.readObject()).root;
