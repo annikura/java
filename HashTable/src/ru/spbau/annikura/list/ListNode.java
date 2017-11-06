@@ -5,29 +5,29 @@ package ru.spbau.annikura.list;
  *
  * @param <ValueType>
  */
-public class ListNode<ValueType> {
+class ListNode<ValueType> {
   private ListNode<ValueType> next = null;
   private ListNode<ValueType> previous = null;
   private final ValueType value;
 
-  public ListNode(ValueType value) {
+  ListNode(ValueType value) {
     this.value = value;
   }
 
   /**
    * @return value which is stored in the list node.
    */
-  public ValueType getValue() {
+  ValueType getValue() {
     return value;
   }
-  public ListNode<ValueType> next() {
+  ListNode<ValueType> next() {
     return next;
   }
 
   /**
    * @return the next list node or null if the next node doesn't exist.
    */
-  public ListNode<ValueType> previous() {
+  ListNode<ValueType> previous() {
     return previous;
   }
 
@@ -36,7 +36,7 @@ public class ListNode<ValueType> {
    * @param otherNode a node to be placed next after the current
    * @return new list node value.
    */
-  public ValueType insertAfter(ListNode<ValueType> otherNode) {
+  ValueType insertAfter(ListNode<ValueType> otherNode) {
     otherNode.next = next;
     next = otherNode;
     otherNode.previous = this;
@@ -51,7 +51,7 @@ public class ListNode<ValueType> {
    *
    * @return the value of the deleted vertex. Null if the next vertex does not exist.
    */
-  public ValueType eraseAfter() {
+  ValueType eraseAfter() {
     if (next == null) {
       return null;
     }

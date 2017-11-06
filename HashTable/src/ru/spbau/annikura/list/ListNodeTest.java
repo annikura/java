@@ -1,14 +1,13 @@
-package tests.ru.spbau.annikura.list;
+package ru.spbau.annikura.list;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.Test;
 
-import ru.spbau.annikura.list.ListNode;
+import static junit.framework.TestCase.assertSame;
+import static org.junit.Assert.assertEquals;
 
 public class ListNodeTest {
   @Test
-  public static void createNode() {
+  public void createNode() {
     ListNode<String> node = new ListNode<>("abc");
     assertEquals(null, node.next());
     assertEquals(null, node.previous());
@@ -16,7 +15,7 @@ public class ListNodeTest {
   }
 
   @Test
-  public static void insertAfterSimple() {
+  public void insertAfterSimple() {
     // Tests simple insertion.
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
@@ -28,7 +27,7 @@ public class ListNodeTest {
   }
 
   @Test
-  public static void insertAfter() {
+  public void insertAfter() {
     // Tests double insertion
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
@@ -42,7 +41,7 @@ public class ListNodeTest {
   }
 
   @Test
-  public static void eraseAfter() {
+  public void eraseAfter() {
     ListNode<String> node1 = new ListNode<>("abc");
     ListNode<String> node2 = new ListNode<>("def");
     ListNode<String> node3 = new ListNode<>("ghj");
