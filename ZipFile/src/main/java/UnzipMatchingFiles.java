@@ -1,4 +1,4 @@
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.zipfile.ZipFile;
 
 import java.io.File;
