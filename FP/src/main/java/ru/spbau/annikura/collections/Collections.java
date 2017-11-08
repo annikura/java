@@ -160,7 +160,9 @@ public class Collections {
                            /*Nullability is not known, function-defined*/ final NewType initValue) {
         if (!iterator.hasNext())
             return initValue;
-        else
-            return func.apply(foldLImplementation(iterator, func, initValue), iterator.next());
+        else {
+            ElementType element = iterator.next();
+            return func.apply(foldLImplementation(iterator, func, initValue), element);
+        }
     }
 }
