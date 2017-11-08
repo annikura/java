@@ -1,11 +1,9 @@
 package ru.spbau.annikura.collections;
 
 import org.junit.Test;
-import ru.spbau.annikura.function.Function1;
 import ru.spbau.annikura.function.Predicate;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -78,7 +76,6 @@ public class CollectionsTest {
         ArrayList<Integer> arr = new ArrayList<>();
         arr.add(5); arr.add(8); arr.add(19); arr.add(7); arr.add(4); arr.add(11);
         String funcRes = Collections.foldL(arr, (str, num) -> str + Integer.toString(num), "x");
-        List<Integer> expected = new ArrayList<>();
         assertEquals("x11471985", funcRes);
     }
 
