@@ -23,6 +23,6 @@ public interface Function1<T, R> {
      * @return the result of the composition.
      */
     public default <U> Function1<T, U> compose(@NotNull final Function1<? super R, ? extends U> composedFunc) {
-        return arg -> composedFunc.apply(this.apply(arg));
+        return arg -> composedFunc.apply(apply(arg));
     }
 }
