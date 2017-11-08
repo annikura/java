@@ -10,11 +10,11 @@ public interface Predicate<T> extends Function1<T, Boolean> {
     /**
      * A predicate that always returns true.
      */
-    public static final Predicate<?> ALWAYS_TRUE = arg -> true;
+    public static final Predicate ALWAYS_TRUE = arg -> true;
     /**
      * A predicate that always returns false.
      */
-    public static final Predicate<?> ALWAYS_FALSE = arg -> false;
+    public static final Predicate ALWAYS_FALSE = arg -> false;
 
     /**
      * 'Or' operator for predicates. Given a second predicate, lazily takes 'or' of a stored function and other one.
