@@ -11,6 +11,7 @@ import java.util.function.Function;
 public class Maybe<T> {
     private final T value;
     private final boolean hasValue;
+    private static Maybe NOTHING = new Maybe();
 
     private Maybe() {
         this.value = null;
@@ -38,7 +39,7 @@ public class Maybe<T> {
      * @return empty Maybe.
      */
     public static <T> Maybe<T> nothing() {
-        return new Maybe<>();
+        return NOTHING;
     }
 
     /**
