@@ -25,12 +25,12 @@ public class MaybeTest {
     }
 
 
-    @Test (expected = MaybeException.class)
+    @Test (expected = MaybeInvalidGetException.class)
     public void getNothing() throws Exception {
         Maybe<String> maybe = Maybe.nothing();
         try {
             maybe.get();
-        } catch (MaybeException ex) {
+        } catch (MaybeInvalidGetException ex) {
             assertEquals(ex.getMessage(), "Invalid get. Maybe does not contain a value");
             throw ex;
         }

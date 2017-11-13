@@ -1,7 +1,7 @@
 package ru.spbau.annikura.maybe;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
@@ -45,10 +45,10 @@ public class Maybe<T> {
      * Maybe value getter.
      * @return a stored value, if existed.
      */
-    public T get() throws MaybeException{
+    public T get() throws MaybeInvalidGetException {
         if (hasValue)
             return value;
-        throw new MaybeException("Invalid get. Maybe does not contain a value");
+        throw new MaybeInvalidGetException("Invalid get. Maybe does not contain a value");
     }
 
     /**
