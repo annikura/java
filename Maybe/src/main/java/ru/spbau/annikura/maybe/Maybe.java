@@ -45,6 +45,7 @@ public class Maybe<T> {
     /**
      * Maybe value getter.
      * @return a stored value, if existed.
+     * @throws MaybeInvalidGetException if an attempt to access value of Nothing instance  was made.
      */
     public T get() throws MaybeInvalidGetException {
         if (hasValue)
