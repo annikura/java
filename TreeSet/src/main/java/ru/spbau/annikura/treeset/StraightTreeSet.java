@@ -10,17 +10,11 @@ class StraightTreeSet<E> extends TreeSetImpl<E> {
         REVERSE_SET = new ReverseTreeSet<>(data, this);
     }
 
-    /**
-     * {@link TreeSet#descendingIterator()}
-     **/
     @Override
     public Iterator<E> descendingIterator() {
         return REVERSE_SET.iterator();
     }
 
-    /**
-     * {@link TreeSet#descendingSet()}
-     **/
     @Override
     public MyTreeSet<E> descendingSet() {
         return REVERSE_SET;

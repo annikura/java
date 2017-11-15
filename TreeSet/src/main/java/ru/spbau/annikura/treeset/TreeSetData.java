@@ -1,6 +1,5 @@
 package ru.spbau.annikura.treeset;
 
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -10,18 +10,11 @@ public class ReverseTreeSet<E> extends TreeSetImpl<E> {
         this.data = data;
     }
 
-    /**
-     * {@link TreeSet#descendingIterator()}
-     **/
     @Override
     public Iterator<E> descendingIterator() {
         return STRAIGHT_SET.iterator();
     }
 
-
-    /**
-     * {@link TreeSet#descendingSet()}
-     **/
     @Override
     public MyTreeSet<E> descendingSet() {
         return STRAIGHT_SET;

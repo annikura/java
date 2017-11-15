@@ -54,9 +54,6 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
          return node.down(e) != null ? findClosest(node.down(e), e) : node;
     }
 
-    /**
-     * {@link TreeSet#lower(E)}
-     **/
     @Nullable
     @Override
     public E floor(@NotNull final E e) {
@@ -71,9 +68,6 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
-    /**
-     * {@link TreeSet#floor(E)}
-     **/
     @Override
     @Nullable
     public E lower(@NotNull E e) {
@@ -86,9 +80,6 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
-    /**
-     * {@link TreeSet#ceiling(E)}
-     **/
     @Override
     @Nullable
     public E ceiling(@NotNull E e) {
@@ -103,9 +94,6 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
-    /**
-     * {@link TreeSet#higher(E)}
-     **/
     @Override
     @Nullable
     public E higher(@NotNull E e) {
@@ -118,9 +106,6 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
-    /**
-     * {@link TreeSet#first()}
-     **/
     @Override
     public E first() {
         if (isEmpty()) {
@@ -129,9 +114,6 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return this.iterator().next();
     }
 
-    /**
-     * {@link TreeSet#last()}
-     **/
     @Override
     public E last() {
         if (isEmpty()) {
