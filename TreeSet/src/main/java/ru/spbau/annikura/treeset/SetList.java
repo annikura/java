@@ -40,13 +40,13 @@ class SetList<E> implements Iterable<E> {
         @NotNull
         @Override
         public boolean hasNext() {
-            return currentNode.next.equals(tail);
+            return !currentNode.next.equals(tail);
         }
 
         @NotNull
         @Override
         public E next() {
-            currentNode = currentNode.prev;
+            currentNode = currentNode.next;
             return currentNode.node.getValue();
         }
     }
@@ -57,13 +57,13 @@ class SetList<E> implements Iterable<E> {
         @NotNull
         @Override
         public boolean hasNext() {
-            return currentNode.prev.equals(head);
+            return !currentNode.prev.equals(head);
         }
 
         @NotNull
         @Override
         public E next() {
-            currentNode = currentNode.next;
+            currentNode = currentNode.prev;
             return currentNode.node.getValue();
         }
     }

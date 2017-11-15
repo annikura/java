@@ -16,6 +16,12 @@ public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements 
 
     @Override
     @NotNull
+    public boolean add(@NotNull E e) {
+        return treeSet.add(e);
+    }
+
+    @Override
+    @NotNull
     public Iterator<E> iterator() {
         return treeSet.iterator();
     }

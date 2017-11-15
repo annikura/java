@@ -77,13 +77,13 @@ class TreeSetData<E> {
 
 
         public void setLeftNode(SetNode newNode) {
-            newNode.listNode.insertBefore(list.new SetListNode(newNode));
-            newNode.left = newNode;
+            listNode.insertBefore(list.new SetListNode(newNode));
+            left = newNode;
         }
 
         public void setRightNode(SetNode newNode) {
-            newNode.listNode.insertAfter(list.new SetListNode(newNode));
-            newNode.right = newNode;
+            listNode.insertAfter(list.new SetListNode(newNode));
+            right = newNode;
         }
     }
 }
