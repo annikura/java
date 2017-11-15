@@ -139,6 +139,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
 
     /** {@link TreeSet#first()} **/
     @Override
+    @NotNull
     public E first() {
         if (isEmpty()) {
             throw new NoSuchElementException("Attempting to get the first element of the empty TreeSet");
@@ -149,6 +150,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
 
     /** {@link TreeSet#last()} **/
     @Override
+    @NotNull
     public E last() {
         if (isEmpty()) {
             throw new NoSuchElementException("Attempting to get the last element of the empty TreeSet");
