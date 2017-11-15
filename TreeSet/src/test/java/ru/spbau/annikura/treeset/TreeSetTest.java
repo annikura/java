@@ -2,7 +2,6 @@ package ru.spbau.annikura.treeset;
 
 import org.junit.Test;
 
-
 public class TreeSetTest {
     @Test
     public void createInstance() throws Exception {
