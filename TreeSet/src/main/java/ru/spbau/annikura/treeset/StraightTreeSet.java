@@ -2,7 +2,7 @@ package ru.spbau.annikura.treeset;
 
 import java.util.Iterator;
 
-class StraightTreeSet<E> extends TreeSetImpl<E> {
+class StraightTreeSet<E> extends AbstractTreeSetImpl<E> {
     private final ReverseTreeSet<E> REVERSE_SET;
 
     StraightTreeSet(TreeSetData<E> data) {

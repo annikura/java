@@ -5,10 +5,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.AbstractSet;
 import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
-abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
+/**
+ * Implementation of my TreeSet.
+ * @param <E> extends comparable. Objects that will be stored in the container.
+ */
+abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
     TreeSetData<E> data;
 
+    /** {@link TreeSet#add(E)} **/
     public boolean add(@NotNull E e) {
         TreeSetData<E>.SetNode node = findClosest(data.getRoot(), e);
         if (node != null && data.getComparator().compare(node.getValue(), e) == 0) {
@@ -28,11 +34,19 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return true;
     }
 
+
+    /** {@link TreeSet#size()} **/
     @Override
     public int size() {
         return data.getList().size();
     }
 
+    /**
+     * Finds the node in the node subtree with a given value, if exists.
+     * @param node a node in which subtree the value will be searched.
+     * @param e value of the searched node.
+     * @return node if it existed in the given tree, null otherwise.
+     */
     @Nullable
     private TreeSetData<E>.SetNode findExact(@Nullable TreeSetData<E>.SetNode node, @NotNull E e) {
         if (node == null) {
@@ -43,6 +57,14 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return findExact(node.down(e), e);
     }
 
+    /**
+     * Looks for the node, closest to the one that should store a given value:
+     * either a node with this valiue itself (if this value exists in the given subtree),
+     * or a node which son the given value is expected to be.
+     * @param node the root of the subtree where the node with the given value is searched.
+     * @param e value of the searched node.
+     * @return null is given node is null, closest to the given value vertex otherwise.
+     */
     @Nullable
     private TreeSetData<E>.SetNode findClosest(@Nullable TreeSetData<E>.SetNode node, @NotNull E e) {
         if (node == null) {
@@ -54,6 +76,8 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
          return node.down(e) != null ? findClosest(node.down(e), e) : node;
     }
 
+
+    /** {@link TreeSet#floor(E)} **/
     @Nullable
     @Override
     public E floor(@NotNull final E e) {
@@ -68,6 +92,8 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
+
+    /** {@link TreeSet#lower(E)} **/
     @Override
     @Nullable
     public E lower(@NotNull E e) {
@@ -80,6 +106,8 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
+
+    /** {@link TreeSet#ceiling(E)} **/
     @Override
     @Nullable
     public E ceiling(@NotNull E e) {
@@ -94,6 +122,8 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
+
+    /** {@link TreeSet#higher(E)} **/
     @Override
     @Nullable
     public E higher(@NotNull E e) {
@@ -106,6 +136,8 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return node == null ? null : node.getValue();
     }
 
+
+    /** {@link TreeSet#first()} **/
     @Override
     public E first() {
         if (isEmpty()) {
@@ -114,6 +146,8 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         return this.iterator().next();
     }
 
+
+    /** {@link TreeSet#last()} **/
     @Override
     public E last() {
         if (isEmpty()) {
@@ -121,6 +155,4 @@ abstract class TreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
         }
         return this.descendingIterator().next();
     }
-
-
 }

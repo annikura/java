@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements MyTreeSet<E> {
     private final TreeSetData<E> data;
-    private TreeSetImpl<E> treeSet;
+    private AbstractTreeSetImpl<E> treeSet;
 
     /**
      * Constructor of the tree set supporting natural ordering.
