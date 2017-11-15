@@ -10,7 +10,7 @@ class SetList<E> implements Iterable<E> {
     private SetListNode tail = new SetListNode(null);
     private int listSize = 0;
 
-    SetList() {
+    public SetList() {
         head.next = tail;
         tail.prev = head;
     }
@@ -37,7 +37,6 @@ class SetList<E> implements Iterable<E> {
     private class SetListStraightIterator implements Iterator<E> {
         SetListNode currentNode = head;
 
-        @NotNull
         @Override
         public boolean hasNext() {
             return !currentNode.next.equals(tail);
@@ -54,7 +53,6 @@ class SetList<E> implements Iterable<E> {
     private class SetListReverseIterator implements Iterator<E> {
         SetListNode currentNode = tail;
 
-        @NotNull
         @Override
         public boolean hasNext() {
             return !currentNode.prev.equals(head);
