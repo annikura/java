@@ -14,7 +14,7 @@ import java.util.TreeSet;
 abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSet<E> {
     TreeSetData<E> data;
 
-    /** {@link TreeSet#add(E)} **/
+    /** {@link java.util.TreeSet#add(Object)} **/
     public boolean add(@NotNull E e) {
         TreeSetData<E>.SetNode node = findClosest(data.getRoot(), e);
         if (node != null && node.compareTo(e) == 0) {
@@ -34,7 +34,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     }
 
 
-    /** {@link TreeSet#size()} **/
+    /** {@link java.util.TreeSet#size()} **/
     @Override
     public int size() {
         return data.size();
@@ -76,7 +76,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     }
 
 
-    /** {@link TreeSet#floor(E)} **/
+    /** {@link java.util.TreeSet#floor(Object)} **/
     @Nullable
     @Override
     public E floor(@NotNull final E e) {
@@ -92,7 +92,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     }
 
 
-    /** {@link TreeSet#lower(E)} **/
+    /** {@link java.util.TreeSet#lower(Object)} **/
     @Override
     @Nullable
     public E lower(@NotNull E e) {
@@ -106,7 +106,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     }
 
 
-    /** {@link TreeSet#ceiling(E)} **/
+    /** {@link java.util.TreeSet#ceiling(Object)} **/
     @Override
     @Nullable
     public E ceiling(@NotNull E e) {
@@ -122,7 +122,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     }
 
 
-    /** {@link TreeSet#higher(E)} **/
+    /** {@link java.util.TreeSet#higher(Object)} **/
     @Override
     @Nullable
     public E higher(@NotNull E e) {
@@ -136,7 +136,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     }
 
 
-    /** {@link TreeSet#first()} **/
+    /** {@link java.util.TreeSet#first()} **/
     @Override
     @NotNull
     public E first() {
@@ -147,7 +147,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     }
 
 
-    /** {@link TreeSet#last()} **/
+    /** {@link java.util.TreeSet#last()} **/
     @Override
     @NotNull
     public E last() {

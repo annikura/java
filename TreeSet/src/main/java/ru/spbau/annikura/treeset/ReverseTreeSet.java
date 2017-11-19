@@ -9,7 +9,7 @@ import java.util.TreeSet;
  * Tree set which iterates through the values in the reverse order.
  * @param <E>
  */
-public class ReverseTreeSet<E> extends AbstractTreeSetImpl<E> {
+class ReverseTreeSet<E> extends AbstractTreeSetImpl<E> {
     private final StraightTreeSet<E> STRAIGHT_SET;
 
     /**
