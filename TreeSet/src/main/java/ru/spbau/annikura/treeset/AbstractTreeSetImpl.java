@@ -32,6 +32,10 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         return true;
     }
 
+    public boolean containing(@NotNull E e) {
+        return findExact(data.getRoot(), e) != null;
+    }
+
 
     /** {@link java.util.TreeSet#size()} **/
     @Override
@@ -99,8 +103,11 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (floorRes == null) {
             return null;
         }
-        TreeSetData<E>.SetNode node = findExact(data.getRoot(), floorRes).prev();  // Won't be null because
+        TreeSetData<E>.SetNode node = findExact(data.getRoot(), floorRes);  // Won't be null because
         // this element was found in the Set by floor.
+        if (node.compareTo(e) == 0) {
+            node = node.prev();
+        }
         return node == null ? null : node.getValue();
     }
 
@@ -113,7 +120,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (node == null) {
             return null;
         }
-        if (data.getComparator().compare(node.getValue(), e) >= 0) {
+        if (node.compareTo(e) >= 0) {
             return node.getValue();
         }
         node = node.next();
@@ -129,8 +136,11 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (ceilingRes == null) {
             return null;
         }
-        TreeSetData<E>.SetNode node = findExact(data.getRoot(), ceilingRes).next();  // Won't be null because
+        TreeSetData<E>.SetNode node = findExact(data.getRoot(), ceilingRes);  // Won't be null because
         // this element was found in the Set by ceiling.
+        if (node.compareTo(e) == 0) {
+            node = node.next();
+        }
         return node == null ? null : node.getValue();
     }
 

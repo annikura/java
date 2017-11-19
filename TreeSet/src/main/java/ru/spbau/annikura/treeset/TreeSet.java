@@ -32,6 +32,17 @@ public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements 
         return treeSet.add(e);
     }
 
+
+    /**
+     * Checks element's presence in the tree.
+     * @param e Value to be searched in the tree.
+     * @return false if this value already was in the tree, true otherwise.
+     */
+    public boolean containing(@NotNull E e) {
+        return treeSet.containing(e);
+    }
+
+
     /**
      * Iterator for the Tree set. Note, that if the current tree set is a result of "descending set" method,
      * this iterator will iterate in the reverse order in comparison to its ancestor.
@@ -133,7 +144,7 @@ public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements 
     @Override
     @Nullable
     public E ceiling(@NotNull E e) {
-        return ceiling(e);
+        return treeSet.ceiling(e);
     }
 
 
@@ -145,6 +156,6 @@ public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements 
     @Override
     @Nullable
     public E higher(@NotNull E e) {
-        return higher(e);
+        return treeSet.higher(e);
     }
 }
