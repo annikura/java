@@ -5,7 +5,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.AbstractSet;
 import java.util.NoSuchElementException;
-import java.util.TreeSet;
 
 /**
  * Implementation of my TreeSet.
