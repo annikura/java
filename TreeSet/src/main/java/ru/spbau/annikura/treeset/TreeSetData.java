@@ -203,12 +203,12 @@ class TreeSetData<E> {
             newNode.prev = this;
             if (next != null) {
                 next.prev = newNode;
-                assert(comparator.compare(newNode.value, next.value) < 0);
+                assert next == tail || (comparator.compare(newNode.value, next.value) < 0);
             }
             next = newNode;
             treeSize++;
 
-            assert(comparator.compare(newNode.value, value) > 0);
+            assert comparator.compare(newNode.value, value) > 0;
         }
 
 
@@ -222,7 +222,7 @@ class TreeSetData<E> {
             newNode.next = this;
             if (prev != null) {
                 prev.next = newNode;
-                assert(comparator.compare(newNode.value, prev.value) > 0);
+                assert prev == head || (comparator.compare(newNode.value, prev.value) > 0);
             }
             prev = newNode;
             treeSize++;

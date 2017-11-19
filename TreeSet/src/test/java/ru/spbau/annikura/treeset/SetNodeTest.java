@@ -42,6 +42,12 @@ public class SetNodeTest {
         assertEquals(rightNode, node.down(12));
     }
 
+    @Test
+    public void downItself() throws Exception {
+        TreeSetData<Integer>.SetNode node = data.new SetNode(9);
+        assertEquals(node, node.down(9));
+    }
+
 
     @Test
     public void simpleDown() throws Exception {
