@@ -40,6 +40,6 @@ class StraightTreeSet<E> extends AbstractTreeSetImpl<E> {
     @Override
     @NotNull
     public Iterator<E> iterator() {
-        return data.getList().iterator();
+        return data.straightIterator();
     }
 }

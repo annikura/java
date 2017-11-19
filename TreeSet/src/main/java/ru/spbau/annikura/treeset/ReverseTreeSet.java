@@ -40,6 +40,6 @@ public class ReverseTreeSet<E> extends AbstractTreeSetImpl<E> {
     @NotNull
     @Override
     public Iterator<E> iterator() {
-        return data.getList().descendingIterator();
+        return data.descendingIterator();
     }
 }

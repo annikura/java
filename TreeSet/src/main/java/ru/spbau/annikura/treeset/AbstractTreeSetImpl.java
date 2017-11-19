@@ -17,16 +17,15 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     /** {@link TreeSet#add(E)} **/
     public boolean add(@NotNull E e) {
         TreeSetData<E>.SetNode node = findClosest(data.getRoot(), e);
-        if (node != null && data.getComparator().compare(node.getValue(), e) == 0) {
+        if (node != null && node.compareTo(e) == 0) {
             return false;
         }
         TreeSetData<E>.SetNode newNode = data.new SetNode(e);
         if (node == null) {
             data.setRoot(newNode);
-            data.getList().add(newNode);
             return true;
         }
-        if (data.getComparator().compare(node.getValue(), e) < 0) {
+        if (node.compareTo(e) < 0) {
             node.setRightNode(newNode);
         } else {
             node.setLeftNode(newNode);
@@ -38,7 +37,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
     /** {@link TreeSet#size()} **/
     @Override
     public int size() {
-        return data.getList().size();
+        return data.size();
     }
 
     /**
@@ -52,7 +51,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (node == null) {
             return null;
         }
-        if (data.getComparator().compare(e, node.getValue()) == 0)
+        if (node.compareTo(e) == 0)
             return node;
         return findExact(node.down(e), e);
     }
@@ -70,7 +69,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (node == null) {
             return null;
         }
-        if (data.getComparator().compare(e, node.getValue()) == 0) {
+        if (node.compareTo(e) == 0) {
             return node;
         }
          return node.down(e) != null ? findClosest(node.down(e), e) : node;
@@ -85,10 +84,10 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (node == null) {
             return null;
         }
-        if (data.getComparator().compare(node.getValue(), e) <= 0) {
+        if (node.compareTo(e) <= 0) {
             return node.getValue();
         }
-        node = node.left();
+        node = node.prev();
         return node == null ? null : node.getValue();
     }
 
@@ -101,7 +100,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (floorRes == null) {
             return null;
         }
-        TreeSetData<E>.SetNode node = findExact(data.getRoot(), floorRes).left();  // Won't be null because
+        TreeSetData<E>.SetNode node = findExact(data.getRoot(), floorRes).prev();  // Won't be null because
         // this element was found in the Set by floor.
         return node == null ? null : node.getValue();
     }
@@ -118,7 +117,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (data.getComparator().compare(node.getValue(), e) >= 0) {
             return node.getValue();
         }
-        node = node.right();
+        node = node.next();
         return node == null ? null : node.getValue();
     }
 
@@ -131,7 +130,7 @@ abstract class AbstractTreeSetImpl<E> extends AbstractSet<E> implements MyTreeSe
         if (ceilingRes == null) {
             return null;
         }
-        TreeSetData<E>.SetNode node = findExact(data.getRoot(), ceilingRes).right();  // Won't be null because
+        TreeSetData<E>.SetNode node = findExact(data.getRoot(), ceilingRes).next();  // Won't be null because
         // this element was found in the Set by ceiling.
         return node == null ? null : node.getValue();
     }
