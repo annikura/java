@@ -22,6 +22,11 @@ public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements 
         treeSet = new StraightTreeSet<>(data);
     }
 
+    /**
+     * Adds into the tree an element e.
+     * @param e Value to be added to the tree.
+     * @return false if this value already was in the tree. Returns true and adds a value to the tree otherwise.
+     */
     @Override
     public boolean add(@NotNull E e) {
         return treeSet.add(e);
@@ -29,7 +34,7 @@ public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements 
 
     /**
      * Iterator for the Tree set. Note, that if the current tree set is a result of "descending set" method,
-     * this iterator will iterate in the reverse order.
+     * this iterator will iterate in the reverse order in comparison to its ancestor.
      * @return straight iterator.
      */
     @Override
@@ -58,7 +63,7 @@ public class TreeSet<E extends Comparable<E>> extends AbstractSet<E> implements 
 
     /**
      * Provides a reverse tree set iterator.
-     * @return iterator to iterate in reverse in relation to the simple iterator() order.
+     * @return iterator to iterate in reverse in relation to the iterator() order.
      */
     @Override
     @NotNull

@@ -17,7 +17,10 @@ class TreeSetData<E> {
     private SetNode root = null;
     private int treeSize = 0;
 
-
+    /**
+     * Size getter.
+     * @return size of the tree.
+     */
     public int size() {
         return treeSize;
     }
@@ -84,6 +87,10 @@ class TreeSetData<E> {
         root.next = tail;
     }
 
+    /**
+     * Iterator object generator. This iterator will iterate in a straight order.
+     * @return an iterator instance.
+     */
     public Iterator<E> straightIterator() {
         return new Iterator<E>() {
             SetNode currentNode = head;
@@ -101,6 +108,11 @@ class TreeSetData<E> {
         };
     }
 
+
+    /**
+     * Iterator object generator. This iterator will iterate in a reverse order.
+     * @return an iterator instance.
+     */
     public Iterator<E> descendingIterator() {
         return new Iterator<E>() {
             SetNode currentNode = tail;
@@ -218,6 +230,12 @@ class TreeSetData<E> {
             assert(comparator.compare(newNode.value, value) < 0);
         }
 
+        /**
+         * Method that allows straight comparison of the value stored in the node and a given value
+         * @param e a value to compare the stored one with.
+         * @return number < 0 if stored value is less than a given one, 0 if they are equal
+         * and a number > 0 if stored value is greater than a given one.
+         */
         @Override
         public int compareTo(@NotNull E e) {
             return comparator.compare(value, e);
