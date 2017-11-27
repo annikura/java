@@ -10,12 +10,33 @@ public interface Predicate<T> extends Function1<T, Boolean> {
     /**
      * A predicate that always returns true.
      */
-    public static final Predicate ALWAYS_TRUE = arg -> true;
+    Predicate ALWAYS_TRUE = arg -> true;
+
+    /**
+     * Always true predicate getter.
+     * @param <T> type of the predicate parameter.
+     * @return a predicate that always returns true.
+     */
+    @SuppressWarnings("unchecked")
+    static <T> Predicate<T> alwaysTrue() {
+        return ALWAYS_TRUE;
+    }
+
     /**
      * A predicate that always returns false.
      */
-    public static final Predicate ALWAYS_FALSE = arg -> false;
+    Predicate ALWAYS_FALSE = arg -> false;
 
+
+    /**
+     * Always false predicate getter.
+     * @param <T> type of the predicate parameter.
+     * @return a predicate that always returns false.
+     */
+    @SuppressWarnings("unchecked")
+    static <T> Predicate<T> alwaysFalse() {
+        return ALWAYS_FALSE;
+    }
     /**
      * 'Or' operator for predicates. Given a second predicate, lazily takes 'or' of a stored function and other one.
      * @param other a second predicate to take 'or'.

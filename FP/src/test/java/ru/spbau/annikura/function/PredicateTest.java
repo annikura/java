@@ -114,14 +114,14 @@ public class PredicateTest {
     public void alwaysTrue() throws Exception {
         Random random = new Random();
         for (int i = 0; i < 1000; i++)
-            assertEquals(true, Predicate.ALWAYS_TRUE.apply(random.nextInt()));
+            assertEquals(true, Predicate.alwaysTrue().apply(random.nextInt()));
     }
 
     @Test
     public void alwaysFalse() throws Exception {
         Random random = new Random();
         for (int i = 0; i < 1000; i++)
-            assertEquals(false, Predicate.ALWAYS_FALSE.apply(random.nextInt()));
+            assertEquals(false, Predicate.alwaysFalse().apply(random.nextInt()));
     }
 
 
