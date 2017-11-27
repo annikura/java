@@ -15,8 +15,8 @@ public interface Function2<A, B, R> {
      * @param arg2 second function argument.
      * @return the result of the function appliсation.
      */
-    public R apply(/*Nullability is not known, function-defined*/ A arg1,
-                   /*Nullability is not known, function-defined*/ B arg2);
+    public R apply(A arg1,
+                   B arg2);
 
     /**
      * Composition operator.  Given a function g will return a function equivalent to g(f(arg1, arg2)),
@@ -35,7 +35,7 @@ public interface Function2<A, B, R> {
      * @param <T> value type.
      * @return one-argument function, the result of the binding.
      */
-    public default <T extends A> Function1<B, R> bind1(/*Nullability is not known, function-defined*/ final T arg) {
+    public default <T extends A> Function1<B, R> bind1(final T arg) {
         return arg1 -> apply(arg, arg1);
     }
 
@@ -46,7 +46,7 @@ public interface Function2<A, B, R> {
      * @param <T> value type.
      * @return one-argument function, the result of the binding.
      */
-    public default <T extends B> Function1<A, R> bind2(/*Nullability is not known, function-defined*/ T arg) {
+    public default <T extends B> Function1<A, R> bind2(T arg) {
         return arg1 -> apply(arg1, arg);
     }
 

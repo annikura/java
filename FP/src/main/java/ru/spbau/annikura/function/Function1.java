@@ -13,7 +13,7 @@ public interface Function1<T, R> {
      * @param arg an argument for the function application.
      * @return a function result.
      */
-    public R apply(/*Nullability is not known, function-defined*/ T arg);
+    public R apply(T arg);
 
     /**
      * Composition operator. Given a function g will return a function equivalent to g(f(arg)),

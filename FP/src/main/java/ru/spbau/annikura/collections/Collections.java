@@ -113,7 +113,7 @@ public class Collections {
             FunctionType extends Function2<? super ElementType, ? super NewType, ? extends NewType>>
     NewType foldR(@NotNull final CollectionType collection,
                   @NotNull final FunctionType func,
-                  /*Nullability is not known, function-defined*/ final NewType initValue) {
+                  final NewType initValue) {
         return foldRImplementation(collection.iterator(), func, initValue);
     }
 
@@ -134,7 +134,7 @@ public class Collections {
             FunctionType extends Function2<? super NewType, ? super ElementType, ? extends NewType>>
     NewType foldL(@NotNull final CollectionType collection,
                   @NotNull final FunctionType func,
-                  /*Nullability is not known, function-defined*/ final NewType initValue) {
+                  final NewType initValue) {
         return foldLImplementation(collection.iterator(), func, initValue);
     }
 
@@ -144,7 +144,7 @@ public class Collections {
             FunctionType extends Function2<? super ElementType, ? super NewType, ? extends NewType>>
     NewType foldRImplementation(@NotNull final IteratorType iterator,
                                 @NotNull final FunctionType func,
-                           /*Nullability is not known, function-defined*/ final NewType initValue) {
+                                final NewType initValue) {
         if (!iterator.hasNext())
             return initValue;
         else
@@ -157,7 +157,7 @@ public class Collections {
             FunctionType extends Function2<? super NewType, ? super ElementType, ? extends NewType>>
     NewType foldLImplementation(@NotNull final IteratorType iterator,
                                 @NotNull final FunctionType func,
-                           /*Nullability is not known, function-defined*/ final NewType initValue) {
+                                final NewType initValue) {
         if (!iterator.hasNext())
             return initValue;
         else {
