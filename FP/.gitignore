@@ -1,0 +1,5 @@
+*
+!.gitignore
+!FP.iml
+!pom.xml
+!src/*
