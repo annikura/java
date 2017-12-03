@@ -144,7 +144,7 @@ public class Calculator {
     @NotNull
     private List<ExpressionToken> splitIntoTokens(@NotNull final String expression) {
         if (expression.length() == 0) {
-            throw new IllegalArgumentException("An error occurred. The expression is invalid. (1)");
+            throw new IllegalArgumentException("An error occurred. The expression is invalid. (0)");
         }
 
         BigDecimal number = new BigDecimalValidator().validate(expression);
@@ -166,7 +166,7 @@ public class Calculator {
                             .collect(Collectors.toList());
                 }
                 if (!OperatorType.isOperator(expression.charAt(pos))) {
-                    throw new IllegalArgumentException("An error occurred. The expression is invalid.");
+                    throw new IllegalArgumentException("An error occurred. The expression is invalid. (1)");
                 }
                 return Stream
                         .of(
