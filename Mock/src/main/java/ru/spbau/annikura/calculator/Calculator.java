@@ -11,14 +11,14 @@ import java.util.stream.Stream;
 import static java.lang.Character.isDigit;
 
 /**
- *
+ * A class calculating the expression using the Reverse Polish notation. Works in O(n).
  */
 public class Calculator {
     private Stack<ExpressionToken> stack;
 
     /**
-     *
-     * @param stack
+     * Class constructor.
+     * @param stack an empty stack of Expression tokens.
      */
     public Calculator(@NotNull final Stack<ExpressionToken> stack) {
         if (!stack.empty()) {
@@ -28,13 +28,13 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param expression
-     * @return
-     * @throws IllegalArgumentException
+     * Given an expression, evaluates it and returns the result.
+     * @param expression string containing valid expression.
+     * @return calculated value of the expression.
+     * @throws IllegalArgumentException if the given expression is invalid.
      */
     @NotNull
-    public BigDecimal evaluate(@NotNull String expression) throws Exception {
+    public BigDecimal evaluate(@NotNull final String expression) throws Exception {
         if (expression.length() == 0) {
             throw new IllegalArgumentException("Empty string is an invalid expression.");
         }
@@ -43,12 +43,12 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param tokens
-     * @return
+     * Converts a given sequence of tokens to the Reverse Polish nonation.
+     * @param tokens tokenized expression.
+     * @return list of tokens representing a given expression in RPN.
      */
     @NotNull
-    private List<ExpressionToken> convertToRPN(@NotNull List<ExpressionToken> tokens) {
+    private List<ExpressionToken> convertToRPN(@NotNull final List<ExpressionToken> tokens) {
         assert stack.empty();
         List<ExpressionToken> rpn = new ArrayList<>();
         for (ExpressionToken token : tokens) {
@@ -76,9 +76,9 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param tokens
-     * @return
+     * Evaluates given RPN sequence of tokens.
+     * @param tokens an expression in RPN.
+     * @return the calculated value of the expression.
      */
     @NotNull
     private BigDecimal evaluateRPN(@NotNull final List<ExpressionToken> tokens) throws Exception {
@@ -105,9 +105,9 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param number
-     * @return
+     * Creates a list containing single number token.
+     * @param number a number to be stored by list.
+     * @return list containing a number token.
      */
     @NotNull
     private List<ExpressionToken> singleTokenList(@NotNull final BigDecimal number) {
@@ -115,9 +115,9 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param symbol
-     * @return
+     * Creates a list containing single operator token.
+     * @param symbol a operator to be stored by list.
+     * @return list containing an operator token.
      */
     @NotNull
     private List<ExpressionToken> singleTokenList(char symbol) {
@@ -125,9 +125,9 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param token
-     * @return
+     * Creates a list containing single token.
+     * @param token a token to be stored by list.
+     * @return list containing a token.
      */
     @NotNull
     private List<ExpressionToken> singleTokenList(@NotNull final ExpressionToken token) {
@@ -137,9 +137,9 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param expression
-     * @return
+     * Given a string expression, splits it into tokens.
+     * @param expression an expression to be parsed.
+     * @return list of tokens.
      */
     @NotNull
     private List<ExpressionToken> splitIntoTokens(@NotNull final String expression) {
@@ -203,11 +203,11 @@ public class Calculator {
     }
 
     /**
-     *
-     * @param expression
-     * @return
+     * Given an expressing that starts with opening bracket, finds a place where this first bracket was closed.
+     * @param expression arithmetic expression.
+     * @return position right after the place where the first bracket was closed.
      */
-    private int findFirstBracketsBlock(@NotNull String expression) {
+    private int findFirstBracketsBlock(@NotNull final String expression) {
         assert expression.length() > 0 && expression.charAt(0) == '(';
         int balance = 0;
         for (int i = 0; i < expression.length(); i++) {
