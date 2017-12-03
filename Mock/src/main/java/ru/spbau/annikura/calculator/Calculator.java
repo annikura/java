@@ -110,8 +110,8 @@ public class Calculator {
      * @return list containing a number token.
      */
     @NotNull
-    private List<ExpressionToken> singleTokenList(@NotNull final BigDecimal number) {
-        return singleTokenList(new ExpressionToken(number));
+    private List<ExpressionToken> singletonList(@NotNull final BigDecimal number) {
+        return Collections.singletonList(new ExpressionToken(number));
     }
 
     /**
@@ -120,20 +120,8 @@ public class Calculator {
      * @return list containing an operator token.
      */
     @NotNull
-    private List<ExpressionToken> singleTokenList(char symbol) {
-        return singleTokenList(new ExpressionToken(symbol));
-    }
-
-    /**
-     * Creates a list containing single token.
-     * @param token a token to be stored by list.
-     * @return list containing a token.
-     */
-    @NotNull
-    private List<ExpressionToken> singleTokenList(@NotNull final ExpressionToken token) {
-        List<ExpressionToken> list = new ArrayList<>();
-        list.add(token);
-        return list;
+    private List<ExpressionToken> singletonList(char symbol) {
+        return Collections.singletonList(new ExpressionToken(symbol));
     }
 
     /**
@@ -149,7 +137,7 @@ public class Calculator {
 
         BigDecimal number = new BigDecimalValidator().validate(expression);
         if (number != null) {
-            return singleTokenList(number);
+            return singletonList(number);
         }
         switch (expression.charAt(0)) {
             case '-':
@@ -159,9 +147,9 @@ public class Calculator {
                 if (pos == expression.length()) {  // Expression looks like "(.*)"
                     return Stream
                             .of(
-                                    singleTokenList('('),
+                                    singletonList('('),
                                     splitIntoTokens(expression.substring(1, pos - 1)),
-                                    singleTokenList(')'))
+                                    singletonList(')'))
                             .flatMap(Collection::stream)
                             .collect(Collectors.toList());
                 }
@@ -171,7 +159,7 @@ public class Calculator {
                 return Stream
                         .of(
                                 splitIntoTokens(expression.substring(0, pos)),
-                                singleTokenList(expression.charAt(pos)),
+                                singletonList(expression.charAt(pos)),
                                 splitIntoTokens(expression.substring(pos + 1)))
                         .flatMap(Collection::stream)
                         .collect(Collectors.toList());
@@ -190,8 +178,8 @@ public class Calculator {
 
                     return Stream
                             .of(
-                                    singleTokenList(number),
-                                    singleTokenList(expression.charAt(opPos)),
+                                    singletonList(number),
+                                    singletonList(expression.charAt(opPos)),
                                     splitIntoTokens(expression.substring(opPos + 1)))
                             .flatMap(Collection::stream)
                             .collect(Collectors.toList());
