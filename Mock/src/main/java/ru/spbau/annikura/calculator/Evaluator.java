@@ -15,7 +15,6 @@ public class Evaluator {
      * @param args should contain a single arithmetical expression.
      */
     public static void main(@NotNull String[] args) {
-        args = new String[]{"5 + 5"};
         if (args.length != 1) {
             System.out.println(String.format(
                     "Exactly one argument was expected, found: %d.", args.length));

@@ -46,6 +46,10 @@ enum OperatorType {
         return priority;
     }
 
+    public static boolean isOperator(char op) {
+        return op == '-' || op == '+' || op == '*' || op == '/';
+    }
+
     static OperatorType createOperatorTypeInstance(char operator) {
         switch (operator) {
             case '+':

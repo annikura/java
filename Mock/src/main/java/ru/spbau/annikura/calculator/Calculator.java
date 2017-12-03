@@ -8,6 +8,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.lang.Character.isDigit;
+
 /**
  *
  */
@@ -48,11 +50,10 @@ public class Calculator {
     @NotNull
     private List<ExpressionToken> convertToRPN(@NotNull List<ExpressionToken> tokens) {
         assert stack.empty();
-
         List<ExpressionToken> rpn = new ArrayList<>();
         for (ExpressionToken token : tokens) {
             if (token.isClosingBracket()) {
-                while (stack.empty() && !stack.peek().isOpeningBracket()) {
+                while (!stack.empty() && !stack.peek().isOpeningBracket()) {
                     rpn.add(stack.pop());
                 }
                 if (stack.empty()) {
@@ -62,7 +63,8 @@ public class Calculator {
                 }
                 continue;
             }
-            while (!stack.empty() && token.getPriority() <= stack.peek().getPriority()) {
+            while (!stack.empty() && !stack.peek().isOpeningBracket() &&
+                    token.getPriority() <= stack.peek().getPriority()) {
                 rpn.add(stack.pop());
             }
             stack.push(token);
@@ -88,8 +90,9 @@ public class Calculator {
             if (token.isNumber()) {
                 stack.push(token);
             } else {
-                assert stack.size() >= 2;
-
+                if (stack.size() < 2) {
+                    throw new IllegalArgumentException("An error occurred. The expression is invalid.");
+                }
                 BigDecimal b = stack.pop().getNumber();
                 BigDecimal a = stack.pop().getNumber();
                 stack.push(new ExpressionToken(token.getOperator().evaluate(a, b)));
@@ -162,24 +165,34 @@ public class Calculator {
                             .flatMap(Collection::stream)
                             .collect(Collectors.toList());
                 }
+                if (!OperatorType.isOperator(expression.charAt(pos))) {
+                    throw new IllegalArgumentException("An error occurred. The expression is invalid.");
+                }
                 return Stream
                         .of(
                                 splitIntoTokens(expression.substring(0, pos)),
                                 singleTokenList(expression.charAt(pos)),
-                                splitIntoTokens(expression.substring(pos + 1, expression.length())))
+                                splitIntoTokens(expression.substring(pos + 1)))
                         .flatMap(Collection::stream)
                         .collect(Collectors.toList());
             default:
-                Scanner scanner = new Scanner(expression);
-                if (!scanner.hasNextBigDecimal()) {
+                int opPos = 0;
+                while (opPos < expression.length() &&
+                        isDigit(expression.charAt(opPos)) ||
+                        expression.charAt(opPos) == '.') {
+                    opPos++;
+                }
+                number = new BigDecimalValidator().validate(expression.substring(0, opPos));
+                if (number == null || !OperatorType.isOperator(expression.charAt(opPos))) {
                     throw new IllegalArgumentException("An error occurred. The expression is invalid.(2)");
                 }
                 try {
+
                     return Stream
                             .of(
-                                    singleTokenList(scanner.nextBigDecimal()),
-                                    singleTokenList(scanner.next(".").charAt(0)),
-                                    splitIntoTokens(scanner.next()))
+                                    singleTokenList(number),
+                                    singleTokenList(expression.charAt(opPos)),
+                                    splitIntoTokens(expression.substring(opPos + 1)))
                             .flatMap(Collection::stream)
                             .collect(Collectors.toList());
 
