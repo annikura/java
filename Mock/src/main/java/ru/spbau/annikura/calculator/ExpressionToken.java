@@ -96,8 +96,7 @@ class ExpressionToken {
         if (isNumber()) {
             return number;
         }
-        // TODO: replace with my exception.
-        throw new Exception("Illegal 'getNumber' call. Token is not a number.");
+        throw new UnsupportedOperationException("Illegal 'getNumber' call. Token is not a number.");
     }
 
     /**
@@ -110,8 +109,7 @@ class ExpressionToken {
         if (isOperator()) {
             return operator;
         }
-        // TODO: replace with my exception.
-        throw new Exception("Illegal 'getOperator' call. Token is not an operator.");
+        throw new UnsupportedOperationException("Illegal 'getOperator' call. Token is not an operator.");
     }
 
     /**
