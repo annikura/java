@@ -1,6 +1,7 @@
 package ru.spbau.annikura.calculator;
 
 import org.jetbrains.annotations.NotNull;
+import ru.spbau.annikura.stack.MyStack;
 
 import java.util.Stack;
 
@@ -23,7 +24,7 @@ public class Evaluator {
         String expression = args[0];
         expression = expression.replaceAll("\\s+", "");
         try {
-            System.out.printf(new Calculator(new Stack<>()).evaluate(expression).toString());
+            System.out.printf(new Calculator(new MyStack<>()).evaluate(expression).toString());
         } catch (IllegalArgumentException exception) {
             System.out.println(String.format(
                     "An error occurred while calculating expression: %s",
