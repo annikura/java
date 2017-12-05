@@ -3,6 +3,7 @@ package ru.spbau.annikura.calculator;
 import java.math.BigDecimal;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.jetbrains.annotations.NotNull;
+import ru.spbau.annikura.stack.MyStack;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,13 +15,13 @@ import static java.lang.Character.isDigit;
  * A class calculating the expression using the Reverse Polish notation. Works in O(n).
  */
 public class Calculator {
-    private Stack<ExpressionToken> stack;
+    private MyStack<ExpressionToken> stack;
 
     /**
      * Class constructor.
      * @param stack an empty stack of Expression tokens.
      */
-    public Calculator(@NotNull final Stack<ExpressionToken> stack) {
+    public Calculator(@NotNull final MyStack<ExpressionToken> stack) {
         if (!stack.empty()) {
             throw new IllegalArgumentException("Given stack should be empty.");
         }
