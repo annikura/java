@@ -123,15 +123,20 @@ class ExpressionToken {
         return tokenType.priority;
     }
 
+    /**
+     * Checks for equality.
+     * @param obj object to be compared with.
+     * @return true if objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ExpressionToken) {
             ExpressionToken token = (ExpressionToken) obj;
-            if (token.tokenType != tokenType)
+            if (!token.tokenType.equals(tokenType))
                 return false;
             switch (tokenType) {
                 case NUMBER: return token.number.equals(number);
-                case OPERATOR: return token.operator == operator;
+                case OPERATOR: return token.operator.equals(operator);
                 case CLOSING_BRACKET: return true;
                 case OPENING_BRACKET: return true;
             }
