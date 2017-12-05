@@ -17,6 +17,7 @@ enum OperatorType {
         }
     },
     MINUS(0) {
+        @NotNull
         public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b) {
             return a.subtract(b);
         }
@@ -69,6 +70,7 @@ enum OperatorType {
      * @param operator an operator to be created.
      * @return OperatorType instance if the given char was a valid operator.
      */
+    @NotNull
     static OperatorType createOperatorTypeInstance(char operator) {
         switch (operator) {
             case '+':
@@ -91,5 +93,7 @@ enum OperatorType {
      * @return result of the operation.
      * @throws IllegalArgumentException if zero division happened.
      */
-    public abstract BigDecimal evaluate(BigDecimal a, BigDecimal b) throws ArithmeticException;
+    @NotNull
+    public abstract BigDecimal evaluate(final @NotNull BigDecimal a, final @NotNull BigDecimal b)
+            throws ArithmeticException;
 }

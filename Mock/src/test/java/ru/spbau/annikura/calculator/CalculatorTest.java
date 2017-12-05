@@ -2,6 +2,7 @@ package ru.spbau.annikura.calculator;
 
 import org.junit.Test;
 import org.mockito.InOrder;
+import org.mockito.internal.verification.AtLeast;
 import ru.spbau.annikura.stack.MyStack;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CalculatorTest {
-    private final static boolean loggingOn = false;
+    private final static boolean loggingOn = true;
     private final ExpressionToken tokenPlus = new ExpressionToken('+');
     private final ExpressionToken tokenMinus = new ExpressionToken('-');
     private final ExpressionToken tokenMul = new ExpressionToken('*');
@@ -153,6 +154,23 @@ public class CalculatorTest {
 
 
     @Test
+    public void bracketsExpressionParseTest() throws Exception {
+        FakeStack fake = new FakeStack(loggingOn);
+        FakeStack spy = spy(fake);
+        Calculator calculator = new Calculator(spy);
+
+        //0 *(5 + 3)
+        BigDecimal a = BigDecimal.valueOf(5);
+        BigDecimal b = BigDecimal.valueOf(3);
+        ExpressionToken tokenA = new ExpressionToken(a);
+        ExpressionToken tokenB = new ExpressionToken(b);
+        List<ExpressionToken> list = Arrays.asList(tokenOpBracket, tokenA, tokenPlus, tokenB, tokenClBracket, tokenMul, tokenZero);
+
+        assertEquals(list, calculator.splitIntoTokens("(5+3)*0"));
+    }
+
+
+    @Test
     public void singleNumberConvertToRPNTest() {
         FakeStack fake = new FakeStack(loggingOn);
         FakeStack spy = spy(fake);
@@ -169,7 +187,6 @@ public class CalculatorTest {
         inOrder.verify(spy).pop();
         inOrder.verify(spy, never()).push(any());
         inOrder.verify(spy, never()).pop();
-        //assertEquals(Arrays.asList(tokenZero, tokenA, tokenMinus, tokenB, tokenPlus), calculator.splitIntoTokens("-5+3"));
     }
 
 
@@ -205,7 +222,7 @@ public class CalculatorTest {
         FakeStack spy = spy(fake);
         Calculator calculator = new Calculator(spy);
 
-        //5 + 3
+        //5 + 3 * 0
         BigDecimal a = BigDecimal.valueOf(5);
         BigDecimal b = BigDecimal.valueOf(3);
         ExpressionToken tokenA = new ExpressionToken(a);
@@ -226,6 +243,191 @@ public class CalculatorTest {
         inOrder.verify(spy, times(3)).pop();
         inOrder.verify(spy, never()).push(any());
         inOrder.verify(spy, never()).pop();
+    }
+
+    @Test
+    public void bracketsPriorityConvertToRPN1() throws Exception {
+        FakeStack fake = new FakeStack(loggingOn);
+        FakeStack spy = spy(fake);
+        Calculator calculator = new Calculator(spy);
+
+        //(5 + 3) * 0
+        BigDecimal a = BigDecimal.valueOf(5);
+        BigDecimal b = BigDecimal.valueOf(3);
+        ExpressionToken tokenA = new ExpressionToken(a);
+        ExpressionToken tokenB = new ExpressionToken(b);
+        List<ExpressionToken> list = Arrays.asList(tokenOpBracket, tokenA, tokenPlus, tokenB, tokenClBracket, tokenMul, tokenZero);
+        List<ExpressionToken> rpn = Arrays.asList(tokenA, tokenB, tokenPlus, tokenZero, tokenMul);
+
+        assertEquals(rpn, calculator.convertToRPN(list));
+
+        InOrder inOrder = inOrder(spy);
+        inOrder.verify(spy).push(tokenOpBracket);
+        inOrder.verify(spy).push(tokenA);
+        inOrder.verify(spy).pop();
+        inOrder.verify(spy).push(tokenPlus);
+        inOrder.verify(spy).push(tokenB);
+        inOrder.verify(spy).pop();
+        inOrder.verify(spy).pop();
+        inOrder.verify(spy).pop();
+        inOrder.verify(spy).push(tokenMul);
+        inOrder.verify(spy).push(tokenZero);
+        inOrder.verify(spy, times(2)).pop();
+        inOrder.verify(spy, never()).push(any());
+        inOrder.verify(spy, never()).pop();
+    }
+
+    @Test
+    public void bracketsPriorityConvertToRPN2() throws Exception {
+        FakeStack fake = new FakeStack(loggingOn);
+        FakeStack spy = spy(fake);
+        Calculator calculator = new Calculator(spy);
+
+        //0 *(5 + 3)
+        BigDecimal a = BigDecimal.valueOf(5);
+        BigDecimal b = BigDecimal.valueOf(3);
+        ExpressionToken tokenA = new ExpressionToken(a);
+        ExpressionToken tokenB = new ExpressionToken(b);
+        List<ExpressionToken> list = Arrays.asList(tokenZero, tokenMul, tokenOpBracket, tokenA, tokenPlus, tokenB, tokenClBracket);
+        List<ExpressionToken> rpn = Arrays.asList(tokenZero, tokenA, tokenB, tokenPlus, tokenMul);
+
+        assertEquals(rpn, calculator.convertToRPN(list));
+
+        InOrder inOrder = inOrder(spy);
+        inOrder.verify(spy).push(tokenZero);
+        inOrder.verify(spy).pop();
+        inOrder.verify(spy).push(tokenMul);
+        inOrder.verify(spy).push(tokenOpBracket);
+        inOrder.verify(spy).push(tokenA);
+        inOrder.verify(spy).pop();
+        inOrder.verify(spy).push(tokenPlus);
+        inOrder.verify(spy).push(tokenB);
+        inOrder.verify(spy, times(4)).pop();
+        inOrder.verify(spy, never()).push(any());
+        inOrder.verify(spy, never()).pop();
+    }
+
+    @Test
+    public void simpleEvaluation() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        assertEquals(BigDecimal.ZERO, calculator.evaluate("0"));
+    }
+
+
+    @Test
+    public void plusEvaluation() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        assertEquals(BigDecimal.valueOf(2), calculator.evaluate("-5+7"));
+    }
+
+    @Test
+    public void complexEvaluation() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        assertEquals(BigDecimal.valueOf(-19), calculator.evaluate("-5+7*(2-4)"));
+    }
+
+
+    @Test
+    public void unaryMinusBeforeBracketEvaluation() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        assertEquals(BigDecimal.valueOf(11), calculator.evaluate("-(5-7)+9"));
+    }
+
+
+    @Test
+    public void divisionEvaluation() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        assertEquals(BigDecimal.valueOf(5), calculator.evaluate("-(5-7)+9/3"));
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void zeroDivision() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("1/(3-3)");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void bracketsMismatch() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("3)");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidExpression() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("dfas8");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void oddSpaces() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("5 - 3");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void notOperatorAfterBracket() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("(3 - 3)5");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyExpression() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptySubxpression() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("()+5");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void openingBracketMismatch() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("(3");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void lackOfOperators() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        Calculator calculator = new Calculator(fake);
+
+        calculator.evaluate("7(8)");
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void notEmptyStack() throws Exception {
+        FakeStack fake = new FakeStack(false);
+        fake.push(tokenZero);
+        Calculator calculator = new Calculator(fake);
     }
 }
 

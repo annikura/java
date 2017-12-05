@@ -175,19 +175,13 @@ public class Calculator {
                 if (number == null || !OperatorType.isOperator(expression.charAt(opPos))) {
                     throw new IllegalArgumentException("An error occurred. The expression is invalid.(2)");
                 }
-                try {
-
-                    return Stream
-                            .of(
-                                    singletonList(number),
-                                    singletonList(expression.charAt(opPos)),
-                                    splitIntoTokens(expression.substring(opPos + 1)))
-                            .flatMap(Collection::stream)
-                            .collect(Collectors.toList());
-
-                } catch (NoSuchElementException exception) {
-                    throw new IllegalArgumentException("An error occurred. The expression is invalid.(3)");
-                }
+                return Stream
+                        .of(
+                                singletonList(number),
+                                singletonList(expression.charAt(opPos)),
+                                splitIntoTokens(expression.substring(opPos + 1)))
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toList());
         }
     }
 
