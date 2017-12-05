@@ -1,11 +1,14 @@
 package ru.spbau.annikura.calculator;
 
-import java.math.BigDecimal;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.stack.MyStack;
 
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

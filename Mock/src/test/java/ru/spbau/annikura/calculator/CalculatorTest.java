@@ -2,7 +2,6 @@ package ru.spbau.annikura.calculator;
 
 import org.junit.Test;
 import org.mockito.InOrder;
-import org.mockito.internal.verification.AtLeast;
 import ru.spbau.annikura.stack.MyStack;
 
 import java.math.BigDecimal;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CalculatorTest {
-    private final static boolean loggingOn = true;
+    private final static boolean loggingOn = false;
     private final ExpressionToken tokenPlus = new ExpressionToken('+');
     private final ExpressionToken tokenMinus = new ExpressionToken('-');
     private final ExpressionToken tokenMul = new ExpressionToken('*');
