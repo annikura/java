@@ -49,7 +49,7 @@ public class Calculator {
      * @return list of tokens representing a given expression in RPN.
      */
     @NotNull
-    private List<ExpressionToken> convertToRPN(@NotNull final List<ExpressionToken> tokens) {
+    List<ExpressionToken> convertToRPN(@NotNull final List<ExpressionToken> tokens) {
         assert stack.empty();
         List<ExpressionToken> rpn = new ArrayList<>();
         for (ExpressionToken token : tokens) {
@@ -82,7 +82,7 @@ public class Calculator {
      * @return the calculated value of the expression.
      */
     @NotNull
-    private BigDecimal evaluateRPN(@NotNull final List<ExpressionToken> tokens) throws Exception {
+    BigDecimal evaluateRPN(@NotNull final List<ExpressionToken> tokens) throws Exception {
         assert stack.empty();
 
         for (ExpressionToken token : tokens) {
@@ -111,7 +111,7 @@ public class Calculator {
      * @return list containing a number token.
      */
     @NotNull
-    private List<ExpressionToken> singletonList(@NotNull final BigDecimal number) {
+    List<ExpressionToken> singletonList(@NotNull final BigDecimal number) {
         return Collections.singletonList(new ExpressionToken(number));
     }
 
@@ -121,7 +121,7 @@ public class Calculator {
      * @return list containing an operator token.
      */
     @NotNull
-    private List<ExpressionToken> singletonList(char symbol) {
+    List<ExpressionToken> singletonList(char symbol) {
         return Collections.singletonList(new ExpressionToken(symbol));
     }
 
@@ -131,7 +131,7 @@ public class Calculator {
      * @return list of tokens.
      */
     @NotNull
-    private List<ExpressionToken> splitIntoTokens(@NotNull final String expression) {
+    List<ExpressionToken> splitIntoTokens(@NotNull final String expression) {
         if (expression.length() == 0) {
             throw new IllegalArgumentException("An error occurred. The expression is invalid. (0)");
         }
@@ -196,7 +196,7 @@ public class Calculator {
      * @param expression arithmetic expression.
      * @return position right after the place where the first bracket was closed.
      */
-    private int findFirstBracketsBlock(@NotNull final String expression) {
+    int findFirstBracketsBlock(@NotNull final String expression) {
         assert expression.length() > 0 && expression.charAt(0) == '(';
         int balance = 0;
         for (int i = 0; i < expression.length(); i++) {

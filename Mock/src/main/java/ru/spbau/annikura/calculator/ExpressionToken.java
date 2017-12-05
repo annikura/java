@@ -122,4 +122,20 @@ class ExpressionToken {
         }
         return tokenType.priority;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ExpressionToken) {
+            ExpressionToken token = (ExpressionToken) obj;
+            if (token.tokenType != tokenType)
+                return false;
+            switch (tokenType) {
+                case NUMBER: return token.number.equals(number);
+                case OPERATOR: return token.operator == operator;
+                case CLOSING_BRACKET: return true;
+                case OPENING_BRACKET: return true;
+            }
+        }
+        return false;
+    }
 }
