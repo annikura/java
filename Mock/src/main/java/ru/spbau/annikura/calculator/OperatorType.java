@@ -3,6 +3,7 @@ package ru.spbau.annikura.calculator;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 /**
  * Operators enum.
@@ -11,32 +12,26 @@ import java.math.BigDecimal;
 enum OperatorType {
     PLUS(0) {
         @NotNull
-        public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b)
-                throws IllegalArgumentException {
+        public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b) {
             return a.add(b);
         }
     },
     MINUS(0) {
-        public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b)
-                throws IllegalArgumentException {
+        public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b) {
             return a.subtract(b);
         }
     },
     MUL(1) {
         @NotNull
-        public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b)
-                throws IllegalArgumentException {
+        public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b) {
             return a.multiply(b);
         }
     },
     DIV(1) {
         @NotNull
         public BigDecimal evaluate(@NotNull BigDecimal a, @NotNull BigDecimal b)
-                throws IllegalArgumentException {
-            if (b.equals(BigDecimal.ZERO)) {
-                throw new IllegalArgumentException("Zero division happened.");
-            }
-            return a.divide(b, 10, BigDecimal.ROUND_HALF_UP);
+                throws ArithmeticException {
+            return a.divide(b, MathContext.DECIMAL128);
         }
     };
 
@@ -96,5 +91,5 @@ enum OperatorType {
      * @return result of the operation.
      * @throws IllegalArgumentException if zero division happened.
      */
-    public abstract BigDecimal evaluate(BigDecimal a, BigDecimal b) throws IllegalArgumentException;
+    public abstract BigDecimal evaluate(BigDecimal a, BigDecimal b) throws ArithmeticException;
 }
