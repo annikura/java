@@ -1,10 +1,20 @@
 package ru.spbau.annikura.injection;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class InjectorTest {
+    @Before
+    public void clearInstanceCounter() {
+        InstanceCounter.cnt = 0;
+    }
+
+    @Test
+    public void createInjectorInstance() {
+        Injector injector = new Injector();
+    }
 
     @Test(expected = InjectionCycleException.class)
     public void selfDependency() throws Exception {
@@ -17,7 +27,7 @@ public class InjectorTest {
     }
 
     @Test(expected = AmbiguousImplementationException.class)
-    public void ambigiousCall() throws Exception {
+    public void ambiguousCall() throws Exception {
         Injector.initialize("ru.spbau.annikura.injection.DependingOnSimple",
                 SimpleClass.class,
                 ExtendingSimple.class);
@@ -28,7 +38,7 @@ public class InjectorTest {
         DependingOnSimple cls = (DependingOnSimple) Injector.initialize(
                 "ru.spbau.annikura.injection.DependingOnSimple",
                 SimpleClass.class);
-        assertEquals(cls.num, 6);
+        assertEquals(cls.getNum(), 6);
     }
 
 
@@ -37,7 +47,7 @@ public class InjectorTest {
         DependingOnSimple cls = (DependingOnSimple) Injector.initialize(
                 "ru.spbau.annikura.injection.DependingOnSimple",
                 ExtendingSimple.class);
-        assertEquals(cls.num, 2);
+        assertEquals(cls.getNum(), 2);
     }
 
     @Test
@@ -45,7 +55,7 @@ public class InjectorTest {
         DependingOnSimple cls = (DependingOnSimple) Injector.initialize(
                 "ru.spbau.annikura.injection.DependingOnSimple",
                 ExtendingSimple.class, FirstInLoop.class, SecondInLoop.class, ThirdInLoop.class);
-        assertEquals(cls.num, 2);
+        assertEquals(cls.getNum(), 2);
     }
 
     @Test(expected = InjectionCycleException.class)
@@ -56,15 +66,33 @@ public class InjectorTest {
     }
 
     @Test
-    public void testInstanciatedOnce() throws Exception {
+    public void testInstantiatedOnce() throws Exception {
         Injector.initialize(
                 "ru.spbau.annikura.injection.DoubleDepending",
                 InstanceCounter.class);
         assertEquals(1, InstanceCounter.cnt);
     }
 
+
+    @Test
+    public void complexTestInstantiatedOnce() throws Exception {
+        Injector.initialize(
+                "ru.spbau.annikura.injection.DoubleDoubleDepending",
+                InstanceCounter.class, DoubleDepending.class);
+        assertEquals(1, InstanceCounter.cnt);
+    }
+
+    @Test(expected = ImplementationNotFoundException.class)
+    public void severalLeveledNotFound() throws Exception {
+        Injector.initialize(
+                "ru.spbau.annikura.injection.FirstInLoop",
+                ExtendingSimple.class, SecondInLoop.class);
+    }
 }
 
+class DoubleDoubleDepending {
+    DoubleDoubleDepending(DoubleDepending a, InstanceCounter b) {}
+}
 
 class DoubleDepending {
     DoubleDepending(InstanceCounter a, InstanceCounter b) {}
@@ -96,7 +124,10 @@ class ThirdInLoop {
 
 
 class SimpleClass {
-    int num = 4;
+    protected int num = 4;
+    public int getNum() {
+        return num;
+    }
 }
 
 class ExtendingSimple extends SimpleClass {
@@ -106,9 +137,12 @@ class ExtendingSimple extends SimpleClass {
 }
 
 class DependingOnSimple {
-    int num;
+    private int num;
     DependingOnSimple(SimpleClass simpleClass) {
-        num = simpleClass.num + 2;
+        num = simpleClass.getNum() + 2;
+    }
+    public int getNum() {
+        return num;
     }
 }
 

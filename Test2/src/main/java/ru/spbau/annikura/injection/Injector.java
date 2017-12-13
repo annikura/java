@@ -22,6 +22,9 @@ public class Injector {
      * @throws ImplementationNotFoundException if its impossible to create a head class instance
      * with only used of the given set of classes
      * @throws ClassNotFoundException if rootClassName class was not found
+     * @throws InvocationTargetException if Injector failed to create one of the instances due to an invocation error
+     * @throws InstantiationException if Injector failed to create one of the instances due to an instantiation error
+     * @throws IllegalAccessException if Injector failed to create one of the instances due to an access error
      */
     @NotNull
     public static Object initialize(final @NotNull String rootClassName,
@@ -54,17 +57,17 @@ public class Injector {
                 }
             }
             if (cnt > 1) {
-                throw new AmbiguousImplementationException("AmbiguousImplementationException");
+                throw new AmbiguousImplementationException("Unable to decide which class should be instantiated.");
             }
             if (cnt == 0) {
-                throw new ImplementationNotFoundException("ImplementationNotFoundException");
+                throw new ImplementationNotFoundException("Could not found a dependency to instantiate");
             }
             if (instances.get(nextClass) != null) {
                 args[i] = instances.get(parameters[i]);
                 continue;
             }
             if (used.contains(nextClass)) {
-                throw new InjectionCycleException("");
+                throw new InjectionCycleException("A cycle was found, cannot be instantiated.");
             }
             instances.put(nextClass, createInstances(nextClass, classes, instances, used));
             args[i] = instances.get(nextClass);
