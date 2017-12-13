@@ -59,16 +59,15 @@ public class Injector {
             if (cnt == 0) {
                 throw new ImplementationNotFoundException("ImplementationNotFoundException");
             }
-            if (used.contains(nextClass)) {
-
-                throw new InjectionCycleException("InjectionCycleException");
-            }
-
             if (instances.get(nextClass) != null) {
                 args[i] = instances.get(parameters[i]);
                 continue;
             }
-            args[i] = createInstances(nextClass, classes, instances, used);
+            if (used.contains(nextClass)) {
+                throw new InjectionCycleException("InjectionCycleException");
+            }
+            instances.put(nextClass, createInstances(nextClass, classes, instances, used));
+            args[i] = instances.get(nextClass);
         }
         return constructor.newInstance(args);
     }
