@@ -2,60 +2,7 @@ package ru.spbau.annikura.injection;
 
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static org.junit.Assert.*;
-
-class DoubleDepending {
-    DoubleDepending(InstanceCounter a, InstanceCounter b) {}
-}
-
-class InstanceCounter {
-    static int cnt = 0;
-    InstanceCounter() {
-        cnt++;
-    }
-}
-
-class DependingOnLoop {
-    DependingOnLoop(SecondInLoop secondInLoop) {}
-}
-
-class FirstInLoop {
-    FirstInLoop(SecondInLoop secondInLoop) {}
-}
-
-class SecondInLoop {
-    SecondInLoop(ThirdInLoop ThirdInLoop) {}
-}
-
-
-class ThirdInLoop {
-    ThirdInLoop(FirstInLoop firstInLoop) {}
-}
-
-
-class SimpleClass {
-    int num = 4;
-}
-
-class ExtendingSimple extends SimpleClass {
-    ExtendingSimple() {
-        num = 0;
-    }
-}
-
-class DependingOnSimple {
-    int num;
-    DependingOnSimple(SimpleClass simpleClass) {
-        num = simpleClass.num + 2;
-    }
-}
-
-
-class SelfDependent {
-    SelfDependent(SelfDependent selfDependent) {}
-}
 
 public class InjectorTest {
 
@@ -116,4 +63,56 @@ public class InjectorTest {
         assertEquals(1, InstanceCounter.cnt);
     }
 
+}
+
+
+class DoubleDepending {
+    DoubleDepending(InstanceCounter a, InstanceCounter b) {}
+}
+
+class InstanceCounter {
+    static int cnt = 0;
+    InstanceCounter() {
+        cnt++;
+    }
+}
+
+class DependingOnLoop {
+    DependingOnLoop(SecondInLoop secondInLoop) {}
+}
+
+class FirstInLoop {
+    FirstInLoop(SecondInLoop secondInLoop) {}
+}
+
+class SecondInLoop {
+    SecondInLoop(ThirdInLoop ThirdInLoop) {}
+}
+
+
+class ThirdInLoop {
+    ThirdInLoop(FirstInLoop firstInLoop) {}
+}
+
+
+class SimpleClass {
+    int num = 4;
+}
+
+class ExtendingSimple extends SimpleClass {
+    ExtendingSimple() {
+        num = 0;
+    }
+}
+
+class DependingOnSimple {
+    int num;
+    DependingOnSimple(SimpleClass simpleClass) {
+        num = simpleClass.num + 2;
+    }
+}
+
+
+class SelfDependent {
+    SelfDependent(SelfDependent selfDependent) {}
 }

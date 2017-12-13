@@ -64,7 +64,7 @@ public class Injector {
                 continue;
             }
             if (used.contains(nextClass)) {
-                throw new InjectionCycleException("InjectionCycleException");
+                throw new InjectionCycleException("");
             }
             instances.put(nextClass, createInstances(nextClass, classes, instances, used));
             args[i] = instances.get(nextClass);
