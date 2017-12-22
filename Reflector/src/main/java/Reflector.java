@@ -3,17 +3,13 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Reflector {
-    public static void main(String[] args) {
-        printStructure(Reflector.class);
-    }
+    private static final String OBJECT = "java.lang.Object";
 
-    public static void printStructure(Class<?> cls) {
+    public static void printStructure(final @NotNull Class<?> cls) {
         List<String> strings = convertClassToStrings(cls);
         try (PrintWriter writer = new PrintWriter(cls.getName() + ".java", "UTF-8")) {
             for (String str : strings) {
@@ -24,16 +20,41 @@ public class Reflector {
         }
     }
 
+    public static void diffClasses(final @NotNull Class<?> cls1, final @NotNull Class<?> cls2) {
+        List<String> cls1Strings1 = convertClassToStrings(cls1);
+        List<String> cls1Strings2 = convertClassToStrings(cls2);
+        List<String> firstDiff =  getFirstHasSecondDoesnt(cls1Strings1, cls1Strings2);
+        List<String> secondDiff = getFirstHasSecondDoesnt(cls1Strings2, cls1Strings1);
+        if (!firstDiff.isEmpty()) {
+            System.out.println("Methods, fields and classes which were declared in the first given class" +
+                    " and not declared in the second");
+            for (String str : firstDiff)
+                System.out.println(str);
+        }
+        if (!secondDiff.isEmpty()) {
+            System.out.println("Methods, fields and classes which were declared in the second given class" +
+                    " and not declared in the first");
+            for (String str : secondDiff)
+                System.out.println(str);
+        }
+    }
+
+    private static List<String> getFirstHasSecondDoesnt(List<String> cls1Strings1, List<String> cls1Strings2) {
+        HashSet<String> set = new HashSet<>();
+        set.addAll(cls1Strings1);
+        set.removeAll(cls1Strings2);
+        return new ArrayList<>(set);
+    }
+
     /**
      * Prints the class into a list.
      * @param cls class to be printed.
      * @return a list of strings, line-by-line describing a class represented by a given Class instance
      */
     @NotNull
-    static List<String> convertClassToStrings(final @NotNull Class<?> cls) {
+    private static List<String> convertClassToStrings(final @NotNull Class<?> cls) {
         ArrayList<String> result = new ArrayList<>();
         result.add(cls.toGenericString() + " " + getStringSuper(cls) + " {");
-        //Todo: add support of extends/implements
         for (Field field : cls.getDeclaredFields()) {
             if (field.isSynthetic()) {
                 continue;
@@ -51,11 +72,13 @@ public class Reflector {
         return result;
     }
 
-    private static String joinList(List<String> list) {
+    @NotNull
+    private static String joinList(final @NotNull List<String> list) {
         return list.stream().collect(Collectors.joining("\n", "", "\n"));
     }
 
-    private static List<String> convertInterfaceToStrings(Class<?> cls) {
+    @NotNull
+    private static List<String> convertInterfaceToStrings(final @NotNull Class<?> cls) {
         List<String> result = new ArrayList<>();
         result.add(String.join(
                 " ",
@@ -64,7 +87,6 @@ public class Reflector {
                 cls.getName(),
                 getStringSuper(cls),
                 "{"));
-        //Todo: add support of extends;
         result.addAll(addTabs(getStringFields(cls)));
         for (Method method : cls.getDeclaredMethods()) {
             if (method.isSynthetic()) {
@@ -76,7 +98,8 @@ public class Reflector {
         return result;
     }
 
-    private static List<String> getStringFields(Class<?> cls) {
+    @NotNull
+    private static List<String> getStringFields(final @NotNull Class<?> cls) {
         List<String> result = new ArrayList<>();
         for (Field field : cls.getDeclaredFields()) {
             if (field.isSynthetic()) {
@@ -87,7 +110,8 @@ public class Reflector {
         return result;
     }
 
-    private static List<String> getStringDeclaredClasses(Class<?> cls) {
+    @NotNull
+    private static List<String> getStringDeclaredClasses(final @NotNull Class<?> cls) {
         List<String> result = new ArrayList<>();
         for (Class<?> inClass : cls.getDeclaredClasses()) {
             if (cls.isSynthetic()) {
@@ -104,7 +128,8 @@ public class Reflector {
         return result;
     }
 
-    private static String convertFieldToString(Field field) {
+    @NotNull
+    private static String convertFieldToString(final @NotNull Field field) {
         return String.join(" ",
                 Modifier.toString(field.getModifiers()),
                 getTypeString(field.getGenericType()),
@@ -113,11 +138,13 @@ public class Reflector {
                 standardValue(field.getType()));
     }
 
-    private static List<String> addTabs(List<String> list) {
+    @NotNull
+    private static List<String> addTabs(final @NotNull List<String> list) {
         return list.stream().map(s -> "\t" + s).collect(Collectors.toList());
     }
 
-    private static List<String> convertMethodToStrings(Method method) {
+    @NotNull
+    private static List<String> convertMethodToStrings(final @NotNull Method method) {
         List<String> result = new ArrayList<>();
         result.add(getMethodSignature(method) + " {");
         result.add("\treturn " + standardValue(method.getReturnType()) + ";");
@@ -125,7 +152,8 @@ public class Reflector {
         return result;
     }
 
-    private static String getMethodSignature(Method method) {
+    @NotNull
+    private static String getMethodSignature(final @NotNull Method method) {
         StringBuilder result = new StringBuilder(String.join(" ",
                 Modifier.toString(method.getModifiers()),
                 genericParametersToString(method.getTypeParameters()),
@@ -147,7 +175,8 @@ public class Reflector {
         return result.toString();
     }
 
-    private static String standardValue(Class<?> type) {
+    @NotNull
+    private static String standardValue(final @NotNull Class<?> type) {
         if (!type.isPrimitive())
             return "null";
         if (type.equals(Boolean.TYPE))
@@ -169,7 +198,8 @@ public class Reflector {
         return "";
     }
 
-    private static String getStringSuper(Class<?> cls) {
+    @NotNull
+    private static String getStringSuper(final @NotNull Class<?> cls) {
         String superClass = getStringSuperclass(cls);
         String superInterfaces = getStringSuperInterfaces(cls);
         if (superClass.isEmpty()) {
@@ -181,13 +211,18 @@ public class Reflector {
         return superClass + ", " + superInterfaces;
     }
 
-    private static String getStringSuperclass(Class<?> cls) {
+    @NotNull
+    private static String getStringSuperclass(final @NotNull Class<?> cls) {
         if (cls.getSuperclass() == null)
             return "";
-        return "extends " +  getTypeString(cls.getGenericSuperclass());
+        String superclass = getTypeString(cls.getGenericSuperclass());
+        if (superclass.equals(OBJECT))
+            return "";
+        return "extends " + superclass;
     }
 
-    private static String getStringSuperInterfaces(Class<?> cls) {
+    @NotNull
+    private static String getStringSuperInterfaces(final @NotNull Class<?> cls) {
         if (cls.getGenericInterfaces().length == 0)
             return "";
         StringBuilder result = new StringBuilder("implements ");
@@ -202,29 +237,83 @@ public class Reflector {
         return result.toString();
     }
 
-    private static String getTypeString(Type type) {
+    @NotNull
+    private static String getTypeString(final @NotNull Type type) {
+        if (type instanceof GenericArrayType) {
+            GenericArrayType genericArrayType = (GenericArrayType) type;
+            return getTypeString(genericArrayType.getGenericComponentType()) + "[]";
+        }
+        if (type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
+            return getTypeString(parameterizedType.getRawType()) +
+                   genericParametersToString(parameterizedType.getActualTypeArguments());
+        }
+        if (type instanceof  TypeVariable<?>) {
+            return getTypeVariableString((TypeVariable<?>) type);
+        }
+        if (type instanceof WildcardType) {
+            return getWildcardString((WildcardType) type);
+        }
         return type.getTypeName();
     }
 
-    static String genericParametersToString(TypeVariable<?>[] typeParameters) {
-        ArrayList<String> result = new ArrayList<>();
+    @NotNull
+    private static String getTypeVariableString(final @NotNull TypeVariable<?> typeVariable) {
+        StringBuilder result = new StringBuilder(typeVariable.getName());
+        boolean putAmpersand = false;
+        for (Type bound : typeVariable.getBounds()) {
+            if (bound.getTypeName().equals(OBJECT)) {
+                continue;
+            }
+            if (putAmpersand) {
+                result.append(" & ");
+            } else {
+                result.append(" extends ");
+                putAmpersand = true;
+            }
+            result.append(getTypeString(bound));
+        }
+        return result.toString();
+    }
+
+    @NotNull
+    private static String getWildcardString(final @NotNull WildcardType wildcardType) {
+        StringBuilder result = new StringBuilder("?");
+        boolean addSuper = false;
+        for (Type lowerBound : wildcardType.getLowerBounds()) {
+            if (lowerBound.getTypeName().equals(OBJECT)) {
+                return OBJECT;
+            }
+            assert !addSuper;
+            result.append(" super ");
+            addSuper = true;
+            result.append(getTypeString(lowerBound));
+        }
+
+        boolean addExtends = false;
+        for (Type upperBound : wildcardType.getUpperBounds()) {
+            if (upperBound.getTypeName().equals(OBJECT)) {
+                continue;
+            }
+            if (addExtends) {
+                result.append(" & ");
+            }
+            if (!addExtends) {
+                result.append(" extends ");
+                addExtends = true;
+            }
+            result.append(getTypeString(upperBound));
+        }
+        return result.toString();
+    }
+
+    @NotNull
+    private static String genericParametersToString(final @NotNull Type[] typeParameters) {
         if (typeParameters.length == 0) {
             return "";
         }
-        for (TypeVariable parameter : typeParameters) {
-            Type[] types = parameter.getBounds();
-            if (types.length == 0) {
-                result.add(parameter.getName());
-                continue;
-            }
-            //ToDo: replace with checking for wildcards, parametrized values, etc.
-            result.add(Arrays.stream(types)
-                    .map(Type::getTypeName)
-                    .collect(Collectors.joining(
-                            " & ",
-                            parameter.getName() + " extends ",
-                            "")));
-        }
-        return result.stream().collect(Collectors.joining(", ", "<", ">"));
+        return Arrays.stream(typeParameters)
+                .map(Reflector::getTypeString)
+                .collect(Collectors.joining(", ", "<", ">"));
     }
 }
