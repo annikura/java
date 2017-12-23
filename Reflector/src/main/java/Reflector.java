@@ -36,7 +36,9 @@ public class Reflector {
      */
     public static void diffClasses(final @NotNull Class<?> cls1, final @NotNull Class<?> cls2) {
         List<String> cls1Strings1 = convertClassToStrings(cls1);
+        cls1Strings1.remove(0);
         List<String> cls1Strings2 = convertClassToStrings(cls2);
+        cls1Strings2.remove(0);
         List<String> firstDiff =  getFirstHasSecondDoesnt(cls1Strings1, cls1Strings2);
         List<String> secondDiff = getFirstHasSecondDoesnt(cls1Strings2, cls1Strings1);
         if (!firstDiff.isEmpty()) {
@@ -75,13 +77,8 @@ public class Reflector {
     @NotNull
     static List<String> convertClassToStrings(final @NotNull Class<?> cls) {
         ArrayList<String> result = new ArrayList<>();
-        result.add(cls.toGenericString() + " " + getStringSuper(cls) + " {");
-        for (Field field : cls.getDeclaredFields()) {
-            if (field.isSynthetic()) {
-                continue;
-            }
-            result.add("\t" + convertFieldToString(field) + ";");
-        }
+        result.add(getClassSignature(cls));
+        result.addAll(addTabs(getStringFields(cls)));
         for (Method method : cls.getDeclaredMethods()) {
             if (method.isSynthetic()) {
                 continue;
@@ -90,6 +87,20 @@ public class Reflector {
         }
         result.addAll(getStringDeclaredClasses(cls));
         result.add("}");
+        return result;
+    }
+
+    private static String getClassSignature(Class<?> cls) {
+        String result = "";
+        if (cls.getModifiers() != 0) {
+            result = Modifier.toString(cls.getModifiers()) + " ";
+        }
+        result += "class " + cls.getName() + genericParametersToString(cls.getTypeParameters());
+        String extenders = getStringSuper(cls);
+        if (!extenders.isEmpty()) {
+            result += " " + extenders;
+        }
+        result += " {";
         return result;
     }
 
@@ -114,7 +125,6 @@ public class Reflector {
         result.add(String.join(
                 " ",
                 Modifier.toString(cls.getModifiers()),
-                "interface",
                 cls.getName(),
                 getStringSuper(cls),
                 "{"));
@@ -123,9 +133,10 @@ public class Reflector {
             if (method.isSynthetic()) {
                 continue;
             }
-            result.add(getMethodSignature(method) + ";");
+            result.add("\t" + getMethodSignature(method) + ";");
         }
         result.addAll(getStringDeclaredClasses(cls));
+        result.add("}");
         return result;
     }
 
@@ -141,7 +152,7 @@ public class Reflector {
             if (field.isSynthetic()) {
                 continue;
             }
-            result.add(convertFieldToString(field));
+            result.add(convertFieldToString(field) + ";");
         }
         return result;
     }
@@ -154,7 +165,7 @@ public class Reflector {
                 continue;
             }
             List<String> inClassStrings;
-            if (cls.isInterface()) {
+            if (inClass.isInterface()) {
                 inClassStrings =  convertInterfaceToStrings(inClass);
             } else {
                 inClassStrings = convertClassToStrings(inClass);
