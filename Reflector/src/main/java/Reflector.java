@@ -6,9 +6,18 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This class can be used for dumping classes using reflection or comparing two classes by
+ * structure and printing their diff
+ */
 public class Reflector {
     private static final String OBJECT = "java.lang.Object";
 
+    /**
+     * Given a Class instance, prints the class represented by this Class instance into a file
+     * named "%Given class name%.java".
+     * @param cls class to be printed.
+     */
     public static void printStructure(final @NotNull Class<?> cls) {
         List<String> strings = convertClassToStrings(cls);
         try (PrintWriter writer = new PrintWriter(cls.getName() + ".java", "UTF-8")) {
@@ -20,6 +29,11 @@ public class Reflector {
         }
     }
 
+    /**
+     * Compares two classes and prints their diff.
+     * @param cls1 first class to compare
+     * @param cls2 second class to compare
+     */
     public static void diffClasses(final @NotNull Class<?> cls1, final @NotNull Class<?> cls2) {
         List<String> cls1Strings1 = convertClassToStrings(cls1);
         List<String> cls1Strings2 = convertClassToStrings(cls2);
@@ -39,7 +53,14 @@ public class Reflector {
         }
     }
 
-    private static List<String> getFirstHasSecondDoesnt(List<String> cls1Strings1, List<String> cls1Strings2) {
+    /**
+     * Given two lists of strings, gives back the list of strings from the first list which
+     * were not met in the second list.
+     * @param cls1Strings1 list where strings will be taken from.
+     * @param cls1Strings2 list of the strings that will be erased from the result list.
+     * @return list of strings contained in the first list, but not in the second one.
+     */
+    static List<String> getFirstHasSecondDoesnt(List<String> cls1Strings1, List<String> cls1Strings2) {
         HashSet<String> set = new HashSet<>();
         set.addAll(cls1Strings1);
         set.removeAll(cls1Strings2);
@@ -52,7 +73,7 @@ public class Reflector {
      * @return a list of strings, line-by-line describing a class represented by a given Class instance
      */
     @NotNull
-    private static List<String> convertClassToStrings(final @NotNull Class<?> cls) {
+    static List<String> convertClassToStrings(final @NotNull Class<?> cls) {
         ArrayList<String> result = new ArrayList<>();
         result.add(cls.toGenericString() + " " + getStringSuper(cls) + " {");
         for (Field field : cls.getDeclaredFields()) {
@@ -72,13 +93,23 @@ public class Reflector {
         return result;
     }
 
+    /**
+     * Given a list of strings, joins it with the '\n' delimiter.
+     * @param list list to be joined
+     * @return result string.
+     */
     @NotNull
-    private static String joinList(final @NotNull List<String> list) {
+    static String joinList(final @NotNull List<String> list) {
         return list.stream().collect(Collectors.joining("\n", "", "\n"));
     }
 
+    /**
+     * Given an interface Class, returns this interface represented as a list of strings.
+     * @param cls interface to be converted.
+     * @return list of strings representing the given interface.
+     */
     @NotNull
-    private static List<String> convertInterfaceToStrings(final @NotNull Class<?> cls) {
+    static List<String> convertInterfaceToStrings(final @NotNull Class<?> cls) {
         List<String> result = new ArrayList<>();
         result.add(String.join(
                 " ",
@@ -98,8 +129,13 @@ public class Reflector {
         return result;
     }
 
+    /**
+     * Given a Class instance, returns ist of its fields converted into strings.
+     * @param cls a Class instance where the fields will be taken from.
+     * @return list of fields converted into strings.
+     */
     @NotNull
-    private static List<String> getStringFields(final @NotNull Class<?> cls) {
+    static List<String> getStringFields(final @NotNull Class<?> cls) {
         List<String> result = new ArrayList<>();
         for (Field field : cls.getDeclaredFields()) {
             if (field.isSynthetic()) {
@@ -111,7 +147,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static List<String> getStringDeclaredClasses(final @NotNull Class<?> cls) {
+    static List<String> getStringDeclaredClasses(final @NotNull Class<?> cls) {
         List<String> result = new ArrayList<>();
         for (Class<?> inClass : cls.getDeclaredClasses()) {
             if (cls.isSynthetic()) {
@@ -129,7 +165,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String convertFieldToString(final @NotNull Field field) {
+    static String convertFieldToString(final @NotNull Field field) {
         return String.join(" ",
                 Modifier.toString(field.getModifiers()),
                 getTypeString(field.getGenericType()),
@@ -139,12 +175,12 @@ public class Reflector {
     }
 
     @NotNull
-    private static List<String> addTabs(final @NotNull List<String> list) {
+    static List<String> addTabs(final @NotNull List<String> list) {
         return list.stream().map(s -> "\t" + s).collect(Collectors.toList());
     }
 
     @NotNull
-    private static List<String> convertMethodToStrings(final @NotNull Method method) {
+    static List<String> convertMethodToStrings(final @NotNull Method method) {
         List<String> result = new ArrayList<>();
         result.add(getMethodSignature(method) + " {");
         result.add("\treturn " + standardValue(method.getReturnType()) + ";");
@@ -153,7 +189,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String getMethodSignature(final @NotNull Method method) {
+    static String getMethodSignature(final @NotNull Method method) {
         StringBuilder result = new StringBuilder(String.join(" ",
                 Modifier.toString(method.getModifiers()),
                 genericParametersToString(method.getTypeParameters()),
@@ -176,7 +212,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String standardValue(final @NotNull Class<?> type) {
+    static String standardValue(final @NotNull Class<?> type) {
         if (!type.isPrimitive())
             return "null";
         if (type.equals(Boolean.TYPE))
@@ -199,7 +235,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String getStringSuper(final @NotNull Class<?> cls) {
+    static String getStringSuper(final @NotNull Class<?> cls) {
         String superClass = getStringSuperclass(cls);
         String superInterfaces = getStringSuperInterfaces(cls);
         if (superClass.isEmpty()) {
@@ -212,7 +248,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String getStringSuperclass(final @NotNull Class<?> cls) {
+    static String getStringSuperclass(final @NotNull Class<?> cls) {
         if (cls.getSuperclass() == null)
             return "";
         String superclass = getTypeString(cls.getGenericSuperclass());
@@ -222,7 +258,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String getStringSuperInterfaces(final @NotNull Class<?> cls) {
+    static String getStringSuperInterfaces(final @NotNull Class<?> cls) {
         if (cls.getGenericInterfaces().length == 0)
             return "";
         StringBuilder result = new StringBuilder("implements ");
@@ -238,7 +274,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String getTypeString(final @NotNull Type type) {
+    static String getTypeString(final @NotNull Type type) {
         if (type instanceof GenericArrayType) {
             GenericArrayType genericArrayType = (GenericArrayType) type;
             return getTypeString(genericArrayType.getGenericComponentType()) + "[]";
@@ -258,7 +294,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String getTypeVariableString(final @NotNull TypeVariable<?> typeVariable) {
+    static String getTypeVariableString(final @NotNull TypeVariable<?> typeVariable) {
         StringBuilder result = new StringBuilder(typeVariable.getName());
         boolean putAmpersand = false;
         for (Type bound : typeVariable.getBounds()) {
@@ -277,7 +313,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String getWildcardString(final @NotNull WildcardType wildcardType) {
+    static String getWildcardString(final @NotNull WildcardType wildcardType) {
         StringBuilder result = new StringBuilder("?");
         boolean addSuper = false;
         for (Type lowerBound : wildcardType.getLowerBounds()) {
@@ -308,7 +344,7 @@ public class Reflector {
     }
 
     @NotNull
-    private static String genericParametersToString(final @NotNull Type[] typeParameters) {
+    static String genericParametersToString(final @NotNull Type[] typeParameters) {
         if (typeParameters.length == 0) {
             return "";
         }
