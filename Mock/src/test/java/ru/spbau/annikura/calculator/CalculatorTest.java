@@ -1,5 +1,6 @@
 package ru.spbau.annikura.calculator;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.mockito.InOrder;
 import ru.spbau.annikura.stack.MyStack;
@@ -473,7 +474,7 @@ class FakeStack extends MyStack<ExpressionToken> {
     }
 
     @Override
-    public ExpressionToken push(ExpressionToken expressionToken) {
+    public ExpressionToken push(@NotNull ExpressionToken expressionToken) {
         if (loggingOn) {
             if (expressionToken.isOpeningBracket()) {
                 System.out.println("Pushed opening bracket");
