@@ -239,10 +239,7 @@ public class Reflector {
             type.equals(Double.TYPE)
            )
             return "0";
-        if (type.equals(Void.TYPE))
-            return "";
-        assert false;
-        return "";
+        return ""; // Void.TYPE
     }
 
     @NotNull
@@ -342,13 +339,9 @@ public class Reflector {
             if (upperBound.getTypeName().equals(OBJECT)) {
                 continue;
             }
-            if (addExtends) {
-                result.append(" & ");
-            }
-            if (!addExtends) {
-                result.append(" extends ");
-                addExtends = true;
-            }
+            assert !addExtends;
+            result.append(" extends ");
+            addExtends = true;
             result.append(getTypeString(upperBound));
         }
         return result.toString();

@@ -1,11 +1,18 @@
+import com.sun.org.apache.regexp.internal.RE;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Path;
 import java.sql.Ref;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ReflectorTest {
     public void checkEquals(Class<?> cls, String... strs) {
@@ -23,6 +30,8 @@ public class ReflectorTest {
         class EmptyClass {
         }
         Reflector.printStructure(EmptyClass.class);
+        File file = new File("ReflectorTest$1EmptyClass.java");
+        file.delete();
     }
 
     @Test
@@ -46,6 +55,17 @@ public class ReflectorTest {
     }
 
     @Test
+    public void checkBooleanVariable() {
+        class SingleBoolean {
+            boolean var = false;
+        }
+        checkEquals(SingleBoolean.class,
+                "class ReflectorTest$1SingleBoolean {",
+                "\t boolean var = true;",
+                "}");
+    }
+
+    @Test
     public void checkPrimitiveArrayVariable() {
         class SinglePrimitiveArray {
             char[] arr = new char[10];
@@ -65,6 +85,17 @@ public class ReflectorTest {
         checkEquals(SingleObjectArray.class,
                 "class ReflectorTest$1SingleObjectArray {",
                 "\t java.lang.Integer[] arr = null;",
+                "}");
+    }
+
+    @Test
+    public void checkTemplateArrayVariable() {
+        class SingleTemplateArray<T> {
+            T[] arr = (T[]) new Object[10];
+        }
+        checkEquals(SingleTemplateArray.class,
+                "class ReflectorTest$1SingleTemplateArray<T> {",
+                "\t T[] arr = null;",
                 "}");
     }
 
@@ -319,5 +350,95 @@ public class ReflectorTest {
                         "int param1" +
                         ") {\n\t\treturn ;\n\t}\n",
                 "}");
+    }
+
+    @Test
+    public void syntheticMethod() {
+        class SyntheticMethod {
+            void mth() {
+                assert true;
+            }
+        }
+        checkEquals(SyntheticMethod.class,
+                "class ReflectorTest$1SyntheticMethod {",
+                "\t  void mth() {\n\t\treturn ;\n\t}\n",
+                "}");
+    }
+
+    @Test
+    public void superWildcard() {
+        class SuperWildcard {
+            <T> void mth(Collection<? super T> c) { }
+        }
+        checkEquals(SuperWildcard.class,
+                "class ReflectorTest$1SuperWildcard {",
+                "\t <T> void mth(java.util.Collection<? super T> param0) {" +
+                        "\n\t\treturn ;\n\t}\n",
+                "}");
+    }
+
+    @Test
+    public void extendsWildcard() {
+        class ExtendsWildcard<T> {
+            void mth(Collection<? extends T> c) {}
+        }
+        checkEquals(ExtendsWildcard.class,
+                "class ReflectorTest$1ExtendsWildcard<T> {",
+                "\t  void mth(java.util.Collection<? extends T> param0) {" +
+                        "\n\t\treturn ;\n\t}\n",
+                "}");
+    }
+
+    @Test
+    public void wildcardExtendsObject() {
+        class WildcardExtendsObject {
+            void mth(Collection<? extends Object> c) {}
+        }
+        checkEquals(WildcardExtendsObject.class,
+                "class ReflectorTest$1WildcardExtendsObject {",
+                "\t  void mth(java.util.Collection<?> param0) {" +
+                        "\n\t\treturn ;\n\t}\n",
+                "}");
+    }
+
+    @Test
+    public void wildcardSuperObject() {
+        class WildcardSuperObject {
+            void mth(Collection<? super Object> c) {}
+        }
+        checkEquals(WildcardSuperObject.class,
+                "class ReflectorTest$1WildcardSuperObject {",
+                "\t  void mth(java.util.Collection<java.lang.Object> param0) {" +
+                        "\n\t\treturn ;\n\t}\n",
+                "}");
+    }
+
+    @Test
+    public void diffReflectorWithItself() throws ClassNotFoundException, MalformedURLException {
+        Reflector.printStructure(Reflector.class);
+
+        File sourceFile = new File("Reflector.java");
+        File sourceByteCode = new File("Reflector.class");
+        sourceFile.deleteOnExit();
+        sourceByteCode.deleteOnExit();
+
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        compiler.run(null, null, null, sourceFile.getAbsolutePath());
+
+        URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] {
+                new File(".")
+                        .toURI()
+                        .toURL() });
+        Class<?> cls = Class.forName("Reflector", true, classLoader);
+
+        assertEquals(new ArrayList<>(), Reflector.getFirstHasSecondDoesnt(
+                Reflector.convertClassToStrings(cls),
+                Reflector.convertClassToStrings(Reflector.class))
+        );
+
+        assertEquals(new ArrayList<>(), Reflector.getFirstHasSecondDoesnt(
+                Reflector.convertClassToStrings(Reflector.class),
+                Reflector.convertClassToStrings(cls))
+        );
     }
 }
