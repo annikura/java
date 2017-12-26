@@ -2,10 +2,9 @@ package ru.spbau.annikura.trie;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StreamCorruptedException;
+import java.io.*;
+import static org.junit.Assert.*;
+import java.nio.file.Paths;
 
 public class TrieTest {
 
@@ -298,5 +297,80 @@ public class TrieTest {
         byte [] byteArray = {5, 5, 5, 10, 14};
         ByteArrayInputStream in = new ByteArrayInputStream(byteArray);
         trie.deserialize(in);
+    }
+
+    private void checkSerialization(String filename, int byteArraySize, String... content) throws IOException {
+        Trie trie = new Trie();
+        String triePath = Paths.get("src", "test", "resources", filename).toString();
+        File trieFile = new File(triePath);
+
+        ByteArrayOutputStream resultArr = new ByteArrayOutputStream(byteArraySize);
+        for (String str : content) {
+            trie.add(str);
+        }
+        trie.serialize(resultArr);
+
+        FileInputStream fis = new FileInputStream(trieFile);
+        byte[] expectedArr = new byte[byteArraySize];
+        fis.read(expectedArr);
+
+        assertArrayEquals(expectedArr, resultArr.toByteArray());
+    }
+
+    private void checkDeserialization(String filename, String... expectedContents)
+            throws IOException, ClassNotFoundException {
+        TrieTestingWrapper trie = new TrieTestingWrapper();
+        String triePath = Paths.get("src", "test", "resources", filename).toString();
+
+        for (String str : expectedContents) {
+            trie.add(str);
+        }
+
+        trie.deserialize(new FileInputStream(new File(triePath)));
+        trie.size();
+        trie.checkConsistency();
+    }
+
+    @Test
+    public void deserializeEmptyTrie() throws IOException, ClassNotFoundException {
+        checkDeserialization("emptyTrie");
+    }
+
+    @Test
+    public void deserializeSimpleTrie() throws IOException, ClassNotFoundException {
+        checkDeserialization("trie", "some string");
+    }
+
+    @Test
+    public void deserializeTrie() throws IOException, ClassNotFoundException {
+        checkDeserialization("trieWithManyStrings",
+                "aaaaaaaaa",
+                "some string",
+                "best string ever",
+                "aa",
+                "black betty");
+    }
+
+
+    @Test
+    public void serializeEmptyTrie() throws IOException {
+        checkSerialization("emptyTrie", 332);
+    }
+
+    @Test
+    public void serializeSimpleTrie() throws IOException {
+        checkSerialization("trie", 906,
+                "some string");
+    }
+
+
+    @Test
+    public void serializeTrie() throws IOException {
+        checkSerialization("trieWithManyStrings", 2537,
+                "some string",
+                "best string ever",
+                "aa",
+                "aaaaaaaaa",
+                "black betty");
     }
 }
