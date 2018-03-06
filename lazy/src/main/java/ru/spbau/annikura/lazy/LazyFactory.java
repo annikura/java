@@ -1,4 +1,6 @@
-import com.sun.istack.internal.NotNull;
+package ru.spbau.annikura.lazy;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
