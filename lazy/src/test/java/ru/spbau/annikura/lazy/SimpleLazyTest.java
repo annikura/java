@@ -1,3 +1,5 @@
+package ru.spbau.annikura.lazy;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
