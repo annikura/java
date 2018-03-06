@@ -1,3 +1,5 @@
+package ru.spbau.annikura.lazy;
+
 import java.util.Collections;
 import java.util.function.Supplier;
 

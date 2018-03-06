@@ -1,3 +1,5 @@
+package ru.spbau.annikura.lazy;
+
 /**
  * Interface for lazy computations.
  * @param <T> stored or evaluated resource type.
