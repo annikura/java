@@ -12,6 +12,11 @@ public class TestUtils {
     public static class CountingSupplier implements Supplier<Integer> {
         int cnt = 0;
 
+
+        public int getCnt() {
+            return cnt;
+        }
+
         @Override
         public Integer get() {
             cnt++;
@@ -19,16 +24,13 @@ public class TestUtils {
         }
     }
 
-    public static class SlowCountingSupplier implements Supplier<Integer> {
-        int cnt = 0;
-
+    public static class SlowCountingSupplier extends CountingSupplier {
         @Override
         public Integer get() {
             try {
                 Thread.sleep(1000);
             } catch(InterruptedException ignored) {}
-            cnt++;
-            return cnt;
+            return super.get();
         }
     }
 }
