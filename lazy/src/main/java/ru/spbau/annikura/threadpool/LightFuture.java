@@ -19,7 +19,7 @@ public interface LightFuture<T> {
      * Waits until task is completed and returns results as soon as it is known.
      * @return result returned by supplier
      */
-    T get();
+    T get() throws LightExecutionException;
 
     /**
      * Creates new LightFuture out of function that will receive result of the current LightFuture as the parameter.
