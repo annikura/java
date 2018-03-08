@@ -1,5 +1,6 @@
 package ru.spbau.annikura.threadpool;
 
+import javafx.scene.effect.Light;
 import org.junit.After;
 import org.junit.Test;
 import ru.spbau.annikura.lazy.TestUtils;
@@ -50,7 +51,7 @@ public class PoolTest {
         pool = new Pool(1);
         final String result = "Success";
         LightFuture<String> task = pool.createNewTask(() -> result);
-        assertTrue(waitFor(5000, task));
+        waitFor(5000, task);
         assertEquals(result, task.get());
     }
 
@@ -67,7 +68,7 @@ public class PoolTest {
             int finalI = i;
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
-        assertTrue(waitFor(5000, tasks));
+        waitFor(5000, tasks);
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
         }
@@ -87,7 +88,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        assertTrue(waitFor(5000, tasks));
+        waitFor(5000, tasks);
         msc.getMemory().sort(Comparator.naturalOrder());
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
@@ -108,7 +109,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        assertTrue(waitFor(5000, tasks));
+        waitFor(5000, tasks);
         boolean isShuffled = false;
         for (int i = 0; i < numOfTasks; i++) {
             isShuffled = isShuffled || (msc.getMemory().get(i) != i);
@@ -130,7 +131,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        assertTrue(waitFor(10000, tasks));
+        waitFor(10000, tasks);
         msc.getMemory().sort(Comparator.naturalOrder());
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
@@ -212,6 +213,27 @@ public class PoolTest {
         assertEquals(3, (int) task2.get());
 
         assertEquals(1, supplier.getCnt());
+    }
+
+    @Test(expected = LightExecutionException.class)
+    public void simplyGetException() throws LightExecutionException {
+        pool = new Pool(1);
+        LightFuture<Integer> task = pool.createNewTask(() -> 1 / 0);
+        task.get();
+    }
+
+    @Test(expected = LightExecutionException.class)
+    public void getExceptionFromThenApply() throws LightExecutionException {
+        pool = new Pool(1);
+        LightFuture<Integer> task = pool.createNewTask(() -> 1 / 0);
+        LightFuture<String> task1 = task.thenApply(Object::toString);
+        task1.get();
+    }
+
+    @Test
+    public void simplyGetNoException() {
+        pool = new Pool(1);
+        LightFuture<Integer> task = pool.createNewTask(() -> 1 / 0);
     }
 }
 
