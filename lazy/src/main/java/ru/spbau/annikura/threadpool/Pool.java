@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * This class owns a pool of threads and, given a set of tasks, executes them in parallel using Pool's threads.
  */
 public class Pool {
-    private final static boolean QUIET = false;
+    private final static boolean QUIET = true;
     private final ArrayList<LightFutureImpl> tasks = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
 
@@ -93,11 +93,10 @@ public class Pool {
      * If there was no such a task, it will be killed immedeately.
      */
     public void shutdown() {
-        synchronized (tasks) {
-            for (Thread thread : threads) {
-                thread.interrupt();
-            }
+        for (Thread thread : threads) {
+            thread.interrupt();
         }
+
     }
 
     /**

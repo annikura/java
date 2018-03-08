@@ -1,6 +1,5 @@
 package ru.spbau.annikura.threadpool;
 
-import javafx.scene.effect.Light;
 import org.junit.After;
 import org.junit.Test;
 import ru.spbau.annikura.lazy.TestUtils;
@@ -16,19 +15,20 @@ import static org.junit.Assert.*;
 public class PoolTest {
     Pool pool;
 
-    boolean waitFor(long ms, LightFuture... tasks) {
+    boolean waitFor(long ms, LightFuture... tasks) throws LightExecutionException {
         long time = System.currentTimeMillis();
         for (LightFuture task : tasks) {
             while (!task.isReady()) {
-                if (time + ms < System.currentTimeMillis())
+                if (time + ms < System.currentTimeMillis()) {
                     return false;
+                }
             }
         }
         return true;
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         pool.shutdown();
     }
 
@@ -56,7 +56,7 @@ public class PoolTest {
     }
 
     @Test
-    public void oneThreadManyTasks() {
+    public void oneThreadManyTasks() throws LightExecutionException {
         pool = new Pool(1);
         final int numOfTasks = 10;
         final int[] resource = new int[numOfTasks];
@@ -75,7 +75,7 @@ public class PoolTest {
     }
 
     @Test
-    public void someThreadsSomeTasks() {
+    public void someThreadsSomeTasks() throws LightExecutionException {
         pool = new Pool(10);
         final int numOfTasks = 20;
         final int[] resource = new int[numOfTasks];
@@ -96,8 +96,8 @@ public class PoolTest {
     }
 
     @Test
-    public void checkShuffleOnManyTasks() {
-        pool = new Pool(100);
+    public void checkShuffleOnManyTasks() throws LightExecutionException {
+        pool = new Pool(20);
         final int numOfTasks = 10000;
         final int[] resource = new int[numOfTasks];
         final LightFuture[] tasks = new LightFuture[numOfTasks];
@@ -118,9 +118,9 @@ public class PoolTest {
     }
 
     @Test
-    public void manyThreadsManyTasks() {
-        pool = new Pool(100);
-        final int numOfTasks = 20000;
+    public void manyThreadsManyTasks() throws LightExecutionException {
+        pool = new Pool(20);
+        final int numOfTasks = 2000;
         final int[] resource = new int[numOfTasks];
         final LightFuture[] tasks = new LightFuture[numOfTasks];
 
