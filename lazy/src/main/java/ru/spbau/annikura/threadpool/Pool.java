@@ -154,8 +154,8 @@ public class Pool {
         }
 
         /**
-         *
-         * @return
+         * Executes task.
+         * @return resource holder if no exception occurred diring the execution, exception holder otherwise
          */
         private RuntimeExceptionOr<T> evaluate() {
             lazy.get();
