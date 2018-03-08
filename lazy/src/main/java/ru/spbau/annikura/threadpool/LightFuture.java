@@ -1,6 +1,6 @@
 package ru.spbau.annikura.threadpool;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
@@ -18,9 +18,8 @@ public interface LightFuture<T> {
     /**
      * Waits until task is completed and returns results as soon as it is known.
      * @return result returned by supplier
-     * @throws LightExecutionException if the exception occurred while supplier was executing.
      */
-    T get() throws LightExecutionException;
+    T get();
 
     /**
      * Creates new LightFuture out of function that will receive result of the current LightFuture as the parameter.
