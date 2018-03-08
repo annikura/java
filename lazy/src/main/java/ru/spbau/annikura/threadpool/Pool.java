@@ -1,11 +1,10 @@
 package ru.spbau.annikura.threadpool;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.lazy.Lazy;
 import ru.spbau.annikura.lazy.LazyFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
@@ -14,6 +13,7 @@ import java.util.logging.Logger;
  * This class owns a pool of threads and, given a set of tasks, executes them in parallel using Pool's threads.
  */
 public class Pool {
+    private final static boolean QUIET = true;
     private final ArrayList<LightFuture> tasks = new ArrayList<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class Pool {
      * @return LightFuture holding the given task.
      */
     public <T> LightFuture<T> createNewTask(final @NotNull Supplier<T> supplier) {
-        return new LightFutureImpl<T>(supplier);
+        return new LightFutureImpl<>(supplier);
     }
 
     /**
@@ -32,32 +32,51 @@ public class Pool {
      * @param numberOfThreads number of threads in the pool
      */
     public Pool(int numberOfThreads) {
-        Runnable runnable = () -> {
-            LightFuture currentTask = null;
-            while (true) {
-                synchronized (tasks) {
-                    if (Thread.interrupted()) {
-                        break;
-                    }
-                    if (tasks.isEmpty()) {
-                        try {
-                            tasks.wait();
-                        } catch (InterruptedException e) {
-                            break;
-                        }
-                    }
-                    if (tasks.isEmpty()) {
-                        Logger.getAnonymousLogger().warning("Notified on empty tasks list. Sleeping...");
-                        continue;
-                    }
-                    currentTask = tasks.get(0);
-                    tasks.remove(0);
+        Runnable runnable = new Runnable() {
+            private void log(String message) {
+                if (!QUIET) {
+                    Logger.getAnonymousLogger().info(Long.toString(Thread.currentThread().getId()) + " " + message);
                 }
+            }
 
-                try {
+            @Override
+            public void run() {
+                LightFuture currentTask;
+                while (true) {
+                    log("waiting to lock tasks");
+                    synchronized (tasks) {
+                        log("locked tasks");
+                        if (Thread.interrupted()) {
+                            log("interrupted, shutting down...");
+                            return;
+                        }
+                        if (tasks.isEmpty()) {
+                            try {
+                                log("going to wait");
+                                tasks.wait();
+                            } catch (InterruptedException e) {
+                                log("wait -> shutting down...");
+                                return;
+                            }
+                        }
+                        log("woke up, getting task");
+                        if (tasks.isEmpty()) {
+                            if (!Thread.currentThread().isInterrupted()) {
+                                Logger.getAnonymousLogger().warning(Thread.currentThread().toString() +
+                                        "was notified on empty tasks list.");
+                                // not very healthy, but it sometimes happens when the active thread took task
+                                // before it was found by the notified thread.
+                            }
+                            continue;
+                        }
+                        currentTask = tasks.get(0);
+                        tasks.remove(0);
+
+                    }
+
+                    log("ready for task");
                     currentTask.get();
-                } catch (LightExecutionException e) {
-                    e.printStackTrace();
+                    log("completed task");
                 }
             }
         };
@@ -80,13 +99,12 @@ public class Pool {
             for (Thread thread : threads) {
                 thread.interrupt();
             }
-            tasks.notifyAll();
         }
     }
 
     /**
      * Adds new LightFuture task to the task queue.
-     * @param task
+     * @param task task that will be added
      */
     private void registerTask(final @NotNull LightFuture task) {
         synchronized (tasks) {
@@ -98,7 +116,7 @@ public class Pool {
 
 
     /**
-     * Standart LightFuture implementation.
+     * Standard LightFuture implementation.
      */
     class LightFutureImpl<T> implements LightFuture<T> {
         private boolean ready = false;
