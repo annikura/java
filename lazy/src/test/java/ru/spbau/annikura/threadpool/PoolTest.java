@@ -37,7 +37,7 @@ public class PoolTest {
     }
 
     @Test
-    public void noThreadsOneTask() {
+    public void noThreadsOneTask() throws LightExecutionException {
         pool = new Pool(0);
         final String result = "Success";
         LightFuture<String> task = pool.createNewTask(() -> result);
@@ -46,11 +46,11 @@ public class PoolTest {
 
 
     @Test
-    public void oneThreadOneTask() {
+    public void oneThreadOneTask() throws LightExecutionException {
         pool = new Pool(1);
         final String result = "Success";
         LightFuture<String> task = pool.createNewTask(() -> result);
-        waitFor(5000, task);
+        assertTrue(waitFor(5000, task));
         assertEquals(result, task.get());
     }
 
@@ -67,7 +67,7 @@ public class PoolTest {
             int finalI = i;
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
-        waitFor(5000, tasks);
+        assertTrue(waitFor(5000, tasks));
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
         }
@@ -87,7 +87,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        waitFor(5000, tasks);
+        assertTrue(waitFor(5000, tasks));
         msc.getMemory().sort(Comparator.naturalOrder());
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
@@ -108,7 +108,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        waitFor(5000, tasks);;
+        assertTrue(waitFor(5000, tasks));
         boolean isShuffled = false;
         for (int i = 0; i < numOfTasks; i++) {
             isShuffled = isShuffled || (msc.getMemory().get(i) != i);
@@ -130,7 +130,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        waitFor(10000, tasks);
+        assertTrue(waitFor(10000, tasks));
         msc.getMemory().sort(Comparator.naturalOrder());
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
@@ -152,7 +152,7 @@ public class PoolTest {
     }
 
     @Test
-    public void thenApplySimple() {
+    public void thenApplySimple() throws LightExecutionException {
         pool = new Pool(1);
         String result = pool
                 .createNewTask(() -> 5)
@@ -163,7 +163,7 @@ public class PoolTest {
 
 
     @Test
-    public void thenApplyCheckBlock() {
+    public void thenApplyCheckBlock() throws LightExecutionException {
         pool = new Pool(2);
         long time = System.currentTimeMillis();
         LightFuture task = pool
@@ -176,7 +176,7 @@ public class PoolTest {
     }
 
     @Test
-    public void thenApplyWithNoThreads() {
+    public void thenApplyWithNoThreads() throws LightExecutionException {
         pool = new Pool(0);
         String result = pool
                 .createNewTask(() -> 5)
@@ -186,13 +186,23 @@ public class PoolTest {
     }
 
     @Test
-    public void multipleThenApplyWithOneTask() {
-        pool = new Pool(0);
-      
+    public void multipleThenApplyForOneTask() throws LightExecutionException {
+        pool = new Pool(4);
+        TestUtils.CountingSupplier supplier = new TestUtils.CountingSupplier();
+        LightFuture<Integer> mainTask = pool.createNewTask(supplier);
+        LightFuture<Integer> task1 = mainTask.thenApply(i -> i + 5);
+        LightFuture<Integer> task2 = mainTask.thenApply(i -> i + 10);
+        LightFuture<Integer> task3 = mainTask.thenApply(i -> i + 15);
+
+        assertEquals(6, (int) task1.get());
+        assertEquals(11, (int) task2.get());
+        assertEquals(16, (int) task3.get());
+
+        assertEquals(1, supplier.getCnt());
     }
     
     @Test
-    public void checkTaskExecutedOnce() {
+    public void checkTaskExecutedOnce() throws LightExecutionException {
         pool = new Pool(0);
         TestUtils.CountingSupplier supplier = new TestUtils.CountingSupplier();
         LightFuture<Integer> task1 = pool.createNewTask(supplier);
