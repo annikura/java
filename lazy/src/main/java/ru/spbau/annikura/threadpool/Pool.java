@@ -117,7 +117,7 @@ public class Pool {
      * Standard LightFuture implementation.
      */
     class LightFutureImpl<T> implements LightFuture<T> {
-        private boolean ready = false;
+        private volatile boolean ready = false;
         private final Lazy<RuntimeExceptionOr<T>> lazy;
 
         LightFutureImpl(final @NotNull Supplier<T> supplier) {

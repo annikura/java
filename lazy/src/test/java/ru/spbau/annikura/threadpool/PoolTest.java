@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
 
 
 public class PoolTest {
-    Pool pool;
+    private Pool pool;
 
-    boolean waitFor(long ms, LightFuture... tasks) throws LightExecutionException {
+    private boolean waitFor(long ms, LightFuture... tasks) {
         long time = System.currentTimeMillis();
         for (LightFuture task : tasks) {
             while (!task.isReady()) {
@@ -56,7 +56,7 @@ public class PoolTest {
     }
 
     @Test
-    public void oneThreadManyTasks() throws LightExecutionException {
+    public void oneThreadManyTasks() {
         pool = new Pool(1);
         final int numOfTasks = 10;
         final int[] resource = new int[numOfTasks];
@@ -75,7 +75,7 @@ public class PoolTest {
     }
 
     @Test
-    public void someThreadsSomeTasks() throws LightExecutionException {
+    public void someThreadsSomeTasks() {
         pool = new Pool(10);
         final int numOfTasks = 20;
         final int[] resource = new int[numOfTasks];
@@ -96,7 +96,7 @@ public class PoolTest {
     }
 
     @Test
-    public void checkShuffleOnManyTasks() throws LightExecutionException {
+    public void checkShuffleOnManyTasks() {
         pool = new Pool(20);
         final int numOfTasks = 10000;
         final int[] resource = new int[numOfTasks];
@@ -118,9 +118,9 @@ public class PoolTest {
     }
 
     @Test
-    public void manyThreadsManyTasks() throws LightExecutionException {
+    public void manyThreadsManyTasks() {
         pool = new Pool(20);
-        final int numOfTasks = 2000;
+        final int numOfTasks = 20000;
         final int[] resource = new int[numOfTasks];
         final LightFuture[] tasks = new LightFuture[numOfTasks];
 
@@ -131,7 +131,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        waitFor(10000, tasks);
+        assertTrue(waitFor(10000, tasks));
         msc.getMemory().sort(Comparator.naturalOrder());
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
@@ -142,11 +142,9 @@ public class PoolTest {
     public void checkShutdown() {
         pool = new Pool(2);
         final int numOfTasks = 10;
-        final LightFuture[] tasks = new LightFuture[numOfTasks];
-
         MemorizingSupplierCreator<Integer> msc = new MemorizingSupplierCreator<>();
         for (int i = 0; i < numOfTasks; i++) {
-            tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(new SlowSupplier<>(2000)));
+            pool.createNewTask(msc.createMemorizingSupplier(new SlowSupplier<>(2000)));
         }
         pool.shutdown();
         assertNotEquals(numOfTasks, msc.getMemory().size());
@@ -268,7 +266,7 @@ class MemorizingSupplierCreator<T> {
 class SlowSupplier<T> implements Supplier<T> {
     private long delay;
 
-    public SlowSupplier(long delay) {
+    SlowSupplier(long delay) {
         this.delay = delay;
     }
 
