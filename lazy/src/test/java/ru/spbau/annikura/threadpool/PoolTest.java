@@ -22,6 +22,11 @@ public class PoolTest {
                 if (time + ms < System.currentTimeMillis()) {
                     return false;
                 }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    Thread.interrupted();
+                }
             }
         }
         return true;
@@ -51,7 +56,7 @@ public class PoolTest {
         pool = new Pool(1);
         final String result = "Success";
         LightFuture<String> task = pool.createNewTask(() -> result);
-        waitFor(5000, task);
+        assertTrue(waitFor(5000, task));
         assertEquals(result, task.get());
     }
 
@@ -68,7 +73,7 @@ public class PoolTest {
             int finalI = i;
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
-        waitFor(5000, tasks);
+        assertTrue(waitFor(5000, tasks));
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
         }
@@ -88,7 +93,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        waitFor(5000, tasks);
+        assertTrue(waitFor(5000, tasks));
         msc.getMemory().sort(Comparator.naturalOrder());
         for (int i = 0; i < numOfTasks; i++) {
             assertEquals(i, (int) msc.getMemory().get(i));
@@ -109,7 +114,7 @@ public class PoolTest {
             tasks[i] = pool.createNewTask(msc.createMemorizingSupplier(() -> resource[finalI]));
         }
 
-        waitFor(5000, tasks);
+        assertTrue(waitFor(5000, tasks));
         boolean isShuffled = false;
         for (int i = 0; i < numOfTasks; i++) {
             isShuffled = isShuffled || (msc.getMemory().get(i) != i);
