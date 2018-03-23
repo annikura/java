@@ -1,11 +1,13 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
-public class MockBoard extends GameField {
+class MockBoard extends GameField {
     private final ArrayList<Pair<Pair<Integer, Integer>, Cell>> changes = new ArrayList<>();
 
-    public MockBoard(GameField field) {
+    public MockBoard(@NotNull GameField field) {
         super(field.getSize());
         for (int i = 0; i < field.getSize(); i++)
             for (int j = 0; j < field.getSize(); j++)
@@ -13,7 +15,7 @@ public class MockBoard extends GameField {
     }
 
     @Override
-    public void set(int x, int y, Cell symbol) {
+    public void set(int x, int y, @NotNull Cell symbol) {
         changes.add(new Pair<>(new Pair<>(x, y), get(x, y)));
         super.set(x, y, symbol);
     }

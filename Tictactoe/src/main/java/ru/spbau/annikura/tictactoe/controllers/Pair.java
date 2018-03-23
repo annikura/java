@@ -1,6 +1,6 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
-public class Pair<X, Y> {
+class Pair<X, Y> {
     private X x;
     private Y y;
     public Pair(X x, Y y) {

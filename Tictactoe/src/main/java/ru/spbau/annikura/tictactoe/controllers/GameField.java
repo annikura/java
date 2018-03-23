@@ -1,5 +1,7 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Game board logic.
  */
@@ -71,7 +73,7 @@ public class GameField {
      * @param o symbol to look at
      * @return maximal length of the row
      */
-    int getMaxRow(Cell o) {
+    int getMaxRow(@NotNull Cell o) {
         int max = 0;
 
         for (int i = 0; i < getSize(); i++) {
@@ -110,7 +112,7 @@ public class GameField {
      * @param dy y delta
      * @return number of consequent cells equals tp symbol in row in the given direction
      */
-    private int getRowInDirection(Cell symbol, int x, int y, int dx, int dy) {
+    private int getRowInDirection(@NotNull Cell symbol, int x, int y, int dx, int dy) {
         int cnt = 0;
         while (inRange(x, y) && get(x, y).equals(symbol)) {
             cnt++;
