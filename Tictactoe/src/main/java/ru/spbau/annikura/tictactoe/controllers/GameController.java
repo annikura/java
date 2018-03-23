@@ -1,6 +1,12 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+/**
+ * Game controller interface. Provides access to the game board and game status.
+ */
 public interface GameController {
+    /**
+     * This enum describes the state of the game.
+     */
     enum GameStatus {
         X_WON(true),
         O_WON(true),
@@ -18,8 +24,29 @@ public interface GameController {
         }
     }
 
+    /**
+     * Makes move on position (i, j) if possible (if chosen cell is empty).
+     * @param x move column
+     * @param y move row
+     * @return new field
+     */
     GameField makeMove(int x, int y);
+
+    /**
+     * Game status getter
+     * @return game status
+     */
     GameStatus getStatus();
+
+    /**
+     * New game creator
+     * @return new empty Game controller with the same parameters
+     */
     GameController newGame();
+
+    /**
+     * Game board getter
+     * @return game board
+     */
     GameField getField();
 }
