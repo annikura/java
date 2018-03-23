@@ -1,22 +1,44 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.abs;
 
+/**
+ * Tictactoe bot. Calculates all possible moves on depth up to calculation depth,
+ * counts number of wins and loses for each possible move and chooses random direction from ones
+ * that have the biggest (wins + 1) / (loses + 1) number.
+ *
+ * WARNING: will work quite a lot on big boards.
+ */
 public class TictactoeBot {
     private final int calcluationDepth;
     private final int amountToWin;
 
+    /**
+     * Creates bot with given parameters
+     * @param depth number of moves that will be looked ahead
+     * @param amountToWin number of same symbols in a row to win
+     */
     public TictactoeBot(int depth, int amountToWin) {
         calcluationDepth = depth;
         this.amountToWin = amountToWin;
     }
 
-    public Pair<Integer, Integer> suggestMove(GameField field,
-                                              GameField.Cell moveWith) {
+    /**
+     * Supposing that the next move should be done by moveWith symbol,
+     * decides which cell is optimal to make a move according to the bot strategy
+     * (see class description for more information).
+     * @param field field to make moves on
+     * @param moveWith symbol to make next move with
+     * @return suggested move
+     */
+    public Pair<Integer, Integer> suggestMove(@NotNull GameField field,
+                                              @NotNull GameField.Cell moveWith) {
         MockBoard board = new MockBoard(field);
         if (
                 board.getMaxRow(GameField.Cell.X) >= amountToWin ||
@@ -42,8 +64,8 @@ public class TictactoeBot {
     }
 
     private HashMap<Pair<Integer,Integer>,Pair<Integer,Integer>> calculateResultsOfSteps(int calcluationDepth,
-                                                                                         MockBoard board,
-                                                                                         GameField.Cell symbol,
+                                                                                         @NotNull MockBoard board,
+                                                                                         @NotNull GameField.Cell symbol,
                                                                                          int weight) {
         HashMap<Pair<Integer,Integer>, Pair<Integer,Integer>>  map = new HashMap<>();
         boolean oWon = board.getMaxRow(GameField.Cell.O) >= amountToWin;
