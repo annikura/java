@@ -1,10 +1,5 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
-/**
- *
- * @param <X>
- * @param <Y>
- */
 public class Pair<X, Y> {
     private X x;
     private Y y;

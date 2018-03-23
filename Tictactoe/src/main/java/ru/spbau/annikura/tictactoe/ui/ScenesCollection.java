@@ -9,17 +9,27 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.tictactoe.backends.DataController;
 import ru.spbau.annikura.tictactoe.backends.Stats;
 import ru.spbau.annikura.tictactoe.controllers.*;
 
-
+/**
+ * Scenes creator class
+ */
 public class ScenesCollection {
     private final static String MAIN_CSS = "-fx-background-color: #336699; -fx-text-fill: #ffffff";
     private final static int BUTTONS_WIDTH = 150;
     private final static int BUTTONS_HEIGHT = 25;
 
-    public static Scene newMainMenuScene(double width, double height, Stage stage) {
+    /**
+     * Creates new main menu scene.
+     * @param width width of the new scene
+     * @param height height of the new scene
+     * @param stage a stage that will be switched to new scene when the button is pressed
+     * @return generated scene with given parameters.
+     */
+    public static Scene newMainMenuScene(double width, double height, @NotNull Stage stage) {
         Button newGameButton = new Button("New Game");
         Button statsButton = new Button("Show Stats");
         resizeElements(BUTTONS_WIDTH, BUTTONS_HEIGHT, newGameButton, statsButton);
@@ -43,7 +53,14 @@ public class ScenesCollection {
         return new Scene(vBox, width, height);
     }
 
-    public static Scene newChooseModeScene(double width, double height, Stage stage) {
+    /**
+     * Creates menu scene, where player can choose mode of the game ans size of the field.
+     * @param width width of the new scene
+     * @param height height of the new scene
+     * @param stage a stage that will be switched to new scene when the button is pressed
+     * @return generated scene with given parameters.
+     */
+    public static Scene newChooseModeScene(double width, double height, @NotNull Stage stage) {
         Button easyModeButton = new Button("Easy Computer");
         Button hardModeButton = new Button("Hard Computer");
         Button hotSeatButton = new Button("Hot Seat");
@@ -90,9 +107,18 @@ public class ScenesCollection {
         return new Scene(menuBox, width, height);
     }
 
+
+    /**
+     * Creates new game scene.
+     * @param width width of the new scene
+     * @param height height of the new scene
+     * @param stage a stage that will be switched to new scene when the corresponding button is pressed
+     * @param gameController game logic owning class
+     * @return generated scene with given parameters.
+     */
     public static Scene newGameScene(double width, double height,
-                                     Stage stage,
-                                     GameController gameController) {
+                                     @NotNull Stage stage,
+                                     @NotNull GameController gameController) {
         int gameSize = gameController.getField().getSize();
 
         Button restartButton = new Button("Restart");
@@ -131,7 +157,13 @@ public class ScenesCollection {
         return new Scene(borderPane, width, height);
     }
 
-    public static Region newGameBoard(int size, GameController controller) {
+    /**
+     * Creates new game board region.
+     * @param size number of the rows/columns on the game field
+     * @param controller game controller
+     * @return new game board ui element
+     */
+    public static Region newGameBoard(int size, @NotNull GameController controller) {
         Button[][] buttons = new Button[size][size];
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5, 10, 15, 10));
@@ -207,7 +239,12 @@ public class ScenesCollection {
         return wrappingBoard;
     }
 
-
+    /**
+     * Creates a siple pane with the fixed size.
+     * @param width width the pane will be created with
+     * @param height height the pane will be created with
+     * @return created pane
+     */
     private static Pane createFixedSizedPane(int width, int height) {
         Pane pane = new Pane();
         pane.setPrefSize(width, height);
@@ -216,14 +253,28 @@ public class ScenesCollection {
         return pane;
     }
 
-    private static void resizeElements(double newWidth, double newHeight, Region... regions) {
+    /**
+     * Takes a bunch of Regions and sets them new fixed sizes
+     * @param newWidth width to set
+     * @param newHeight height to set
+     * @param regions Regions to resize
+     */
+    private static void resizeElements(double newWidth, double newHeight, @NotNull Region... regions) {
         for (Region region : regions) {
             region.setPrefWidth(newWidth);
             region.setPrefHeight(newHeight);
         }
     }
 
-    public static Scene newStatsScene(double width, double height, Stage stage) {
+
+    /**
+     * Creates menu scene, showing number of wins for each type of player.
+     * @param width width of the new scene
+     * @param height height of the new scene
+     * @param stage a stage that will be switched to new scene when the button is pressed
+     * @return generated scene with given parameters.
+     */
+    public static Scene newStatsScene(double width, double height, @NotNull Stage stage) {
         Stats stats = DataController.getStats();
         Text totalsText = new Text("Games in total: " + Integer.toString(stats.getTotal()));
         Text xWinsText = new Text("X won: " + Integer.toString(stats.getXWon()));
