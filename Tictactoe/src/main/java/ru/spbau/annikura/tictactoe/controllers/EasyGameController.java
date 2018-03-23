@@ -12,7 +12,7 @@ public class EasyGameController extends AbstractBotGameController {
      */
     public EasyGameController(int size, int cnt) {
         super(size, cnt);
-        tictactoeBot = new TictactoeBot(2, amountToWin);
+        tictactoeBot = new TictactoeBotImplementation(2, amountToWin);
     }
 
     /**

@@ -11,7 +11,7 @@ public class HardGameController extends AbstractBotGameController {
      */
     public HardGameController(int size, int cnt) {
         super(size, cnt);
-        tictactoeBot = new TictactoeBot(4, amountToWin);
+        tictactoeBot = new TictactoeBotImplementation(4, amountToWin);
     }
 
     /**
