@@ -94,7 +94,6 @@ public abstract class AbstractGameController implements GameController {
             status = GameStatus.X_TURN;
             return;
         }
-        assert false;
     }
 
     protected abstract void finishMove();

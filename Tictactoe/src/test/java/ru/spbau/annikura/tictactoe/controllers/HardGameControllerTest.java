@@ -8,16 +8,6 @@ import static ru.spbau.annikura.tictactoe.controllers.GameField.Cell.O;
 import static ru.spbau.annikura.tictactoe.controllers.GameField.Cell.X;
 
 public class HardGameControllerTest {
-
-    private void showField(GameField field) {
-        for (int i = 0; i < field.getSize(); i++) {
-            for (int j = 0; j < field.getSize(); j++) {
-                System.out.print(field.get(j, i).toString().charAt(0));
-            }
-            System.out.println();
-        }
-    }
-
     @Test
     public void createInstance() throws Exception {
         HardGameController controller = new HardGameController(5, 4);
@@ -36,7 +26,6 @@ public class HardGameControllerTest {
         for (int i = 0; i < 2; i++)
             controller.field.set(0, i, X);
         controller.makeMove(0, 2);
-        showField(controller.field);
         assertEquals(O, controller.getField().get(0, 3));
     }
 
@@ -55,7 +44,6 @@ public class HardGameControllerTest {
         }
         controller.field.set(1, 2, O);
         controller.makeMove(0, 2);
-        showField(controller.field);
         assertEquals(O, controller.getField().get(1, 3));
         assertEquals(EMPTY, controller.getField().get(0, 3));
     }
@@ -76,7 +64,6 @@ public class HardGameControllerTest {
         }
         controller.field.set(1, 2, O);
         controller.makeMove(0, 2);
-        showField(controller.field);
         assertEquals(O, controller.getField().get(1, 3));
         assertEquals(EMPTY, controller.getField().get(0, 3));
     }
@@ -107,11 +94,27 @@ public class HardGameControllerTest {
     -----           -----
     */
     @Test
-    public void findNotEasyBlock() throws Exception {
+    public void findNotSoEasyBlock() throws Exception {
         HardGameController controller = new HardGameController(5, 4);
         controller.field.set(1, 1, X);
 
         controller.makeMove(2, 2);
         assertEquals(O, controller.field.get(3, 3));
+    }
+
+    @Test
+    public void newGameCreation() throws Exception {
+        EasyGameController controller = new EasyGameController(5, 3);
+        controller.makeMove(1, 1);
+        EasyGameController newController = (EasyGameController) controller.newGame();
+
+        assertEquals(5, newController.getField().getSize());
+        assertEquals(3, newController.amountToWin);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(EMPTY, newController.field.get(i, j));
+            }
+        }
     }
 }

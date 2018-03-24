@@ -6,15 +6,6 @@ import static org.junit.Assert.*;
 import static ru.spbau.annikura.tictactoe.controllers.GameField.Cell.*;
 
 public class EasyGameControllerTest {
-    private void showField(GameField field) {
-        for (int i = 0; i < field.getSize(); i++) {
-            for (int j = 0; j < field.getSize(); j++) {
-                System.out.print(field.get(j, i).toString().charAt(0));
-            }
-            System.out.println();
-        }
-    }
-
     @Test
     public void createInstance() throws Exception {
         EasyGameController controller = new EasyGameController(5, 4);
@@ -73,5 +64,21 @@ public class EasyGameControllerTest {
         controller.makeMove(0, 2);
         assertEquals(O, controller.getField().get(1, 3));
         assertEquals(EMPTY, controller.getField().get(0, 3));
+    }
+
+    @Test
+    public void newGameCreation() throws Exception {
+        HardGameController controller = new HardGameController(5, 3);
+        controller.makeMove(1, 1);
+        HardGameController newController = (HardGameController) controller.newGame();
+
+        assertEquals(5, newController.getField().getSize());
+        assertEquals(3, newController.amountToWin);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(EMPTY, newController.field.get(i, j));
+            }
+        }
     }
 }
