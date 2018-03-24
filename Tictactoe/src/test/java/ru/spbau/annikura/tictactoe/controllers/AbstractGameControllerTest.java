@@ -114,4 +114,15 @@ public class AbstractGameControllerTest {
         assertEquals(O_TURN, controller.status);
         assertEquals(X, controller.getField().get(0, 0));
     }
+
+    @Test
+    public void checkNothingChangesAfterEnd() throws Exception {
+        controller.makeMove(0, 0);
+        controller.makeMove(1, 0);
+        controller.makeMove(0, 1);
+        controller.makeMove(2, 2);
+
+        assertEquals(EMPTY, controller.getField().get(2, 2));
+    }
+
 }

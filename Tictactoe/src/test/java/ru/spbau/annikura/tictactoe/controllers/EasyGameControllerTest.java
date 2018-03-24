@@ -81,4 +81,18 @@ public class EasyGameControllerTest {
             }
         }
     }
+
+    @Test
+    public void checkNothingChangesAfterWin() throws Exception {
+        EasyGameController controller = new EasyGameController(5, 1);
+        controller.makeMove(0, 0);
+        controller.makeMove(3, 3);
+        controller.makeMove(3, 4);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (i + j > 0)
+                    assertEquals(EMPTY, controller.field.get(i, j));
+            }
+        }
+    }
 }
