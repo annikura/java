@@ -24,6 +24,7 @@ public class GameField {
      * @param row row column index
      * @return symbol in the cell
      */
+    @NotNull
     public Cell get(int column, int row) {
         return field[column][row];
     }
@@ -93,7 +94,7 @@ public class GameField {
      * @param row coordinate
      * @param newValue symbol to be places at the coordinate
      */
-    void set(int column, int row, Cell newValue) {
+    void set(int column, int row, @NotNull Cell newValue) {
         if (field[column][row].equals(Cell.EMPTY)  && !newValue.equals(Cell.EMPTY)) {
             emptyCounter--;
         }

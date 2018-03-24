@@ -1,5 +1,6 @@
 package ru.spbau.annikura.tictactoe.backends;
 
+import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.tictactoe.controllers.GameController;
 
 import java.io.*;
@@ -15,6 +16,7 @@ public class FileDataController {
      * or doesn't exist, will return empty stats object.
      * @return received stats class
      */
+    @NotNull
     public static Stats getStats() {
         File file = new File(STATS_FILE);
         Stats stats;
@@ -33,7 +35,7 @@ public class FileDataController {
      * Writes stats object on disk.
      * @param stats stats to be written
      */
-    private static void writeStats(Stats stats) {
+    private static void writeStats(@NotNull Stats stats) {
         File file = new File(STATS_FILE);
         try {
             FileOutputStream fos = new FileOutputStream(file);
@@ -48,7 +50,7 @@ public class FileDataController {
      * Updates stats object stored on disk according to the new known result.
      * @param result new game result that should be recorded
      */
-    public static void updateStats(GameController.GameStatus result) {
+    public static void updateStats(@NotNull GameController.GameStatus result) {
         Stats stats = getStats();
         switch (result) {
             case O_WON:

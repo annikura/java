@@ -1,5 +1,7 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Easy game controller. Provides game with a simple bot with small recursion depth
  */
@@ -19,6 +21,7 @@ public class EasyGameController extends AbstractBotGameController {
      * Creates new game with the same parameters
      * @return new easy game controller
      */
+    @NotNull
     @Override
     public GameController newGame() {
         return new EasyGameController(field.getSize(), amountToWin);

@@ -1,5 +1,7 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Hard game controller. Provides game with a hard bot with average recursion depth
  */
@@ -18,6 +20,7 @@ public class HardGameController extends AbstractBotGameController {
      * Creates new game with the same parameters
      * @return new hard game controller
      */
+    @NotNull
     @Override
     public GameController newGame() {
         return new HardGameController(field.getSize(), amountToWin);

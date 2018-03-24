@@ -1,5 +1,7 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Hot seat controller. Allows to 2 people to play together
  */
@@ -23,6 +25,7 @@ public class HotSeatGameController extends AbstractGameController {
      * Creates new game with the same parameters
      * @return new hotseat game controller
      */
+    @NotNull
     @Override
     public GameController newGame() {
         return new HotSeatGameController(field.getSize(), amountToWin);

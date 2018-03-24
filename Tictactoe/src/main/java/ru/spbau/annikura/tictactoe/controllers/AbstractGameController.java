@@ -1,5 +1,7 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Tictactoe controller abstraction.
  * Provides set of simple operations which are common for any controller like:
@@ -34,6 +36,7 @@ public abstract class AbstractGameController implements GameController {
      * Game status getter
      * @return game status
      */
+    @NotNull
     @Override
     public GameStatus getStatus() {
         return status;
@@ -45,6 +48,7 @@ public abstract class AbstractGameController implements GameController {
      * @param j move row
      * @return new field
      */
+    @NotNull
     @Override
     public GameField makeMove(int i, int j) {
         if (status.isFinished() || !setCell(i, j)) {

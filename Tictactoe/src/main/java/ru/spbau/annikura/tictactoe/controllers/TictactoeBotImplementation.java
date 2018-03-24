@@ -1,6 +1,7 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ public class TictactoeBotImplementation implements TictactoeBot {
      * @param moveWith symbol to make next move with
      * @return suggested move
      */
+    @Nullable
     @Override
     public Pair<Integer, Integer> suggestMove(@NotNull GameField field,
                                               @NotNull GameField.Cell moveWith) {
@@ -65,6 +67,7 @@ public class TictactoeBotImplementation implements TictactoeBot {
         return bestSteps.get(abs(new Random().nextInt()) % bestSteps.size());
     }
 
+    @NotNull
     private HashMap<Pair<Integer,Integer>,Pair<Integer,Integer>> calculateResultsOfSteps(int calcluationDepth,
                                                                                          @NotNull BruteForceBoard board,
                                                                                          @NotNull GameField.Cell symbol,

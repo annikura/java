@@ -1,5 +1,7 @@
 package ru.spbau.annikura.tictactoe.controllers;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Game controller interface. Provides access to the game board and game status.
  */
@@ -30,12 +32,14 @@ public interface GameController {
      * @param y move row
      * @return new field
      */
+    @NotNull
     GameField makeMove(int x, int y);
 
     /**
      * Game status getter
      * @return game status
      */
+    @NotNull
     GameStatus getStatus();
 
     /**
@@ -48,5 +52,6 @@ public interface GameController {
      * Game board getter
      * @return game board
      */
+    @NotNull
     GameField getField();
 }
