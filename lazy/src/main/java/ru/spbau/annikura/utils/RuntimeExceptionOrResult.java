@@ -4,7 +4,7 @@ package ru.spbau.annikura.utils;
  * Resource or runtime exception holder.
  * @param <T> type of the resource
  */
-public class RuntimeExceptionOr<T> {
+public class RuntimeExceptionOrResult<T> {
     private final RuntimeException exception;
     private final T resource;
 
@@ -12,7 +12,7 @@ public class RuntimeExceptionOr<T> {
      * Constructs holder with exception
      * @param exception exception that will be held
      */
-    public RuntimeExceptionOr(RuntimeException exception) {
+    public RuntimeExceptionOrResult(RuntimeException exception) {
         this.exception = exception;
         resource = null;
     }
@@ -21,7 +21,7 @@ public class RuntimeExceptionOr<T> {
      * Constructs holder with resource
      * @param resource resource that will be held
      */
-    public RuntimeExceptionOr(T resource) {
+    public RuntimeExceptionOrResult(T resource) {
         this.resource = resource;
         exception = null;
     }

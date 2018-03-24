@@ -3,7 +3,7 @@ package ru.spbau.annikura.threadpool;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.lazy.Lazy;
 import ru.spbau.annikura.lazy.LazyFactory;
-import ru.spbau.annikura.utils.RuntimeExceptionOr;
+import ru.spbau.annikura.utils.RuntimeExceptionOrResult;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -118,14 +118,14 @@ public class Pool {
      */
     class LightFutureImpl<T> implements LightFuture<T> {
         private volatile boolean ready = false;
-        private final Lazy<RuntimeExceptionOr<T>> lazy;
+        private final Lazy<RuntimeExceptionOrResult<T>> lazy;
 
         LightFutureImpl(final @NotNull Supplier<T> supplier) {
             lazy = LazyFactory.createThreadSafeLazy(() -> {
                 try {
-                    return new RuntimeExceptionOr<>(supplier.get());
+                    return new RuntimeExceptionOrResult<>(supplier.get());
                 } catch (RuntimeException exception) {
-                    return new RuntimeExceptionOr<>(exception);
+                    return new RuntimeExceptionOrResult<>(exception);
                 }
             });
             registerTask(this);
@@ -144,7 +144,7 @@ public class Pool {
          */
         @Override
         public T get() throws LightExecutionException {
-            RuntimeExceptionOr<T> result = evaluate();
+            RuntimeExceptionOrResult<T> result = evaluate();
             if (result.isException()) {
                 throw new LightExecutionException(result.getException().getMessage());
             } else {
@@ -156,7 +156,7 @@ public class Pool {
          * Executes task.
          * @return resource holder if no exception occurred diring the execution, exception holder otherwise
          */
-        private RuntimeExceptionOr<T> evaluate() {
+        private RuntimeExceptionOrResult<T> evaluate() {
             lazy.get();
             ready = true;
             return lazy.get();
