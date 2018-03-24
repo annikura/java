@@ -1,5 +1,6 @@
 package ru.spbau.annikura.tictactoe.ui;
 
+import com.sun.prism.paint.Paint;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,7 +19,7 @@ import ru.spbau.annikura.tictactoe.controllers.*;
  * Scenes creator class
  */
 public class ScenesCollection {
-    private final static String MAIN_CSS = "-fx-background-color: #336699; -fx-text-fill: #ffffff";
+        private final static String MAIN_CSS = "-fx-background-color: #0048ad";
     private final static int BUTTONS_WIDTH = 150;
     private final static int BUTTONS_HEIGHT = 25;
 
@@ -221,6 +222,11 @@ public class ScenesCollection {
                                 case EMPTY:
                                     break;
                             }
+                            if (!buttons[i1][j1].getText().equals(symbol)) {
+                                buttons[i1][j1].setStyle("-fx-font: 22 arial; -fx-base: #e3f3ff;");
+                            } else {
+                                buttons[i1][j1].setStyle("-fx-font: 22 arial;");
+                            }
                             buttons[i1][j1].setText(symbol);
                         }
                     }
@@ -280,6 +286,11 @@ public class ScenesCollection {
         Text xWinsText = new Text("X won: " + Integer.toString(stats.getXWon()));
         Text oWinsText = new Text("O won: " + Integer.toString(stats.getOWon()));
         Text draws = new Text("Draws: " + Integer.toString(stats.getDraw()));
+
+        totalsText.setFill(Color.WHITE);
+        xWinsText.setFill(Color.WHITE);
+        oWinsText.setFill(Color.WHITE);
+        draws.setFill(Color.WHITE);
 
         Button backToMenuButton = new Button("Back To Menu");
         backToMenuButton.setOnAction(e -> stage.setScene(
