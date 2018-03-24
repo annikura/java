@@ -40,7 +40,7 @@ public class TictactoeBotImplementation implements TictactoeBot {
     @Override
     public Pair<Integer, Integer> suggestMove(@NotNull GameField field,
                                               @NotNull GameField.Cell moveWith) {
-        MockBoard board = new MockBoard(field);
+        BruteForceBoard board = new BruteForceBoard(field);
         if (
                 board.getMaxRow(GameField.Cell.X) >= amountToWin ||
                 board.getMaxRow(GameField.Cell.O) >= amountToWin) {
@@ -66,7 +66,7 @@ public class TictactoeBotImplementation implements TictactoeBot {
     }
 
     private HashMap<Pair<Integer,Integer>,Pair<Integer,Integer>> calculateResultsOfSteps(int calcluationDepth,
-                                                                                         @NotNull MockBoard board,
+                                                                                         @NotNull BruteForceBoard board,
                                                                                          @NotNull GameField.Cell symbol,
                                                                                          int weight) {
         HashMap<Pair<Integer,Integer>, Pair<Integer,Integer>>  map = new HashMap<>();
