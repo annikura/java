@@ -4,9 +4,17 @@ import ru.spbau.annikura.tictactoe.controllers.GameController;
 
 import java.io.*;
 
-public class DataController {
+/**
+ * Class controlling reading a writing data from disk
+ */
+public class FileDataController {
     private static String STATS_FILE = "stats";
 
+    /**
+     * Reads stats file from disk. If the file storing it is damaged
+     * or doesn't exist, will return empty stats object.
+     * @return received stats class
+     */
     public static Stats getStats() {
         File file = new File(STATS_FILE);
         Stats stats;
@@ -21,6 +29,10 @@ public class DataController {
         return stats;
     }
 
+    /**
+     * Writes stats object on disk.
+     * @param stats stats to be written
+     */
     private static void writeStats(Stats stats) {
         File file = new File(STATS_FILE);
         try {
@@ -32,6 +44,10 @@ public class DataController {
         }
     }
 
+    /**
+     * Updates stats object stored on disk according to the new known result.
+     * @param result new game result that should be recorded
+     */
     public static void updateStats(GameController.GameStatus result) {
         Stats stats = getStats();
         switch (result) {

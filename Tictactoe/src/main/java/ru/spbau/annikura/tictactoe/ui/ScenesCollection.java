@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-import ru.spbau.annikura.tictactoe.backends.DataController;
+import ru.spbau.annikura.tictactoe.backends.FileDataController;
 import ru.spbau.annikura.tictactoe.backends.Stats;
 import ru.spbau.annikura.tictactoe.controllers.*;
 
@@ -226,7 +226,7 @@ public class ScenesCollection {
                     }
                     text.setText("Game status: " + controller.getStatus().toString().replace('_', ' '));
                     if (controller.getStatus().isFinished()) {
-                        DataController.updateStats(controller.getStatus());
+                        FileDataController.updateStats(controller.getStatus());
                     }
                 });
                 grid.add(buttons[i][j], i, j);
@@ -275,7 +275,7 @@ public class ScenesCollection {
      * @return generated scene with given parameters.
      */
     public static Scene newStatsScene(double width, double height, @NotNull Stage stage) {
-        Stats stats = DataController.getStats();
+        Stats stats = FileDataController.getStats();
         Text totalsText = new Text("Games in total: " + Integer.toString(stats.getTotal()));
         Text xWinsText = new Text("X won: " + Integer.toString(stats.getXWon()));
         Text oWinsText = new Text("O won: " + Integer.toString(stats.getOWon()));
