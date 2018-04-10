@@ -16,7 +16,9 @@ public class Main extends Application {
     @Override
     public void start(@NotNull Stage primaryStage) {
         primaryStage.setTitle("TicTacToe");
-        primaryStage.setScene(ScenesCollection.newMainMenuScene(600, 400, primaryStage));
+        primaryStage.setMaxHeight(600);
+        primaryStage.setMaxWidth(800);
+        primaryStage.setScene(ScenesCollection.newMainMenuScene(700, 500, primaryStage));
         primaryStage.show();
     }
 

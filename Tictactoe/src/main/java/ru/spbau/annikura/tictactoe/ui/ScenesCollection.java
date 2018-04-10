@@ -203,7 +203,7 @@ public class ScenesCollection {
                 final int finalJ = j;
                 buttons[i][j] = new Button();
                 buttons[i][j].setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-                buttons[i][j].setMinSize(30, 30);
+                buttons[i][j].setMinSize(50, 50);
                 buttons[i][j].setOnAction(event -> {
                     if (controller.getStatus().isFinished()) {
                         return;
