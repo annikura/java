@@ -1,5 +1,7 @@
 package ru.spbau.annikura.tictactoe.ui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import org.jetbrains.annotations.NotNull;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -16,8 +18,7 @@ public class Main extends Application {
     @Override
     public void start(@NotNull Stage primaryStage) {
         primaryStage.setTitle("TicTacToe");
-        primaryStage.setMaxHeight(600);
-        primaryStage.setMaxWidth(800);
+        primaryStage.setResizable(false);
         primaryStage.setScene(ScenesCollection.newMainMenuScene(700, 500, primaryStage));
         primaryStage.show();
     }
