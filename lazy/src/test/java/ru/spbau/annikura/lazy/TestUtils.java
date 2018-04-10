@@ -11,12 +11,9 @@ public class TestUtils {
     }
     public static class CountingSupplier implements Supplier<Integer> {
         int cnt = 0;
-
-
         public int getCnt() {
             return cnt;
         }
-
         @Override
         public Integer get() {
             cnt++;
