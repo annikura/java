@@ -12,11 +12,30 @@ public class Main {
             System.out.println("Given path is not a directory.");
         }
 
+        byte[] simpleResult = null;
+        byte[] parallelResult = null;
+
+        long startTime = System.currentTimeMillis();
         try {
-            FileHashCounter.hashInstance(file);
+            simpleResult = FileHashCounter.hashInstance(file);
         } catch (IOException e) {
             System.out.println("IO error occurred during execution.");
             return;
         }
+        long finishTime = System.currentTimeMillis();
+        long simpleHashingDuration = finishTime - startTime;
+
+        startTime = System.currentTimeMillis();
+        parallelResult = FileHashCounter.hashInstanceInParallel(file);
+        if (parallelResult == null) {
+            System.out.println("IO error occurred during parallel execution.");
+            return;
+        }
+        finishTime = System.currentTimeMillis();
+
+        long parallelHashingDuration = finishTime - startTime;
+
+        System.out.println("Simple algorithm worked in " + simpleHashingDuration + "milliseconds");
+        System.out.println("Parallel algorithm worked in " + parallelHashingDuration + "milliseconds");
     }
 }

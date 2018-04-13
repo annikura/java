@@ -8,10 +8,9 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
 public class HashingTask extends RecursiveTask<byte[]> {
-    private final static int BUFFER_SIZE = 1024;
     private final File fileToCompute;
 
-    public HashingTask(@NotNull File file) {
+    HashingTask(@NotNull File file) {
         fileToCompute = file;
     }
 
@@ -40,7 +39,11 @@ public class HashingTask extends RecursiveTask<byte[]> {
         digest.update(fileToCompute.getName().getBytes());
 
         for (HashingTask task : tasks) {
-            digest.update(task.compute());
+            byte[] taskResult = task.compute();
+            if (taskResult == null) {
+                return null;
+            }
+            digest.update(taskResult);
         }
 
         return digest.digest();

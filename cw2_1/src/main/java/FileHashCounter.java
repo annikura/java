@@ -29,7 +29,7 @@ public class FileHashCounter {
 
 
     @NotNull
-    public static byte[] hashInstanceInParallel(@NotNull final File file) throws IOException {
+    public static byte[] hashInstanceInParallel(@NotNull final File file) {
         ForkJoinPool fjp = new ForkJoinPool();
         HashingTask task = new HashingTask(file);
         fjp.submit(task);
