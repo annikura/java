@@ -30,19 +30,24 @@ public class FileHashCounterTest {
         } catch (NoSuchAlgorithmException ignored) { }
         assert digest != null;
 
+        if (len > 0)
         digest.update(buffer, 0, len);
         return digest.digest();
     }
 
-    private byte[] hashString(@NotNull String str) throws IOException {
+    private byte[] hashBytes(@NotNull byte[] bytes) {
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ignored) { }
         assert digest != null;
 
-        digest.update(str.getBytes());
+        digest.update(bytes);
         return digest.digest();
+    }
+
+    private byte[] hashString(@NotNull String str) {
+        return hashBytes(str.getBytes());
     }
 
     @Test
@@ -83,10 +88,9 @@ public class FileHashCounterTest {
         file.mkdir();
         assertEquals(
                 Arrays.toString(hashString(file.getName())),
-                Arrays.toString(FileHashCounter.hashInstance(file))
+                Arrays.toString(FileHashCounter.hashDirectory(file))
         );
     }
-
 
     @Test
     public void hashSimpleFileInParallel() throws IOException {
