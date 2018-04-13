@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class FileHashCounterTest {
-    private final static int BUFFER_SIZE = 10000;
+    private final static int BUFFER_SIZE = 100000;
 
     private String resourceFilePath(@NotNull String name) {
         return Paths.get("src", "test", "resources", name).toString();
@@ -60,6 +60,15 @@ public class FileHashCounterTest {
     }
 
     @Test
+    public void hashBigFile() throws IOException {
+        File file = new File(resourceFilePath("bigFile"));
+        assertEquals(
+                Arrays.toString(hashFileContent(file)),
+                Arrays.toString(FileHashCounter.hashFile(file))
+        );
+    }
+
+    @Test
     public void hashSeveralLinesFile() throws IOException {
         File file = new File(resourceFilePath("severalLinesFile"));
         assertEquals(
@@ -82,6 +91,15 @@ public class FileHashCounterTest {
     @Test
     public void hashSimpleFileInParallel() throws IOException {
         File file = new File(resourceFilePath("simpleFile"));
+        assertEquals(
+                Arrays.toString(hashFileContent(file)),
+                Arrays.toString(FileHashCounter.hashInstanceInParallel(file))
+        );
+    }
+
+    @Test
+    public void hashBigFileInParallel() throws IOException {
+        File file = new File(resourceFilePath("bigFile"));
         assertEquals(
                 Arrays.toString(hashFileContent(file)),
                 Arrays.toString(FileHashCounter.hashInstanceInParallel(file))
