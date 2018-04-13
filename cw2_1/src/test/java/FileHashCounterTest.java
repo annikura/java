@@ -20,30 +20,6 @@ public class FileHashCounterTest {
         return Paths.get("src", "test", "resources", name).toString();
     }
 
-    @Test
-    public void createDigest() {
-        assertNotNull(FileHashCounter.createDigest());
-    }
-
-    @Test
-    public void hashSimpleFile() throws IOException {
-        File file = new File(resourceFilePath("simpleFile"));
-        assertEquals(
-                Arrays.toString(hashFileContent(file)),
-                Arrays.toString(FileHashCounter.hashFile(file))
-        );
-    }
-
-    @Test
-    public void hashSeveralLinesFile() throws IOException {
-        File file = new File(resourceFilePath("severalLinesFile"));
-        assertEquals(
-                Arrays.toString(hashFileContent(file)),
-                Arrays.toString(FileHashCounter.hashFile(file))
-        );
-    }
-
-
     private byte[] hashFileContent(@NotNull File file) throws IOException {
         InputStream is = new FileInputStream(file);
         byte[] buffer = new byte[BUFFER_SIZE];
@@ -70,6 +46,29 @@ public class FileHashCounterTest {
     }
 
     @Test
+    public void createDigest() {
+        assertNotNull(FileHashCounter.createDigest());
+    }
+
+    @Test
+    public void hashSimpleFile() throws IOException {
+        File file = new File(resourceFilePath("simpleFile"));
+        assertEquals(
+                Arrays.toString(hashFileContent(file)),
+                Arrays.toString(FileHashCounter.hashFile(file))
+        );
+    }
+
+    @Test
+    public void hashSeveralLinesFile() throws IOException {
+        File file = new File(resourceFilePath("severalLinesFile"));
+        assertEquals(
+                Arrays.toString(hashFileContent(file)),
+                Arrays.toString(FileHashCounter.hashFile(file))
+        );
+    }
+
+    @Test
     public void hashEmptyDir() throws IOException {
         File file = new File(resourceFilePath("dir"));
         file.mkdir();
@@ -79,4 +78,32 @@ public class FileHashCounterTest {
         );
     }
 
+
+    @Test
+    public void hashSimpleFileInParallel() throws IOException {
+        File file = new File(resourceFilePath("simpleFile"));
+        assertEquals(
+                Arrays.toString(hashFileContent(file)),
+                Arrays.toString(FileHashCounter.hashInstanceInParallel(file))
+        );
+    }
+
+    @Test
+    public void hashSeveralLinesFileInParallel() throws IOException {
+        File file = new File(resourceFilePath("severalLinesFile"));
+        assertEquals(
+                Arrays.toString(hashFileContent(file)),
+                Arrays.toString(FileHashCounter.hashInstanceInParallel(file))
+        );
+    }
+
+    @Test
+    public void hashEmptyDirInParallel() throws IOException {
+        File file = new File(resourceFilePath("dir"));
+        file.mkdir();
+        assertEquals(
+                Arrays.toString(hashString(file.getName())),
+                Arrays.toString(FileHashCounter.hashInstanceInParallel(file))
+        );
+    }
 }
