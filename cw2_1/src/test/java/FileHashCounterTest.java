@@ -64,7 +64,7 @@ public class FileHashCounterTest {
         File file = new File(resourceFilePath("severalLinesFile"));
         assertEquals(
                 Arrays.toString(hashFileContent(file)),
-                Arrays.toString(FileHashCounter.hashFile(file))
+                Arrays.toString(FileHashCounter.hashInstance(file))
         );
     }
 
@@ -74,7 +74,7 @@ public class FileHashCounterTest {
         file.mkdir();
         assertEquals(
                 Arrays.toString(hashString(file.getName())),
-                Arrays.toString(FileHashCounter.hashDirectory(file))
+                Arrays.toString(FileHashCounter.hashInstance(file))
         );
     }
 
