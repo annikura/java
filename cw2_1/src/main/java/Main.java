@@ -42,8 +42,5 @@ public class Main {
 
         System.out.println("Simple algorithm worked in " + simpleHashingDuration + " milliseconds");
         System.out.println("Parallel algorithm worked in " + parallelHashingDuration + " milliseconds");
-
-        System.out.println(Arrays.toString(simpleResult));
-        System.out.println(Arrays.toString(parallelResult));
     }
 }
