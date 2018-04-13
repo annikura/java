@@ -7,13 +7,25 @@ import java.util.ArrayList;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
+/**
+ * Task used to execute directory hashing recursively.
+ */
 public class HashingTask extends RecursiveTask<byte[]> {
     private final File fileToCompute;
 
+    /**
+     * Creates new hashing task that will hash given file according to the hashing rules written in FileHashCounter.
+     * @see FileHashCounter
+     * @param file file to be hashed
+     */
     HashingTask(@NotNull File file) {
         fileToCompute = file;
     }
 
+    /**
+     * Method used to start hash computation.
+     * @return calculated hash
+     */
     @Override
     protected byte[] compute() {
         if (fileToCompute.isFile()) {
