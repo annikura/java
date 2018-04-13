@@ -3,11 +3,8 @@ import com.sun.istack.internal.NotNull;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.util.concurrent.ForkJoinPool;
 
-/**
- *
- */
 public class FileHashCounter {
     private final static int BUFFER_SIZE = 1024;
 
@@ -28,6 +25,15 @@ public class FileHashCounter {
         } else {
             return hashFile(file);
         }
+    }
+
+
+    @NotNull
+    public static byte[] hashInstanceInParallel(@NotNull final File file) throws IOException {
+        ForkJoinPool fjp = new ForkJoinPool();
+        HashingTask task = new HashingTask(file);
+        fjp.submit(task);
+        return task.compute();
     }
 
     @NotNull
