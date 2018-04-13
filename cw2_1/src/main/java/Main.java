@@ -1,8 +1,13 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
+        if (args.length < 1) {
+            System.out.println("Arguments list is empty. At least one argument is required.");
+            return;
+        }
         File file = new File(args[0]);
         if (!file.exists()) {
             System.out.println("Such a file does not exist.");
@@ -35,7 +40,10 @@ public class Main {
 
         long parallelHashingDuration = finishTime - startTime;
 
-        System.out.println("Simple algorithm worked in " + simpleHashingDuration + "milliseconds");
-        System.out.println("Parallel algorithm worked in " + parallelHashingDuration + "milliseconds");
+        System.out.println("Simple algorithm worked in " + simpleHashingDuration + " milliseconds");
+        System.out.println("Parallel algorithm worked in " + parallelHashingDuration + " milliseconds");
+
+        System.out.println(Arrays.toString(simpleResult));
+        System.out.println(Arrays.toString(parallelResult));
     }
 }

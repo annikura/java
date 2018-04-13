@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
@@ -45,13 +46,16 @@ public class HashingTask extends RecursiveTask<byte[]> {
         for (File file : listOfFiles) {
             tasks.add(new HashingTask(file));
         }
-        ForkJoinTask.invokeAll(tasks);
+        Collection<HashingTask> results = ForkJoinTask.invokeAll(tasks);
 
         MessageDigest digest = FileHashCounter.createDigest();
         digest.update(fileToCompute.getName().getBytes());
 
-        for (HashingTask task : tasks) {
-            byte[] taskResult = task.compute();
+        for (HashingTask result : results) {
+            byte[] taskResult = null;
+            try {
+                taskResult = result.get();
+            } catch (Exception ignored) { }
             if (taskResult == null) {
                 return null;
             }
