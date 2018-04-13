@@ -108,7 +108,27 @@ public class FileHashCounterTest {
 
         assertEquals(
                 Arrays.toString(hashBytes(arr3)),
-                Arrays.toString(FileHashCounter.hashDirectory(file))
+                Arrays.toString(FileHashCounter.hashInstance(file))
+        );
+    }
+
+    @Test
+    public void hashDirWithNotEmptyFile() throws IOException {
+        String dirName = resourceFilePath("dir_with_file");
+        String filename = Paths.get(dirName, "file").toString();
+
+        File file = new File(dirName);
+
+        byte[] arr1 = file.getName().getBytes();
+        byte[] arr2 = hashFileContent(new File(filename));
+        byte[] arr3 = new byte[arr1.length + arr2.length];
+
+        System.arraycopy(arr1, 0, arr3, 0, arr1.length);
+        System.arraycopy(arr2, 0, arr3, arr1.length, arr2.length);
+
+        assertEquals(
+                Arrays.toString(hashBytes(arr3)),
+                Arrays.toString(FileHashCounter.hashInstance(file))
         );
     }
 
@@ -153,6 +173,26 @@ public class FileHashCounterTest {
     public void hashDirWithEmptyFileInParallel() throws IOException {
         String dirName = resourceFilePath("dir_with_empty");
         String filename = Paths.get(dirName, "empty_file").toString();
+
+        File file = new File(dirName);
+
+        byte[] arr1 = file.getName().getBytes();
+        byte[] arr2 = hashFileContent(new File(filename));
+        byte[] arr3 = new byte[arr1.length + arr2.length];
+
+        System.arraycopy(arr1, 0, arr3, 0, arr1.length);
+        System.arraycopy(arr2, 0, arr3, arr1.length, arr2.length);
+
+        assertEquals(
+                Arrays.toString(hashBytes(arr3)),
+                Arrays.toString(FileHashCounter.hashInstanceInParallel(file))
+        );
+    }
+
+    @Test
+    public void hashDirWithNotEmptyFileInParallel() throws IOException {
+        String dirName = resourceFilePath("dir_with_file");
+        String filename = Paths.get(dirName, "file").toString();
 
         File file = new File(dirName);
 
