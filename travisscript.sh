@@ -5,6 +5,9 @@ for dir in $(ls -d1 -- */); do
 	find . -maxdepth 1 -type f | grep -q ^./pom.xml$
 	if [ $? -eq 0 ]; then
 		mvn test
+		if [ $? -ne 0 ]; then
+			exit 1
+		fi
 	fi	
 	cd ..
 done
