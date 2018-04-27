@@ -8,6 +8,7 @@ public class FileDataServer {
     void startServer(int portNumber) throws IOException {
         Logger.getAnonymousLogger().info("Server is running");
         ServerSocket socket = new ServerSocket(portNumber);
+        Logger.getAnonymousLogger().info("Server socket is created");
         while (listening) {
             new Thread(new FileDataRunnable(socket.accept())).start();
         }
