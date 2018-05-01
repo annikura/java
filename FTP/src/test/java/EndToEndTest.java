@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,8 @@ public class EndToEndTest {
     private String fileWithText;
     private byte[] fileContent = {42, 34};
     private String subdir;
+    private String fileInSubdir;
+    private String emptyFile;
 
     @Before
     public void startServer() throws Exception {
@@ -35,6 +38,14 @@ public class EndToEndTest {
             }
         }).start();
         Thread.sleep(100);
+    }
+
+    @After
+    public void eraseFiles() {
+        for (String name : new String[]{emptyFile, fileWithText, fileInSubdir, subdir, mainDir}) {
+            File file = new File(name);
+            file.delete();
+        }
     }
 
     @Before
@@ -56,9 +67,9 @@ public class EndToEndTest {
         this.mainDir = mainDir.getAbsolutePath();
         this.subdir = subdir.getAbsolutePath();
         this.fileWithText = fileWithText.getAbsolutePath();
+        this.emptyFile = emptyFile.getAbsolutePath();
+        this.fileInSubdir = fileInSubdir.getAbsolutePath();
     }
-
-
 
     @Test
     public void startConnection() throws Exception {
@@ -95,6 +106,15 @@ public class EndToEndTest {
     }
 
     @Test
+    public void listNotExistingFilesRequest() throws Exception {
+        FileDataClient client = FileDataClient.createClient("localhost", port);
+        ServerFile[] response = client.getFiles("not existing dir");
+        assertEquals(0, response.length);
+        client.closeClient();
+    }
+
+
+    @Test
     public void getFileRequest() throws Exception {
         FileDataClient client = FileDataClient.createClient("localhost", port);
         byte[] response = client.getFile(fileWithText);
@@ -102,5 +122,11 @@ public class EndToEndTest {
         client.closeClient();
     }
 
-
+    @Test
+    public void getNotExistingFileRequest() throws Exception {
+        FileDataClient client = FileDataClient.createClient("localhost", port);
+        byte[] response = client.getFile("not existing file");
+        assertEquals("[]", Arrays.toString(response));
+        client.closeClient();
+    }
 }

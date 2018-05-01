@@ -9,10 +9,10 @@ import java.util.logging.Logger;
 class FileDataRunnable implements Runnable {
     private final SocketIO io;
     FileDataRunnable(@NotNull Socket socket) throws IOException {
-        io = new SocketIOImpl(socket.getInputStream(), socket.getOutputStream());
+        this(new SocketIOImpl(socket.getInputStream(), socket.getOutputStream()));
     }
 
-    FileDataRunnable(@NotNull SocketIO io) {
+    private FileDataRunnable(@NotNull SocketIO io) {
         this.io = io;
     }
 

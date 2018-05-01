@@ -15,8 +15,7 @@ public class FileDataServer {
         Logger.getAnonymousLogger().info("Server was stopped");
     }
 
-    void stopServer() {
+    void stopListening() {
         listening = false;
     }
-
 }
