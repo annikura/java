@@ -1,19 +1,14 @@
 package ru.spbau.annikura.tictactoe.ui;
 
-import com.sun.prism.paint.Paint;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-import ru.spbau.annikura.tictactoe.backends.FileDataController;
-import ru.spbau.annikura.tictactoe.backends.Stats;
-import ru.spbau.annikura.tictactoe.controllers.*;
+import ru.spbau.annikura.tictactoe.controllers.GameController;
 
 /**
  * Scenes creator class
@@ -27,8 +22,6 @@ public class ScenesCollection {
      * Creates new game scene.
      * @param width width of the new scene
      * @param height height of the new scene
-     * @param stage a stage that will be switched to new scene when the corresponding button is pressed
-     * @param gameController game logic owning class
      * @return generated scene with given parameters.
      */
     public static Scene newGameScene(double width, double height, int boardSize) {
@@ -40,7 +33,6 @@ public class ScenesCollection {
     /**
      * Creates new game board region.
      * @param size number of the rows/columns on the game field
-     * @param controller game controller
      * @return new game board ui element
      */
     public static Region newGameBoard(int size) {
