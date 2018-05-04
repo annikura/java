@@ -16,9 +16,7 @@ import java.util.concurrent.TimeUnit;
  * Scenes creator class
  */
 public class ScenesCollection {
-        private final static String MAIN_CSS = "-fx-background-color: #0048ad";
-    private final static int BUTTONS_WIDTH = 150;
-    private final static int BUTTONS_HEIGHT = 25;
+    private final static String MAIN_CSS = "-fx-background-color: #0048ad";
 
     /**
      * Creates new game scene.
@@ -104,8 +102,11 @@ public class ScenesCollection {
     private static void updateBoard(@NotNull Button[][] buttons, @NotNull GameController.GameField field, int size) {
         for (int i1 = 0; i1 < size; i1++) {
             for (int j1 = 0; j1 < size; j1++) {
-                String symbol = field.get(i1, j1).getValue();
-                if (!buttons[i1][j1].getText().equals(symbol)) {
+                GameController.Cell cell = field.get(i1, j1);
+                String symbol = cell.getValue();
+                if (cell.isDisabled()) {
+                    buttons[i1][j1].disableProperty();
+                } else if (cell.isHighlighted()) {
                     buttons[i1][j1].setStyle("-fx-font: 22 arial; -fx-base: #e3f3ff;");
                 } else {
                     buttons[i1][j1].setStyle("-fx-font: 22 arial;");

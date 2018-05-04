@@ -2,8 +2,6 @@ package ru.spbau.annikura.tictactoe.controllers;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.TimeUnit;
-
 public class GameController {
     private final GameField board;
     private GameStatus status = GameStatus.CHOOSE_FIRST_TILE;
@@ -24,18 +22,23 @@ public class GameController {
         if (!status.equals(GameStatus.WRONG_MATCH) && !status.equals(GameStatus.SUCCESSFUL_MATCH)) {
             return board;
         }
+        boolean notEnd = false;
+
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++) {
                 Cell currentCell = board.get(i, j);
                 if (!currentCell.isHighlighted) {
-                    continue;
+
+                    board.get(i, j).setHighlight(false);
+                    if (status.equals(GameStatus.SUCCESSFUL_MATCH)) {
+                        currentCell.disable();
+                    }
                 }
-                board.get(i, j).setHighlight(false);
-                if (status.equals(GameStatus.SUCCESSFUL_MATCH)) {
-                    currentCell.disable();
+                if (!currentCell.isDisabled) {
+                    notEnd = true;
                 }
             }
-        status = GameStatus.CHOOSE_FIRST_TILE;
+        status = notEnd ? GameStatus.CHOOSE_FIRST_TILE : GameStatus.THE_END;
         return board;
     }
     
