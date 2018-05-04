@@ -99,6 +99,12 @@ public class ScenesCollection {
         return wrappingBoard;
     }
 
+    /**
+     * Given an array of buttons and a game field, sets the buttons into a state corresponding to the state of the field.
+     * @param buttons set of buttons that will be modified.
+     * @param field state of the field which buttons will be changes to
+     * @param size size of the board
+     */
     private static void updateBoard(@NotNull Button[][] buttons, @NotNull GameController.GameField field, int size) {
         for (int i1 = 0; i1 < size; i1++) {
             for (int j1 = 0; j1 < size; j1++) {
