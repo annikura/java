@@ -8,7 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
-import ru.spbau.annikura.tictactoe.controllers.GameController;
+import ru.spbau.annikura.pair.controllers.GameController;
 
 import java.util.concurrent.TimeUnit;
 

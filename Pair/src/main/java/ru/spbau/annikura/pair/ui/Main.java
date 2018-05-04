@@ -3,7 +3,6 @@ package ru.spbau.annikura.pair.ui;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-import ru.spbau.annikura.tictactoe.ui.ScenesCollection;
 
 /**
  * Main application class. Starts application.
