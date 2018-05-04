@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 public class GameController {
     private final GameField board;
     private GameStatus status = GameStatus.CHOOSE_FIRST_TILE;
+    private int chosenValue;
     private final int size;
 
     public GameStatus getStatus() {
@@ -23,9 +24,6 @@ public class GameController {
         if (!status.equals(GameStatus.WRONG_MATCH) && !status.equals(GameStatus.SUCCESSFUL_MATCH)) {
             return board;
         }
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException ignored) { }
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++) {
                 Cell currentCell = board.get(i, j);
@@ -46,7 +44,20 @@ public class GameController {
             return board;
         }
         assert status.equals(GameStatus.CHOOSE_FIRST_TILE) || status.equals(GameStatus.CHOOSE_SECOND_TILE);
-
+        if (status.equals(GameStatus.CHOOSE_FIRST_TILE)) {
+            chosenValue = board.get(i, j).value;
+            board.get(i, j).setHighlight(true);
+            status = GameStatus.CHOOSE_SECOND_TILE;
+        } else if (status.equals(GameStatus.CHOOSE_FIRST_TILE)) {
+            assert chosenValue != -1;
+            chosenValue = -1;
+            board.get(i, j).setHighlight(true);
+            if (chosenValue == board.get(i, j).value) {
+                status = GameStatus.SUCCESSFUL_MATCH;
+            } else {
+                status = GameStatus.WRONG_MATCH;
+            }
+        }
         return board;
     }
 

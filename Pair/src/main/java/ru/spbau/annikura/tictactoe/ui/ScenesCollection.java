@@ -10,6 +10,8 @@ import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.tictactoe.controllers.GameController;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Scenes creator class
  */
@@ -80,6 +82,12 @@ public class ScenesCollection {
                 buttons[i][j].setOnAction(event -> {
                     updateBoard(buttons, controller.makeMove(finalI, finalJ), size);
                     text.setText(controller.getStatus().toString().replace('_', ' '));
+                    if (controller.getStatus().equals(GameController.GameStatus.WRONG_MATCH) ||
+                            controller.getStatus().equals(GameController.GameStatus.SUCCESSFUL_MATCH)) {
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException ignored) { }
+                    }
                     updateBoard(buttons, controller.makeDecision(), size);
                     text.setText(controller.getStatus().toString().replace('_', ' '));
                 });
