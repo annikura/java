@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ScenesCollection {
     private final static String MAIN_CSS = "-fx-background-color: #0048ad";
+    private final static int DELAY = 500;
 
     /**
      * Creates new game scene.
@@ -111,7 +112,7 @@ public class ScenesCollection {
                 GameController.Cell cell = field.get(i1, j1);
                 String symbol = cell.getValue();
                 if (cell.isDisabled()) {
-                    buttons[i1][j1].disableProperty();
+                    buttons[i1][j1].setDisable(true);
                 } else if (cell.isHighlighted()) {
                     buttons[i1][j1].setStyle("-fx-font: 22 arial; -fx-base: #e3f3ff;");
                 } else {

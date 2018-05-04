@@ -39,9 +39,8 @@ public class GameController {
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++) {
                 Cell currentCell = board.get(i, j);
-                if (!currentCell.isHighlighted) {
-
-                    board.get(i, j).setHighlight(false);
+                if (currentCell.isHighlighted) {
+                    currentCell.setHighlight(false);
                     if (status.equals(GameStatus.SUCCESSFUL_MATCH)) {
                         currentCell.disable();
                     }
@@ -70,15 +69,15 @@ public class GameController {
             chosenValue = board.get(i, j).value;
             board.get(i, j).setHighlight(true);
             status = GameStatus.CHOOSE_SECOND_TILE;
-        } else if (status.equals(GameStatus.CHOOSE_FIRST_TILE)) {
+        } else if (status.equals(GameStatus.CHOOSE_SECOND_TILE)) {
             assert chosenValue != -1;
-            chosenValue = -1;
             board.get(i, j).setHighlight(true);
             if (chosenValue == board.get(i, j).value) {
                 status = GameStatus.SUCCESSFUL_MATCH;
             } else {
                 status = GameStatus.WRONG_MATCH;
             }
+            chosenValue = -1;
         }
         return board;
     }
