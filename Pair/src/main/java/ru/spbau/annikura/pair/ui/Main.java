@@ -21,6 +21,9 @@ public class Main extends Application {
         String errorMessage = "Wrong input format. If you want size to be specified, pass '--size=<Integer>' as a parameter." +
                 "Note that size should be a positive even integer < 100, not containing leading zeroes.";
         String sizeAsStr = getParameters().getNamed().get("size");
+        if (sizeAsStr == null) {
+            sizeAsStr = "4";
+        }
         if (!sizeAsStr.matches("\\d+") || sizeAsStr.length() > 2) {
             System.out.println(errorMessage);
             return;

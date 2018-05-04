@@ -2,6 +2,8 @@ package ru.spbau.annikura.pair.controllers;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 /**
  * Pair game controller.
  */
@@ -179,10 +181,19 @@ public class GameController {
 
             int[] values = new int[size * size];
             for (int i = 0; i < size * size; i += 2) {
-                // filling an array with pairs of numbers in range [0, size^2 / 2]
+                // filling an values with pairs of numbers in range [0, size^2 / 2]
                 values[i] = i / 2;
                 values[i + 1] = i / 2;
+            }
 
+            Random rgen = new Random();
+
+            // Random shuffle
+            for (int i = 0; i < values.length; i++) {
+                int randomPosition = rgen.nextInt(values.length);
+                int temp = values[i];
+                values[i] = values[randomPosition];
+                values[randomPosition] = temp;
             }
 
             for (int i = 0, cnt = 0; i < size; i++) {

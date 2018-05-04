@@ -84,7 +84,7 @@ public class ScenesCollection {
                     if (controller.getStatus().equals(GameController.GameStatus.WRONG_MATCH) ||
                             controller.getStatus().equals(GameController.GameStatus.SUCCESSFUL_MATCH)) {
                         try {
-                            TimeUnit.SECONDS.sleep(1);
+                            Thread.sleep(500);
                         } catch (InterruptedException ignored) { }
                     }
                     updateBoard(buttons, controller.makeDecision(), size);
