@@ -1,4 +1,4 @@
-package ru.spbau.annikura.tictactoe.controllers;
+package ru.spbau.annikura.pair.controllers;
 
 import org.jetbrains.annotations.NotNull;
 

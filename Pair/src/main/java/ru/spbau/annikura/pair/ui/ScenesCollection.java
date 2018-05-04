@@ -1,4 +1,4 @@
-package ru.spbau.annikura.tictactoe.ui;
+package ru.spbau.annikura.pair.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

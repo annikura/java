@@ -1,8 +1,9 @@
-package ru.spbau.annikura.tictactoe.ui;
+package ru.spbau.annikura.pair.ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
+import ru.spbau.annikura.tictactoe.ui.ScenesCollection;
 
 /**
  * Main application class. Starts application.
@@ -20,7 +21,8 @@ public class Main extends Application {
 
         String errorMessage = "Wrong input format. If you want size to be specified, pass '--size=<Integer>' as a parameter." +
                 "Note that size should be a positive even integer < 100, not containing leading zeroes.";
-        String sizeAsStr = getParameters().getNamed().get("size");
+        //String sizeAsStr = getParameters().getNamed().get("size");
+        String sizeAsStr = "5";
         if (!sizeAsStr.matches("\\d+") || sizeAsStr.length() > 2) {
             System.out.println(errorMessage);
             return;
