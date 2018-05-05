@@ -16,7 +16,6 @@ import ru.spbau.annikura.pair.controllers.GameController;
  */
 public class ScenesCollection {
     private final static String MAIN_CSS = "-fx-background-color: #0048ad";
-    private final static int DELAY = 500;
 
     /**
      * Creates new game scene.
@@ -43,7 +42,7 @@ public class ScenesCollection {
         BorderPane field = new BorderPane();
         field.setPadding(new Insets(10));
 
-        Text text = new Text("Choose first tile");
+        Text text = new Text("CHOOSE FIRST TILE");
         text.setFill(Color.WHITE);
 
         VBox vBox = new VBox(text);
