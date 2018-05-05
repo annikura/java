@@ -17,6 +17,10 @@ public class GameController {
         return status;
     }
 
+    public GameField getBoard() {
+        return board;
+    }
+
     /**
      * Creates new game with given board size.
      * @param size size of the new board

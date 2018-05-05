@@ -1,5 +1,6 @@
 package ru.spbau.annikura.pair.ui;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,8 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.pair.controllers.GameController;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Scenes creator class
@@ -80,15 +79,20 @@ public class ScenesCollection {
                 buttons[i][j].setMinSize(50, 50);
                 buttons[i][j].setOnAction(event -> {
                     updateBoard(buttons, controller.makeMove(finalI, finalJ), size);
+                    updateBoard(buttons, controller.getBoard(), size);
                     text.setText(controller.getStatus().toString().replace('_', ' '));
                     if (controller.getStatus().equals(GameController.GameStatus.WRONG_MATCH) ||
                             controller.getStatus().equals(GameController.GameStatus.SUCCESSFUL_MATCH)) {
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException ignored) { }
+                        new Thread(() -> {
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException ignored) { }
+                            Platform.runLater(() -> {
+                                updateBoard(buttons, controller.makeDecision(), size);
+                                text.setText(controller.getStatus().toString().replace('_', ' '));
+                            });
+                        }).start();
                     }
-                    updateBoard(buttons, controller.makeDecision(), size);
-                    text.setText(controller.getStatus().toString().replace('_', ' '));
                 });
                 grid.add(buttons[i][j], i, j);
             }

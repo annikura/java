@@ -19,7 +19,8 @@ public class Main extends Application {
         primaryStage.setResizable(false);
 
         String errorMessage = "Wrong input format. If you want size to be specified, pass '--size=<Integer>' as a parameter." +
-                "Note that size should be a positive even integer < 100, not containing leading zeroes.";
+                "Note that size should be a positive even integer < 100, not containing leading zeroes." +
+                "If no size is specified, the default size is 4.";
         String sizeAsStr = getParameters().getNamed().get("size");
         if (sizeAsStr == null) {
             sizeAsStr = "4";
