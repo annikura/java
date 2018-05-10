@@ -17,7 +17,7 @@ class SocketIOImpl implements SocketIO {
      */
     SocketIOImpl(@NotNull final InputStream in, @NotNull final OutputStream out) {
         this.in = new DataInputStream(new BufferedInputStream(in));
-        this.out = new DataOutputStream(out);
+        this.out = new DataOutputStream(new BufferedOutputStream(out));
     }
 
     private void afterWrite() throws IOException {
@@ -25,12 +25,12 @@ class SocketIOImpl implements SocketIO {
     }
 
     /**
-     * Writes bytes to the out stream and flushes it.
-     * @param bytes bytes to be written into the socket
+     * Writes byte to the out stream and flushes it.
+     * @param b byte to be written into the socket
      * @throws IOException if an error occurred while writing into the stream.
      */
-    public void writeBytes(@NotNull byte[] bytes) throws IOException {
-        out.write(bytes);
+    public void writeByte(byte b) throws IOException {
+        out.write(b);
         afterWrite();
     }
 
@@ -76,16 +76,12 @@ class SocketIOImpl implements SocketIO {
     }
 
     /**
-     * Reads given number of bytes from the stream.
-     * @param length number of bytes
-     * @return array of bytes that was read.
+     * Reads byte from the stream.
+     * @return byte that was read.
      * @throws IOException if an error occurred while reading from the stream.
      */
-    @NotNull
-    public byte[] readBytes(long length) throws IOException {
-        byte[] bytes = new byte[(int) length];
-        in.read(bytes);
-        return bytes;
+    public byte readByte() throws IOException {
+        return in.readByte();
     }
 
     /**

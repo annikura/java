@@ -1,3 +1,4 @@
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -75,7 +76,9 @@ public class EndToEndTest extends TestWithFiles {
     @Test
     public void getFileRequest() throws Exception {
         FileDataClient client = FileDataClient.createClient("localhost", port);
-        byte[] response = client.getFile(fileWithText);
+        ByteOutputStream out = new ByteOutputStream();
+        client.getFile(fileWithText, out);
+        byte[] response = out.toByteArray();
         assertEquals(Arrays.toString(fileContent), Arrays.toString(response));
         client.closeClient();
     }
@@ -83,7 +86,9 @@ public class EndToEndTest extends TestWithFiles {
     @Test
     public void getNotExistingFileRequest() throws Exception {
         FileDataClient client = FileDataClient.createClient("localhost", port);
-        byte[] response = client.getFile("not existing file");
+        ByteOutputStream out = new ByteOutputStream();
+        client.getFile("not existing file", new ByteOutputStream());
+        byte[] response = out.toByteArray();
         assertEquals("[]", Arrays.toString(response));
         client.closeClient();
     }

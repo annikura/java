@@ -8,11 +8,11 @@ import java.io.IOException;
  */
 public interface SocketIO {
     /**
-     * Writes given bytes into the socket.
-     * @param bytes bytes to be written into the socket
+     * Writes given byte into the socket.
+     * @param b byte to be written into the socket
      * @throws IOException if an error occurs while writing
      */
-    void writeBytes(@NotNull byte[] bytes) throws IOException;
+    void writeByte(byte b) throws IOException;
 
     /**
      * Writes given integer into the socket.
@@ -43,13 +43,11 @@ public interface SocketIO {
     void writeBoolean(boolean bool) throws IOException;
 
     /**
-     * Reads given amount of bytes from the socket.
-     * @param length number of bytes
-     * @return length of bytes from the socket
+     * Reads byte from the socket.
+     * @return byte from the socket
      * @throws IOException if an error occurs while writing
      */
-    @NotNull
-    byte[] readBytes(long length) throws IOException;
+    byte readByte() throws IOException;
 
     /**
      * Reads integer from the socket

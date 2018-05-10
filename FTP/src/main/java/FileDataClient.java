@@ -1,6 +1,7 @@
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.logging.Logger;
 
@@ -81,12 +82,14 @@ public class FileDataClient {
      * @throws IOException can be thrown if an IO error occurs while reading/writing from/to the client-server stream.
      */
     @NotNull
-    public byte[] getFile(@NotNull String filename) throws IOException {
+    public void getFile(@NotNull String filename, @NotNull OutputStream out) throws IOException {
         io.writeInt(2);
         io.writeInt(filename.length());
         io.writeString(filename);
 
-        return io.readBytes(io.readLong());
+        long len = io.readLong();
+        for (int i = 0; i < len; i++)
+            out.write(io.readByte());
     }
 
     /**

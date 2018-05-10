@@ -61,7 +61,7 @@ class FileDataRunnable implements Runnable {
                     case 2:
                         byte[] fileContent = getFile(io.readString(io.readInt()));
                         io.writeLong(fileContent.length);
-                        io.writeBytes(fileContent);
+                        for (byte aFileContent : fileContent) io.writeByte(aFileContent);
                         break;
                     case 1:
                         ServerFile[] content = getDirContent(io.readString(io.readInt()));
