@@ -56,7 +56,7 @@ public class FileDataClientTest {
 
         ByteOutputStream out = new ByteOutputStream();
         client.getFile(path, out);
-        byte[] result = out.getBytes();
+        byte[] result = out.toByteArray();
 
         verify(mockSocket).readLong();
         verify(mockSocket, new Times(3)).readByte();

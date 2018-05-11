@@ -9,22 +9,24 @@ import java.io.IOException;
 public interface SocketIO {
     /**
      * Writes given byte into the socket.
-     * @param b byte to be written into the socket
-     * @throws IOException if an error occurs while writing
+     * @param b byte to be written into the socket.
+     * @throws IOException if an error occurs while writing.
+     *
+     * WARNING: should be flushed manually.
      */
     void writeByte(byte b) throws IOException;
 
     /**
      * Writes given integer into the socket.
-     * @param number integer to be written into the socket
-     * @throws IOException if an error occurs while writing
+     * @param number integer to be written into the socket.
+     * @throws IOException if an error occurs while writing.
      */
     void writeInt(int number) throws IOException;
 
     /**
      * Writes given string into the socket.
-     * @param string string to be written into the socket
-     * @throws IOException if an error occurs while writing
+     * @param string string to be written into the socket.
+     * @throws IOException if an error occurs while writing.
      */
     void writeString(@NotNull String string) throws IOException;
 
@@ -37,45 +39,45 @@ public interface SocketIO {
 
     /**
      * Writes given boolean into the socket.
-     * @param bool boolean to be written into the socket
-     * @throws IOException if an error occurs while writing
+     * @param bool boolean to be written into the socket.
+     * @throws IOException if an error occurs while writing.
      */
     void writeBoolean(boolean bool) throws IOException;
 
     /**
      * Reads byte from the socket.
-     * @return byte from the socket
-     * @throws IOException if an error occurs while writing
+     * @return byte from the socket.
+     * @throws IOException if an error occurs while writing.
      */
     byte readByte() throws IOException;
 
     /**
-     * Reads integer from the socket
-     * @return read integer
-     * @throws IOException if an error occurs while reading
+     * Reads integer from the socket.
+     * @return read integer.
+     * @throws IOException if an error occurs while reading.
      */
     int readInt() throws IOException;
 
     /**
      * Reads string of the given length from the socket.
-     * @param length string length
-     * @return read string
-     * @throws IOException if an error occurs while reading
+     * @param length string length.
+     * @return read string.
+     * @throws IOException if an error occurs while reading.
      */
     @NotNull
     String readString(int length) throws IOException;
 
     /**
      * Reads long from the socket.
-     * @return read long
-     * @throws IOException if an error occurs while reading
+     * @return read long.
+     * @throws IOException if an error occurs while reading.
      */
     long readLong() throws IOException;
 
     /**
-     * Reads boolean from the socket
-     * @return read boolean
-     * @throws IOException if an error occurs while reading
+     * Reads boolean from the socket.
+     * @return read boolean.
+     * @throws IOException if an error occurs while reading.
      */
     boolean readBoolean() throws IOException;
 
@@ -84,4 +86,10 @@ public interface SocketIO {
      * @throws IOException if an error occurred while closing the io stream.
      */
     void close() throws IOException;
+
+    /**
+     * Flushes output stream.
+     * @throws IOException if an error occurred while flushing.
+     */
+    void flush() throws IOException;
 }

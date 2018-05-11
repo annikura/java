@@ -1,6 +1,8 @@
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
@@ -16,17 +18,24 @@ public class FileDataRunnableTest extends TestWithFiles {
 
     @Test
     public void getFile() throws IOException {
-        assertEquals(Arrays.toString(fileContent), Arrays.toString(FileDataRunnable.getFile(fileWithText)));
+        InputStream in = FileDataRunnable.getFile(fileWithText);
+        byte[] result = new byte[in.available()];
+        in.read(result);
+        assertEquals(Arrays.toString(fileContent), Arrays.toString(result));
     }
 
     @Test
     public void getNotExistingFile() throws IOException {
-        assertEquals("[]", Arrays.toString(FileDataRunnable.getFile("does not exist")));
+        InputStream in = FileDataRunnable.getFile("does not exist");
+        assertNull(in);
     }
 
     @Test
     public void getEmptyFile() throws IOException {
-        assertEquals("[]", Arrays.toString(FileDataRunnable.getFile(emptyFile)));
+        InputStream in = FileDataRunnable.getFile(emptyFile);
+        byte[] result = new byte[in.available()];
+        in.read(result);
+        assertEquals("[]", Arrays.toString(result));
     }
 
     @Test

@@ -1,8 +1,7 @@
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.logging.Logger;
 
@@ -59,9 +58,17 @@ class FileDataRunnable implements Runnable {
                 }
                 switch (type) {
                     case 2:
-                        byte[] fileContent = getFile(io.readString(io.readInt()));
-                        io.writeLong(fileContent.length);
-                        for (byte aFileContent : fileContent) io.writeByte(aFileContent);
+                        InputStream in = getFile(io.readString(io.readInt()));
+                        if (in == null) {
+                            io.writeLong(0);
+                            break;
+                        }
+                        long len = in.available();
+                        io.writeLong(len);
+                        for (int i = 0; i < len; i++) {
+                            io.writeByte((byte) in.read());
+                        }
+                        io.flush();
                         break;
                     case 1:
                         ServerFile[] content = getDirContent(io.readString(io.readInt()));
@@ -83,19 +90,16 @@ class FileDataRunnable implements Runnable {
     /**
      * Given the name of the file, returns its content as bytes[].
      * @param filename name of the file to get the contents of.
-     * @return contents of the file.
+     * @return contents of the file. Null if file didn't exist.
      * @throws IOException if an error occurred while reading the file.
      */
-    @NotNull
-    static byte[] getFile(@NotNull String filename) throws IOException {
+    @Nullable
+    static InputStream getFile(@NotNull String filename) throws IOException {
         File file = new File(filename);
         if (!file.exists()) {
-            return new byte[0];
+            return null;
         }
-        FileInputStream fis = new FileInputStream(file);
-        byte[] result = new byte[fis.available()];
-        fis.read(result);
-        return result;
+        return new BufferedInputStream(new FileInputStream(file));
     }
 
     /**
