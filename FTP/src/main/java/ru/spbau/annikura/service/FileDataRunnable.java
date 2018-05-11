@@ -1,3 +1,5 @@
+package ru.spbau.annikura.service;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,3 +1,5 @@
+package ru.spbau.annikura.service;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.logging.Logger;

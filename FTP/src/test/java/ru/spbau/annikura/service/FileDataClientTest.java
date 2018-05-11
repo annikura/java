@@ -1,7 +1,9 @@
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+package ru.spbau.annikura.service;
+
 import org.junit.Test;
 import org.mockito.internal.verification.Times;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -54,7 +56,7 @@ public class FileDataClientTest {
         when(mockSocket.readLong()).thenReturn((long) 3);
         when(mockSocket.readByte()).thenReturn(data[0]).thenReturn(data[1]).thenReturn(data[2]);
 
-        ByteOutputStream out = new ByteOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         client.getFile(path, out);
         byte[] result = out.toByteArray();
 

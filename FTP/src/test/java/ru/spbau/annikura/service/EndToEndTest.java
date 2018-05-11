@@ -1,4 +1,6 @@
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+package ru.spbau.annikura.service;
+
+import java.io.ByteArrayOutputStream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -76,7 +78,7 @@ public class EndToEndTest extends TestWithFiles {
     @Test
     public void getFileRequest() throws Exception {
         FileDataClient client = FileDataClient.createClient("localhost", port);
-        ByteOutputStream out = new ByteOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         client.getFile(fileWithText, out);
         byte[] response = out.toByteArray();
         assertEquals(Arrays.toString(fileContent), Arrays.toString(response));
@@ -86,8 +88,8 @@ public class EndToEndTest extends TestWithFiles {
     @Test
     public void getNotExistingFileRequest() throws Exception {
         FileDataClient client = FileDataClient.createClient("localhost", port);
-        ByteOutputStream out = new ByteOutputStream();
-        client.getFile("not existing file", new ByteOutputStream());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        client.getFile("not existing file", new ByteArrayOutputStream());
         byte[] response = out.toByteArray();
         assertEquals("[]", Arrays.toString(response));
         client.closeClient();

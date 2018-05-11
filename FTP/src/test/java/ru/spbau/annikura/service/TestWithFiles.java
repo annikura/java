@@ -1,3 +1,5 @@
+package ru.spbau.annikura.service;
+
 import org.junit.After;
 import org.junit.Before;
 
