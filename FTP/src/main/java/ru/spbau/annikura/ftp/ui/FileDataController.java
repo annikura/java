@@ -3,10 +3,8 @@ package ru.spbau.annikura.ftp.ui;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.service.FileDataClient;
 import ru.spbau.annikura.service.ServerFile;
-import ru.spbau.annikura.service.SocketIO;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
