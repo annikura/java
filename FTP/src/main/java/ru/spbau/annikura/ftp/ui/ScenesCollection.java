@@ -30,6 +30,13 @@ public class ScenesCollection {
     private final static String BUTTONS_CSS =   "-fx-background-color: #4d4d4d;" +
                                                 "-fx-text-fill: #FFFFFF";
 
+    /**
+     * Generates new log in scene with the stated parameters.
+     * @param width new scene width
+     * @param height new scene height
+     * @param stage current scene ancestor
+     * @return new log in scene
+     */
     public static Scene newLogInScene(final double width, final double height, @NotNull final Stage stage) {
         VBox body = new VBox();
 
