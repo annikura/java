@@ -72,7 +72,7 @@ public class FileDataController {
      * Downloads chosen file in the current directory into the given File location.
      * @param filename name of the file that should be downloaded
      * @param toFile destination file descriptor
-     * @throws IOException
+     * @throws IOException if download is interrupted because of reading from server or writing to the disk error.
      */
     public void downloadTo(@NotNull String filename, @NotNull File toFile) throws IOException {
         String path = Paths.get(currentDirectory, filename).toString();
