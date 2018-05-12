@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.annikura.service.ServerFile;
 
-import javax.xml.ws.Action;
 import javax.xml.ws.Holder;
 import java.io.File;
 import java.io.IOException;
@@ -27,9 +26,9 @@ import java.util.Optional;
  * Scenes creator class
  */
 public class ScenesCollection {
-    private final static String MAIN_CSS = "-fx-background-color: #0048ad";
-    private final static int BUTTONS_WIDTH = 150;
-    private final static int BUTTONS_HEIGHT = 25;
+    private final static String MAIN_CSS = "-fx-background-color: #808080";
+    private final static String BUTTONS_CSS =   "-fx-background-color: #4d4d4d;" +
+                                                "-fx-text-fill: #FFFFFF";
 
     public static Scene newLogInScene(final double width, final double height, @NotNull final Stage stage) {
         VBox body = new VBox();
@@ -85,6 +84,9 @@ public class ScenesCollection {
             }
             stage.setScene(ScenesCollection.newClientScene(width, height, controller, stage));
         });
+
+        okButton.setStyle(BUTTONS_CSS);
+        body.setStyle(MAIN_CSS);
         return new Scene(body, width, height);
     }
 
@@ -167,12 +169,15 @@ public class ScenesCollection {
         VBox mainBox = new VBox(10);
         mainBox.getChildren().addAll(headerBox, listView, buttonsBox);
 
+        exitButton.setStyle(BUTTONS_CSS);
+        leaveServerButton.setStyle(BUTTONS_CSS);
+        mainBox.setStyle(MAIN_CSS);
         return new Scene(mainBox, width, height);
     }
 
-    private static void setFileList(ListView listView, ServerFile[] files) {
+    private static void setFileList(@NotNull ListView listView, @NotNull ServerFile[] files) {
         Text[] fields = new Text[files.length + 1];
-        Color directoryColor = Color.BLUEVIOLET;
+        Color directoryColor = Color.DARKBLUE;
         Color fileColor = Color.BLACK;
         fields[0] = new Text("..");
         fields[0].setFill(directoryColor);
