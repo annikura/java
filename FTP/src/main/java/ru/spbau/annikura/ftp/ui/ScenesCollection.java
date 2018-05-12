@@ -84,7 +84,7 @@ public class ScenesCollection {
                 alert.setHeaderText(e.getMessage());
                 alert.setContentText("Try again?");
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get().equals(ButtonType.OK)) {
+                if (result.isPresent() && result.get().equals(ButtonType.OK)) {
                     okButton.getOnAction().handle(event);
                 }
                 return;
@@ -155,7 +155,6 @@ public class ScenesCollection {
                 }
                 setFileList(listView, filesHolder.value);
                 directoryField.setText(controller.getPath());
-                return;
             }
         });
 
