@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 public class FileDataServer {
     private boolean listening = true;
 
-    void startServer(int portNumber) throws IOException {
+    public void startServer(int portNumber) throws IOException {
         Logger.getAnonymousLogger().info("Server is running");
         ServerSocket socket = new ServerSocket(portNumber);
         Logger.getAnonymousLogger().info("Server socket is created");

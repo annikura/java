@@ -50,7 +50,7 @@ public class FileDataClient {
      */
     @NotNull
     public ServerFile[] getFiles(@NotNull String path) throws IOException {
-        Logger.getAnonymousLogger().info("Sending getFiles request");
+        Logger.getAnonymousLogger().info("Sending getFilesByAbsolutePath request");
 
         io.writeInt(1);
         io.writeInt(path.length());
