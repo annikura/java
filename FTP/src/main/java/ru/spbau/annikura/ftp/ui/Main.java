@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ru.spbau.annikura.ftp.ui.Main application class. Starts application.
+ * Main application class. Starts application.
  */
 public class Main extends Application {
 
