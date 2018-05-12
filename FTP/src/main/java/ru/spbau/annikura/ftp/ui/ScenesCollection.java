@@ -34,8 +34,8 @@ public class ScenesCollection {
      * Generates new log in scene with the stated parameters.
      * @param width new scene width
      * @param height new scene height
-     * @param stage current scene ancestor
-     * @return new log in scene
+     * @param stage root stage
+     * @return created log in scene
      */
     public static Scene newLogInScene(final double width, final double height, @NotNull final Stage stage) {
         VBox body = new VBox();
@@ -97,6 +97,14 @@ public class ScenesCollection {
         return new Scene(body, width, height);
     }
 
+    /**
+     * Generates new client scene with stated parameters
+     * @param width new scene width
+     * @param height new scene height
+     * @param controller client controller
+     * @param stage root stage
+     * @return created client scene
+     */
     public static Scene newClientScene(double width, double height,
                                        @NotNull FileDataController controller,
                                        @NotNull Stage stage) {
@@ -182,6 +190,11 @@ public class ScenesCollection {
         return new Scene(mainBox, width, height);
     }
 
+    /**
+     * Updates given list content with given files list.
+     * @param listView list to be updated
+     * @param files new list content
+     */
     private static void setFileList(@NotNull ListView listView, @NotNull ServerFile[] files) {
         Text[] fields = new Text[files.length + 1];
         Color directoryColor = Color.DARKBLUE;
@@ -204,6 +217,11 @@ public class ScenesCollection {
         listView.setItems(FXCollections.observableArrayList(fields));
     }
 
+    /**
+     * Generates new io error alert with given content.
+     * @param content alert content.
+     * @return generated alert.
+     */
     public static Alert newIOError(@NotNull String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("IO Error");
