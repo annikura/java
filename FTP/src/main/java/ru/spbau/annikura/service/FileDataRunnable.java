@@ -60,12 +60,13 @@ class FileDataRunnable implements Runnable {
                 }
                 switch (type) {
                     case 2:
-                        InputStream in = getFile(io.readString(io.readInt()));
+                        File file = new File(io.readString(io.readInt()));
+                        InputStream in = getFile(file);
                         if (in == null) {
                             io.writeLong(0);
                             break;
                         }
-                        long len = in.available();
+                        long len = file.length();
                         io.writeLong(len);
                         for (int i = 0; i < len; i++) {
                             io.writeByte((byte) in.read());
@@ -75,10 +76,10 @@ class FileDataRunnable implements Runnable {
                     case 1:
                         ServerFile[] content = getDirContent(io.readString(io.readInt()));
                         io.writeInt(content.length);
-                        for (ServerFile file : content) {
-                            io.writeInt(file.getPath().length());
-                            io.writeString(file.getPath());
-                            io.writeBoolean(file.isDirectory());
+                        for (ServerFile serverFile : content) {
+                            io.writeInt(serverFile.getPath().length());
+                            io.writeString(serverFile.getPath());
+                            io.writeBoolean(serverFile.isDirectory());
                         }
                         break;
                 }
@@ -90,18 +91,28 @@ class FileDataRunnable implements Runnable {
     }
 
     /**
-     * Given the name of the file, returns its content as bytes[].
-     * @param filename name of the file to get the contents of.
+     * Given the file, returns stream where the file content can be read from.
+     * @param file file to get the contents of.
      * @return contents of the file. Null if file didn't exist.
-     * @throws IOException if an error occurred while reading the file.
+     * @throws IOException if an error occurred while accessing the file content.
      */
     @Nullable
-    static InputStream getFile(@NotNull String filename) throws IOException {
-        File file = new File(filename);
+    static InputStream getFile(@NotNull File file) throws IOException {
         if (!file.exists()) {
             return null;
         }
         return new BufferedInputStream(new FileInputStream(file));
+    }
+
+    /**
+     * Given the filename, returns stream where the file content can be read from.
+     * @param filename name of the file to get the contents of.
+     * @return contents of the file. Null if file didn't exist.
+     * @throws IOException if an error occurred while accessing the file content.
+     */
+    @Nullable
+    static InputStream getFile(@NotNull String filename) throws IOException {
+        return getFile(new File(filename));
     }
 
     /**
