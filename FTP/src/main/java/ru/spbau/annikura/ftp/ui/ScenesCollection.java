@@ -139,7 +139,7 @@ public class ScenesCollection {
                     return;
                 }
                 try {
-                    controller.downloadTo(filesHolder.value[index].getPath(), file);
+                    controller.downloadTo(filesHolder.value[index - 1].getPath(), file);
                 } catch (IOException e) {
                     newIOError(e.getMessage()).showAndWait();
                 }
