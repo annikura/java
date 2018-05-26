@@ -14,7 +14,7 @@ public class TestRunner {
 
     private final List<TestResult> results;
 
-    public TestRunner(@NotNull Class<?> cls) throws IllegalAccessException, InstantiationException, BeforeClassException, AfterClassException {
+    public TestRunner(@NotNull Class<?> cls) throws IllegalAccessException, InstantiationException, StateException {
         this.cls = cls;
         instance = cls.newInstance();
 
@@ -29,19 +29,30 @@ public class TestRunner {
             runMethods(instance, beforeClassMethods);
         } catch (InvocationTargetException e) {
             results = Collections.emptyList();
-            throw new BeforeClassException(
-                    "Exception occurred while executing @beforeClass methods. " +
-                            "No testing was performed.\n" + Arrays.toString(e.getTargetException().getStackTrace()));
+            throw new StateException(
+                    "Exception occurred while executing @BeforeClass method. No testing was performed.", e);
         }
 
-        results = runTests(instance, beforeMethods, afterMethods, testMethods);
+        results = new ArrayList<>();
+        for (Method method : testMethods) {
+            try {
+                runMethods(instance, beforeMethods);
+            } catch (InvocationTargetException e) {
+                throw new StateException("An error occurred while running @Before method", e);
+            }
+            results.add(new TestResult(instance, method));
+            try {
+                runMethods(instance, afterMethods);
+            } catch (InvocationTargetException e) {
+                throw new StateException("An error occurred while running @After method", e);
+            }
+        }
 
         try {
             runMethods(instance, afterClassMethods);
         } catch (InvocationTargetException e) {
-            throw new AfterClassException(
-                    "Exception occurred while executing @afterClass methods. "
-                            + Arrays.toString(e.getTargetException().getStackTrace()));
+            throw new StateException(
+                    "Exception occurred while executing @AfterClass method.", e);
 
         }
     }
@@ -62,26 +73,6 @@ public class TestRunner {
             }
         }
         return result;
-    }
-
-    static @NotNull List<TestResult> runTests(@NotNull Object obj,
-                                              @NotNull List<Method> beforeMethods, @NotNull List<Method> afterMethods,
-                                              @NotNull List<Method> testMethods) throws IllegalAccessException {
-        List<TestResult> results = new ArrayList<>();
-        for (Method method : testMethods) {
-            TestResult result = null;
-            try {
-                runMethods(obj, beforeMethods);
-            } catch (InvocationTargetException e) {
-
-            }
-            result = new TestResult(obj, method));
-            try {
-                runMethods(obj, afterMethods);
-            } catch (InvocationTargetException e) {
-
-            }
-        }
     }
 
     List<TestResult> getResults() {
