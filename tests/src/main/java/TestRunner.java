@@ -12,13 +12,14 @@ public class TestRunner {
     private final Class<?> cls;
     private final Object instance;
 
-    private final List<TestResult> results;
+    private List<TestResult> results;
 
-    public TestRunner(@NotNull Class<?> cls) throws IllegalAccessException, InstantiationException, StateException {
+    public TestRunner(@NotNull Class<?> cls) throws IllegalAccessException, InstantiationException {
         this.cls = cls;
         instance = cls.newInstance();
+    }
 
-
+    public void runTests() throws IllegalAccessException, StateException {
         List<Method> beforeClassMethods = classifyByAnnotation(cls.getDeclaredMethods(), BeforeClass.class);
         List<Method> afterClassMethods = classifyByAnnotation(cls.getDeclaredMethods(), AfterClass.class);
         List<Method> beforeMethods = classifyByAnnotation(cls.getDeclaredMethods(), Before.class);
