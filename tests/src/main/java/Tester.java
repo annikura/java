@@ -52,14 +52,16 @@ public class Tester {
     }
 
     /**
-     *
-     * @param runner
+     * Prints tests report.
+     * @param runner TestRunner to retrieve reports from.
      */
     private static void printReport(@NotNull TestRunner runner) {
         List<TestRunner.TestResult> results = runner.getResults();
         assert results != null;
+        System.out.println("==================================");
         for (TestRunner.TestResult result : results) {
             System.out.println(result.generateReport());
+            System.out.println("---");
         }
     }
 }
