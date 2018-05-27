@@ -1,4 +1,6 @@
 import org.jetbrains.annotations.NotNull;
+import ru.spbau.annikura.tester.StateException;
+import ru.spbau.annikura.tester.TestRunner;
 
 import java.util.List;
 
@@ -55,6 +57,7 @@ public class Tester {
      */
     private static void printReport(@NotNull TestRunner runner) {
         List<TestRunner.TestResult> results = runner.getResults();
+        assert results != null;
         for (TestRunner.TestResult result : results) {
             System.out.println(result.generateReport());
         }

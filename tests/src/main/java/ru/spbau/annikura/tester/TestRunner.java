@@ -1,3 +1,5 @@
+package ru.spbau.annikura.tester;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -124,7 +126,7 @@ public class TestRunner {
      * @return list of test results or null if {@link #runTests()} method was never invoked.
      */
     @Nullable
-    List<TestResult> getResults() {
+    public List<TestResult> getResults() {
         return results;
     }
 

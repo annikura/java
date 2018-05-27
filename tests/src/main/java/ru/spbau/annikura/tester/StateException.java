@@ -1,3 +1,5 @@
+package ru.spbau.annikura.tester;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
