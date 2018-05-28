@@ -2,6 +2,7 @@ package ru.spbau.annikura.tester;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import sun.rmi.runtime.Log;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Class providing tester implementation. Taken a .class instance it
@@ -57,17 +59,18 @@ public class TestRunner {
         List<Method> beforeMethods = classifyByAnnotation(cls.getDeclaredMethods(), Before.class);
         List<Method> afterMethods = classifyByAnnotation(cls.getDeclaredMethods(), After.class);
         List<Method> testMethods = classifyByAnnotation(cls.getDeclaredMethods(), Test.class);
+        results = Collections.emptyList();
 
         try {
             runMethods(instance, beforeClassMethods);
         } catch (InvocationTargetException e) {
-            results = Collections.emptyList();
             throw new StateException(
                     "Exception occurred while executing @BeforeClass method. No testing was performed.", e);
         }
 
         results = new ArrayList<>();
         for (Method method : testMethods) {
+            Logger.getAnonymousLogger().info("Running method " + method.getName());
             try {
                 runMethods(instance, beforeMethods);
             } catch (InvocationTargetException e) {
@@ -100,7 +103,7 @@ public class TestRunner {
     static void runMethods(@NotNull Object obj, @NotNull List<Method> methods)
             throws InvocationTargetException, IllegalAccessException {
         for (Method method : methods) {
-            method.invoke(obj, method);
+            method.invoke(obj);
         }
     }
 
