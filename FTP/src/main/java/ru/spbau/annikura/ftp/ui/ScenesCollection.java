@@ -134,6 +134,8 @@ public class ScenesCollection {
             }
             if (index > 0 && !filesHolder.value[index - 1].isDirectory()) {
                 FileChooser fileChooser = new FileChooser();
+                fileChooser.setInitialDirectory(new File("."));
+                fileChooser.setInitialFileName(new File(filesHolder.value[index - 1].getPath()).getName());
                 File file = fileChooser.showSaveDialog(stage);
                 if (file == null) {
                     return;
