@@ -128,7 +128,11 @@ public class ScenesCollection {
         });
 
         listView.setOnMouseClicked(event -> {
-            int index = listView.getFocusModel().getFocusedIndex();
+            int size = listView.getSelectionModel().getSelectedIndices().size();
+            if (size != 1) {
+                return;
+            }
+            int index = listView.getSelectionModel().getSelectedIndices().get(0);
             if (index < 0) {
                 return;
             }
