@@ -157,6 +157,11 @@ public class Reflector {
         return result;
     }
 
+    /**
+     * Given a Class instance, returns a list of classes and interfaces declared in this class, represented as strings.
+     * @param cls input Class whose inner classes will be listed
+     * @return list of classes representen in string format
+     */
     @NotNull
     static List<String> getStringDeclaredClasses(final @NotNull Class<?> cls) {
         List<String> result = new ArrayList<>();
@@ -175,6 +180,11 @@ public class Reflector {
         return result;
     }
 
+    /**
+     * Given a field, returns a string representing the declaration of this field.
+     * @param field a field to be converted
+     * @return  string representing the given field
+     */
     @NotNull
     static String convertFieldToString(final @NotNull Field field) {
         return String.join(" ",
